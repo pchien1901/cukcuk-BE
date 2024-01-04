@@ -80,15 +80,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 }
                 else
                 {
-                    var res = new
-                    {
-                        type = "",
-                        title = "Record is not exist",
-                        status = HttpStatusCode.BadRequest,
-                        traceId = "",
-                        errors = "Nhóm khách hàng không tồn tại trong hệ thống",
-                    };
-                    return StatusCode(400, res);
+                    throw new MISAValidateException("Nhóm khách hàng không tồn tại trong hệ thống.");
                 }
 
 

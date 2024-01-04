@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MISA.CUKCUK.Core.DTOs;
+using MISA.CUKCUK.Core.Resources;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace MISA.CUKCUK.Core.Exceptions
         public async Task Invoke(HttpContext context)
         {
             //await _next(context);
+            /*
             try
             {
                 await _next(context);
@@ -96,11 +98,11 @@ namespace MISA.CUKCUK.Core.Exceptions
                 };
 
 
-                /*
+                
                     var res = System.Text.Json.JsonSerializer.Serialize(ex);
                     context.Response.StatusCode = 500;
                     context.Response.ContentType = "application/json";
-                */
+                
                 var res = JsonConvert.SerializeObject(serviceResult);
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync(res);
@@ -121,17 +123,69 @@ namespace MISA.CUKCUK.Core.Exceptions
                 };
     
                     
-                /*
+                
                     var res = System.Text.Json.JsonSerializer.Serialize(ex);
                     context.Response.StatusCode = 500;
                     context.Response.ContentType = "application/json";
-                */
+                
                 var res = JsonConvert.SerializeObject(ex);
                 await context.Response.WriteAsync(res);
                
    
-                }
+                }*/
 
+            try
+            {
+                await _next(context);
             }
+            catch(MISAValidateException misaValidateEx)
+            {
+                var error = new MISAErrorResponse
+                {
+                    devMsg = misaValidateEx.Message,
+                    userMsg = misaValidateEx.Message,
+                    errorCode = "",
+                    moreInfor = "",
+                    traceId = ""
+                };
+
+                var res = JsonConvert.SerializeObject(error);
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(res);
+            }
+            catch(MISAControllerException misaControllerEx)
+            {
+                var error = new MISAErrorResponse
+                {
+                    devMsg = misaControllerEx.devMsg,
+                    userMsg = misaControllerEx.Message,
+                    errorCode = "",
+                    moreInfor = "",
+                    traceId = ""
+                };
+
+                var res = JsonConvert.SerializeObject(error);
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync(res);
+            }
+            catch (Exception ex)
+            {
+
+                var error = new MISAErrorResponse
+                {
+                    devMsg = ex.Message,
+                    userMsg = MISAResource.ServerError,
+                    errorCode = "",
+                    moreInfor = "",
+                    traceId = ""
+                };
+
+                var res = JsonConvert.SerializeObject(error);
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync(res);
+            }
+
         }
+
+    }
 }

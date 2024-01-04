@@ -31,58 +31,17 @@ namespace MISA.CUKCUK.Core.Services
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// 
         public MISAServiceResult InsertService(Customer customer)
         {
             var serviceResult = new MISAServiceResult();
             var isDuplicate = _customerRepository.CheckCodeIsExist(customer.CustomerCode);
-            if(isDuplicate)
+            if (isDuplicate)
             {
-                throw new MISAValidateException("Mã khách hàng đã tồn tại", "CustomerCode");
+                throw new MISAValidateException("Mã khách hàng đã tồn tại");
             }
             serviceResult.Success = true;
             return serviceResult;
-
-            /*
-            var serviceResult = new MISAServiceResult();
-            serviceResult.Success = false;
-            // Check CustomerCode đã tồn tại chưa
-            var isDuplicate = _customerRepository.CheckCodeIsExist(customer.CustomerCode);
-            if (isDuplicate)
-            {
-                throw new MISAValidateException("Mã khách hàng đã tồn tại", "CustomerCode");
-            }
-            else
-            {
-                serviceResult.Success = true;
-            }
-
-            return serviceResult;
-            */
-
-            /*
-            try
-            {
-                
-                // Check CustomerCode đã tồn tại chưa
-                var isDuplicate = _customerRepository.CheckCodeIsExist(customer.CustomerCode);
-                if (isDuplicate == true)
-                {
-                    throw new MISAValidateException("Mã khách hàng đã tồn tại", "CustomerCode");
-                }
-                else
-                {
-                    serviceResult.Success = true;
-                }
-
-                return serviceResult;
-            }
-            catch (Exception ex)
-            {
-                serviceResult.Success = false;
-            }
-            return serviceResult;
-            */
         }
 
         /// <summary>
@@ -90,7 +49,7 @@ namespace MISA.CUKCUK.Core.Services
         /// </summary>
         /// <param name="customer"></param>
         /// <returns>MiSAServiceResult - kết quả</returns>
-        /// Created by: PMCHIEN(27/12/2023
+        /// Created by: PMCHIEN(27/12/2023)
         public MISAServiceResult UpdateService(Customer customer)
         {
             var serviceResult = new MISAServiceResult();
@@ -119,11 +78,11 @@ namespace MISA.CUKCUK.Core.Services
                         }
                         else
                         {
-                            throw new MISAValidateException("Mã khách hàng đã tồn tại", "CustomerCode");
+                            throw new MISAValidateException("Mã khách hàng đã tồn tại");
                         }
                         break;
                     default:
-                        throw new MISAValidateException("Mã khách hàng đã tồn tại", "CustomerCode");
+                        throw new MISAValidateException("Mã khách hàng đã tồn tại");
                         break;
                 }
 

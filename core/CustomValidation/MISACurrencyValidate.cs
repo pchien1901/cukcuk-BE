@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.CUKCUK.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Core.CustomValidation
 {
-    public class DateLessThanToday: ValidationAttribute
+    public class MISACurrencyValidate: ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
@@ -16,24 +17,16 @@ namespace MISA.CUKCUK.Core.CustomValidation
                 return ValidationResult.Success;
             }
 
-            //var dateValue = String.IsNullOrEmpty(value.ToString()) ? ;
-            DateTime date;
-            if(DateTime.TryParse(value.ToString(), out date))
+            if(decimal.TryParse(value.ToString(), out decimal currency)) 
             {
-                // so sánh ngày hiện tại
-                var todayDate = DateTime.Now;
-                if(todayDate < date)
+                if (currency < 0)
                 {
-                    return new ValidationResult(ErrorMessage);
+                    throw new MISAValidateException(ErrorMessage);
                 }
                 else
                 {
                     return ValidationResult.Success;
                 }
-            }
-            else
-            {
-                
             }
             return base.IsValid(value, validationContext);
         }

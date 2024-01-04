@@ -14,7 +14,7 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// </summary>
         /// <returns>Danh sách các bản ghi</returns>
         /// Created By: PMCHIEN
-        List<T> Get();
+        IEnumerable<T> Get();
 
         /// <summary>
         /// Lấy theo Id
@@ -49,11 +49,11 @@ namespace MISA.CUKCUK.Core.Interfaces
         int Delete(string id);
 
         /// <summary>
-        /// Xóa tất cả bản ghi
+        /// Xóa danh sách bản ghi
         /// </summary>
-        /// <returns></returns>
-        /// Created By: PMCHIEN
-        int DeleteAll();
+        /// <param name="ids">mảng id cần xóa</param>
+        /// <returns>Số bản ghi bị thay đổi</returns>
+        int DeleteAny(string[] ids);
 
        
     }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MISA.CUKCUK.Core.CustomValidation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Core.Entities
@@ -17,7 +19,7 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng
         /// </summary>
-        [Required(ErrorMessage = "Tên nhóm khách hàng không được bỏ trống")]
+        [MISARequired(ErrorMessage = "Tên nhóm khách hàng không được bỏ trống")]
         public string CustomerGroupName { get; set; }
 
         /// <summary>
@@ -28,7 +30,9 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        public string? CreatedDate { get; set; }
+        /// 
+        [JsonConverter(typeof(NullableDateTimeConverter))]
+        public DateTime? CreatedDate { get; set; }
 
         /// <summary>
         /// Người chỉnh sửa
@@ -38,6 +42,8 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Ngày chỉnh sửa
         /// </summary>
-        public string? ModifiedDate { get; set; }
+        /// 
+        [JsonConverter(typeof(NullableDateTimeConverter))]
+        public DateTime? ModifiedDate { get; set; }
     }
 }

@@ -9,11 +9,10 @@ namespace MISA.CUKCUK.Core.Exceptions
     public class MISAValidateException: Exception
     {
         private string MsgError = string.Empty;
-        public string FieldName { get; }
-        public MISAValidateException(string error, string fieldName)
+        
+        public MISAValidateException(string error)
         {
             this.MsgError = error;
-            this.FieldName = fieldName;
         }
 
         public override string Message => this.MsgError;

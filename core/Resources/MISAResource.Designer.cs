@@ -59,5 +59,113 @@ namespace MISA.CUKCUK.Core.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã khách hàng đã tồn tại.
+        /// </summary>
+        public static string CustomerCodeIsDuplicated {
+            get {
+                return ResourceManager.GetString("CustomerCodeIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã khách hàng không được để trống.
+        /// </summary>
+        public static string CustomerCodeRequired {
+            get {
+                return ResourceManager.GetString("CustomerCodeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to khách hàng đã tồn tại.
+        /// </summary>
+        public static string CustomerGroupNameIsDuplicated {
+            get {
+                return ResourceManager.GetString("CustomerGroupNameIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên nhóm khách hàng không được để trống.
+        /// </summary>
+        public static string CustomerGroupNameRequired {
+            get {
+                return ResourceManager.GetString("CustomerGroupNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày sinh không hợp lệ.
+        /// </summary>
+        public static string DateOfBirthInvalid {
+            get {
+                return ResourceManager.GetString("DateOfBirthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số tiền nợ không được âm, và chỉ chứa số.
+        /// </summary>
+        public static string DebitAmoutInvalid {
+            get {
+                return ResourceManager.GetString("DebitAmoutInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email không đúng định dạng.
+        /// </summary>
+        public static string EmailInvalid {
+            get {
+                return ResourceManager.GetString("EmailInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email không được để trống.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Họ và tên không được để trống.
+        /// </summary>
+        public static string FullNameRequired {
+            get {
+                return ResourceManager.GetString("FullNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giới tính phải thuộc từ 0 - 2.
+        /// </summary>
+        public static string GenderInvalid {
+            get {
+                return ResourceManager.GetString("GenderInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Số điện thoại không đúng định dạng.
+        /// </summary>
+        public static string PhoneNumberInvalid {
+            get {
+                return ResourceManager.GetString("PhoneNumberInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lỗi server, vui lòng liên hệ quản trị viên để được hỗ trợ..
+        /// </summary>
+        public static string ServerError {
+            get {
+                return ResourceManager.GetString("ServerError", resourceCulture);
+            }
+        }
     }
 }

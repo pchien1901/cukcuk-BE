@@ -1,7 +1,7 @@
 ﻿using core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MISA.CUKCUK.Core.Entities.EntitiesFromRequest;
+using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
 using System.Net;
 
@@ -53,15 +53,6 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            /*
-            var customer = new Customer 
-            {
-                CustomerId = customerModel.CustomerId,
-                CustomerGroupId = customerModel.CustomerGroupId,
-                CustomerCode = customerModel.CustomerCode,
-
-            };
-            */
             try
             {
                 var validate = _customerService.InsertService(customer);
@@ -89,7 +80,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 }
                 else
                 {
-                    return StatusCode(400, "Bản ghi chưa tồn tại");
+                    throw new MISAValidateException("Khách hàng chưa tồn tại trong hệ thống.");
                 }
             }
             catch (Exception)
@@ -105,16 +96,20 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var validate = _customerService.DeleteService(id);
+                var res = _customerRepository.Delete(id);
+                return StatusCode(200, res);
 
-                if(validate.Success == true)
+                /*
+                if (validate.Success == true)
                 {
                     var res = _customerRepository.Delete(id);
                     return StatusCode(200, res);
                 }
                 else
                 {
-                    return StatusCode(400, "Bản ghi không tồn tại");
+                    throw new MISAValidateException("Khách hàng không tồn tại trong hệ thống.");
                 }
+                */
             }
             catch (Exception)
             {

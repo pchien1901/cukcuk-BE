@@ -1,9 +1,11 @@
 ﻿using MISA.CUKCUK.Core.CustomValidation;
+using MISA.CUKCUK.Core.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace core.Entities
@@ -23,32 +25,32 @@ namespace core.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        [Required(ErrorMessage = "Mã khách hàng không được để trống")]
+        [MISARequired(ErrorMessage = "Mã khách hàng không được để trống")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
-        [Required(ErrorMessage = "Email không được để trống")]
-        [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
+        [MISARequired(ErrorMessage = "Email không được để trống")]
+        [MISAEmailValidate(ErrorMessage = "Email không đúng định dạng")]
         public string Email { get; set; }
 
         /// <summary>
         /// Số điện thoại
         /// </summary>
-        [RegularExpression(pattern: "^\\d+$", ErrorMessage = "Số điện thoại không đúng định dạng")]
+        [MISAPhoneNumberValidate(ErrorMessage = "Số điện thoại không đúng định dạng")]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Giới tính
         /// </summary>
-        [Range(minimum: 0, maximum: 2, ErrorMessage = "Giới tính phải thuộc từ 0 - 2")]
+        [MISAGenderValidate(ErrorMessage = "Giới tính phải thuộc từ 0 - 2")]
         public int? Gender { get; set; }
 
         /// <summary>
         /// Họ tên
         /// </summary>
-        [Required(ErrorMessage = "Họ và tên không được để trống")]
+        [MISARequired(ErrorMessage = "Họ và tên không được để trống")]
         public string FullName { get; set; }
 
         /// <summary>
@@ -59,13 +61,14 @@ namespace core.Entities
         /// <summary>
         /// Ngày sinh
         /// </summary>
-        [DateLessThanToday(ErrorMessage = "Ngày sinh không hợp lệ")]
-        public string? DateOfBirth { get; set; }
+        [JsonConverter(typeof(NullableDateTimeConverter))]
+        [MISADateLessThanToday(ErrorMessage = "Ngày sinh không hợp lệ")]
+        public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// Số tiền nợ
         /// </summary>
-        [Range(minimum: 0, maximum: double.MaxValue, ErrorMessage = "Số tiền nợ không được âm")]
+        [MISACurrencyValidate(ErrorMessage = "Số tiền nợ không được âm")]
         public decimal? DebitAmount { get; set; }
 
         /// <summary>
@@ -90,11 +93,9 @@ namespace core.Entities
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        public string? CreatedDate
-        {
-            get;
-            set; 
-        }
+        /// 
+        [JsonConverter(typeof(NullableDateTimeConverter))]
+        public DateTime? CreatedDate { get; set; }
 
         /// <summary>
         /// Người sửa đổi
@@ -104,6 +105,8 @@ namespace core.Entities
         /// <summary>
         /// ngày sửa đổi
         /// </summary>
-        public string? ModifiedDate { get; set; }
+        /// 
+        [JsonConverter(typeof(NullableDateTimeConverter))]
+        public DateTime? ModifiedDate { get; set; }
     }
 }

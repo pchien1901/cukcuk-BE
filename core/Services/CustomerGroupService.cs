@@ -33,7 +33,7 @@ namespace MISA.CUKCUK.Core.Services
 
             if (isExistName == true)
             {
-                throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại", "CustomerGroupName");
+                throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại");
             }
 
             return serviceResult;
@@ -73,11 +73,11 @@ namespace MISA.CUKCUK.Core.Services
                         }
                         else
                         {
-                            throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại", "CustomerGroupName");
+                            throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại");
                         }
                         break;
                     default:
-                        throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại", "CustomerGroupName");
+                        throw new MISAValidateException("Tên nhóm khách hàng đã tồn tại");
                         break;
                 }
 

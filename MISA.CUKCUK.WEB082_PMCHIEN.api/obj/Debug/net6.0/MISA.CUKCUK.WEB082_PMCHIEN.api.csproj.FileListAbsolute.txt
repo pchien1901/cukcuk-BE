@@ -39,3 +39,11 @@ C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.W
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\obj\Debug\net6.0\MISA.CUKCUK.WEB082_PMCHIEN.api.genruntimeconfig.cache
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\obj\Debug\net6.0\ref\MISA.CUKCUK.WEB082_PMCHIEN.api.dll
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

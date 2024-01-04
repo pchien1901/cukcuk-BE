@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MISA.CUKCUK.Core.Entities.EntitiesFromRequest
+namespace MISA.CUKCUK.Core
 {
-    internal class CustomerGroupModel
+    public class Common
     {
+        public static string ConnectionString;
     }
 }
