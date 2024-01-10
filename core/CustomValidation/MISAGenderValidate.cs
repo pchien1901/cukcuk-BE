@@ -15,16 +15,14 @@ namespace MISA.CUKCUK.Core.CustomValidation
             if(value == null || value == "") {
                 return ValidationResult.Success;
             }
-            if(int.TryParse(value.ToString(), out int gender))
+            var gender = (int) value;
+            if (gender is not (int)MISAEnum.Gender.MALE and not (int)MISAEnum.Gender.FEMALE and not (int)MISAEnum.Gender.OTHER)
             {
-                if(gender is not (int)MISAEnum.Gender.MALE and not (int)MISAEnum.Gender.FEMALE and not (int)MISAEnum.Gender.OTHER)
-                {
-                    throw new MISAValidateException(ErrorMessage);
-                }
-                else
-                {
-                    return ValidationResult.Success;
-                }
+                throw new MISAValidateException(ErrorMessage);
+            }
+            else
+            {
+                return ValidationResult.Success;
             }
             return base.IsValid(value, validationContext);
         }
