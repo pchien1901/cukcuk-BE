@@ -19,7 +19,7 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Lấy tất cả bản ghi
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
         /// <returns>Danh sách bản ghi</returns>
         /// Created by: PMCHIEN (03/01/2024)
         public IEnumerable<T> Get<T>();
@@ -27,7 +27,7 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Lấy một bản ghi theo id
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
         /// <param name="id">id của bản ghi </param>
         /// <returns>entity || null</returns>
         /// Created by: PMCHIEN (03/01/2024)
@@ -36,8 +36,8 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Chèn một bản ghi vào DB
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
+        /// <param name="entity">Đối tượng cần thêm vào Database</param>
         /// <returns>Số lượng bản ghi thay đổi</returns>
         /// Created by: PMCHIEN (03/01/2024)
         public int Insert<T>(T entity);
@@ -45,8 +45,8 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Sửa một bản ghi 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
+        /// <param name="entity">Đối tượng cần chỉnh sửa</param>
         /// <returns>Số bản ghi thay đổi</returns>
         /// Created by: PMCHIEN (03/01/2024)
         public int Update<T>(T entity);
@@ -54,8 +54,8 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Xóa một bản ghi
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id"></param>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
+        /// <param name="id">Id của bản ghi cần xóa</param>
         /// <returns>Số lượng bản ghi thay đổi</returns>
         /// Created by: PMCHIEN (03/01/2024)
         public int Delete<T>(string id);
@@ -63,8 +63,8 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
         /// <summary>
         /// Xóa danh sách bản ghi
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ids"></param>
+        /// <typeparam name="T">Kiểu của đối tượng</typeparam>
+        /// <param name="ids">danh sách id của các bản ghi cần xóa</param>
         /// <returns>Số lượng bản ghi thay đổi</returns>
         public int DeleteAny<T>(string[] ids);
     }

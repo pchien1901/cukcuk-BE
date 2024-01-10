@@ -1,27 +1,34 @@
 ﻿using core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
+using MISA.CUKCUK.Core.Resources;
 using System.Net;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseController<Customer>
     {
+        #region Declaration
         ICustomerRepository _customerRepository;
         ICustomerService _customerService;
+        #endregion
 
+        #region Constructor
         public CustomersController(ICustomerRepository customerRepository, ICustomerService customerService)
         {
             _customerRepository = customerRepository;
             _customerService = customerService;
         }
+        #endregion
 
+        #region Method
         [HttpGet]
-        public IActionResult Get()
+        public override IActionResult Get()
         {
             try
             {
@@ -30,44 +37,51 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
             catch (Exception)
             {
-                throw ;
+                throw;
             }
 
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public override IActionResult Get(string id)
         {
             try
             {
                 var customer = _customerRepository.Get(id);
                 return StatusCode(200, customer);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Lỗi tại get by id controller");
+                throw;
             }
 
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Customer customer)
+        public override IActionResult Post([FromBody] Customer customer)
         {
             try
             {
                 var validate = _customerService.InsertService(customer);
-                var res = _customerRepository.Insert(customer);
-                return StatusCode(200, res);
+                if (validate.Success == true)
+                {
+                    return StatusCode(201, validate.Data);
+                }
+                else
+                {
+                    var devMsg = "Lỗi tại post Customer";
+                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                }
             }
             catch (Exception)
             {
-                throw ;
+                throw;
             }
-    
+
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody]  Customer customer)
+        public override IActionResult Put([FromBody] Customer customer)
         {
             try
             {
@@ -75,12 +89,11 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 var validate = _customerService.UpdateService(customer);
                 if (validate.Success == true)
                 {
-                    var res = _customerRepository.Update(customer);
-                    return StatusCode(200, res);
+                    return StatusCode(200, validate.Data);
                 }
                 else
                 {
-                    throw new MISAValidateException("Khách hàng chưa tồn tại trong hệ thống.");
+                    throw new MISAValidateException(MISAResource.CustomerDoesNotExist);
                 }
             }
             catch (Exception)
@@ -91,7 +104,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id) 
+        public override IActionResult Delete(string id)
         {
             try
             {
@@ -116,5 +129,21 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+
+        [HttpDelete]
+        public override IActionResult Delete([FromBody] string[] ids)
+        {
+            try
+            {
+                var res = _customerRepository.DeleteAny(ids);
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
     }
 }

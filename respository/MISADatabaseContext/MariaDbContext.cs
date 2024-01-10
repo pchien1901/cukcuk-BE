@@ -13,13 +13,18 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
 {
     public class MariaDbContext : IMISADbContext
     {
+        #region Property
         public IDbConnection Connection { get; }
+        #endregion
 
+        #region Constructor
         public MariaDbContext(IConfiguration config)
         {
             Connection = new MySqlConnection(config.GetConnectionString("Database1"));
         }
+        #endregion
 
+        #region Method
         public void Dispose()
         {
             Connection.Dispose();
@@ -83,8 +88,6 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
                 }
             }
 
-
-
             // duyệt từng prop
             foreach (var prop in props)
             {
@@ -93,8 +96,8 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
                 // lấy value
                 var propValue = prop.GetValue(entity);
 
-                colNameList = colNameList + $"{propName},";
-                colParamList = colParamList + $"@{propName},";
+                colNameList += $"{propName},";
+                colParamList += $"@{propName},";
                 parameters.Add($"@{propName}", propValue);
 
             }
@@ -117,7 +120,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             var className = typeof(T).Name;
 
             // Dùng DynamicParameters chống SQL injection
-            DynamicParameters parameters = new DynamicParameters();
+            var parameters = new DynamicParameters();
 
             // lấy properties của T
             var props = typeof(T).GetProperties();
@@ -136,7 +139,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
                 {
                     // lấy value
                     var propValue = prop.GetValue(entity);
-                    updateList = updateList + $"{propName} = @{propName},";
+                    updateList += $"{propName} = @{propName},";
                     parameters.Add($"@{propName}", propValue);
                 }
             }
@@ -144,14 +147,14 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             updateList = updateList + "ModifiedDate = @ModifiedDate,";
             parameters.Add("@ModifiedDate", DateTime.Now);
 
-            updateList = updateList.Substring(0, updateList.Length - 1);
+            updateList = updateList.Substring(startIndex: 0, length: updateList.Length - 1);
 
             // Truy vấn
             var sql = $"UPDATE {className} " +
                 $"SET {updateList} " +
                 $"WHERE {className}Id = @id";
 
-            parameters.Add("@id", typeof(T).GetProperty($"{className}Id").GetValue(entity));
+            parameters.Add("@id", value: typeof(T).GetProperty($"{className}Id").GetValue(entity));
 
             // Thực hiện truy vấn
             var res = Connection.Execute(sql, param: parameters);
@@ -200,5 +203,6 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             // Trả về kết quả
             return data;
         }
+        #endregion
     }
 }

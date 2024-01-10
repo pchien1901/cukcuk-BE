@@ -13,14 +13,18 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
 {
     public class MySqlDbContext: IMISADbContext
     {
+        #region Property
         public IDbConnection Connection { get; }
+        #endregion
 
+        #region Constructor
         public MySqlDbContext(IConfiguration config)
         {
             Connection = new MySqlConnection(config.GetConnectionString("Database1"));
         }
+        #endregion
 
-
+        #region Method
         public void Dispose()
         {
             Connection.Dispose();
@@ -201,6 +205,6 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             // Trả về kết quả
             return data;
         }
-
+        #endregion
     }
 }

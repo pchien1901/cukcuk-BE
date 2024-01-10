@@ -11,10 +11,10 @@ namespace MISA.CUKCUK.Core.Interfaces
     public interface ICustomerService : IBaseService<Customer>
     {
         /// <summary>
-        /// xử lí việc nhập filet
+        /// xử lí việc nhập file
         /// </summary>
-        /// <param name="excel"></param>
-        /// <returns></returns>
+        /// <param name="excel">tệp cần thực hiện xuất khẩu</param>
+        /// <returns>object chứa thong tin có thỏa mãn không</returns>
         object ImportService(IFormFile excel);
     }
 }

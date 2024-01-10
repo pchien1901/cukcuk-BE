@@ -61,6 +61,15 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string BaseError {
+            get {
+                return ResourceManager.GetString("BaseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã khách hàng đã tồn tại.
         /// </summary>
         public static string CustomerCodeIsDuplicated {
@@ -75,6 +84,24 @@ namespace MISA.CUKCUK.Core.Resources {
         public static string CustomerCodeRequired {
             get {
                 return ResourceManager.GetString("CustomerCodeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khách hàng chưa tồn tại trong hệ thống.
+        /// </summary>
+        public static string CustomerDoesNotExist {
+            get {
+                return ResourceManager.GetString("CustomerDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhóm khách hàng không tồn tại trong hệ thống.
+        /// </summary>
+        public static string CustomerGroupDoesNotExist {
+            get {
+                return ResourceManager.GetString("CustomerGroupDoesNotExist", resourceCulture);
             }
         }
         
@@ -115,6 +142,24 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã đơn vị đã tồn tại.
+        /// </summary>
+        public static string DepartmentCodeIsDuplicated {
+            get {
+                return ResourceManager.GetString("DepartmentCodeIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đơn vị chưa tồn tại trong hệ thống.
+        /// </summary>
+        public static string DepartmentDoesNotExist {
+            get {
+                return ResourceManager.GetString("DepartmentDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email không đúng định dạng.
         /// </summary>
         public static string EmailInvalid {
@@ -133,6 +178,24 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã nhân viên đã tồn tại.
+        /// </summary>
+        public static string EmployeeCodeIsDuplicated {
+            get {
+                return ResourceManager.GetString("EmployeeCodeIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhân viên chưa tồn tại trong hệ thống.
+        /// </summary>
+        public static string EmployeeDoesNotExist {
+            get {
+                return ResourceManager.GetString("EmployeeDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Họ và tên không được để trống.
         /// </summary>
         public static string FullNameRequired {
@@ -142,7 +205,7 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Giới tính phải thuộc từ 0 - 2.
+        ///   Looks up a localized string similar to Giới tính không hợp lệ.
         /// </summary>
         public static string GenderInvalid {
             get {
@@ -156,6 +219,33 @@ namespace MISA.CUKCUK.Core.Resources {
         public static string PhoneNumberInvalid {
             get {
                 return ResourceManager.GetString("PhoneNumberInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chức danh không tồn tại.
+        /// </summary>
+        public static string PositionDoesNotExist {
+            get {
+                return ResourceManager.GetString("PositionDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên chức danh đã tồn tại.
+        /// </summary>
+        public static string PositionNameIsDuplicated {
+            get {
+                return ResourceManager.GetString("PositionNameIsDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đối tượng không tồn tại, vui lòng tải lại dữ liệu để được cập nhật.
+        /// </summary>
+        public static string RecordsDoesNotExist {
+            get {
+                return ResourceManager.GetString("RecordsDoesNotExist", resourceCulture);
             }
         }
         

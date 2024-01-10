@@ -174,7 +174,7 @@ namespace MISA.CUKCUK.Core.Exceptions
                 var error = new MISAErrorResponse
                 {
                     devMsg = ex.Message,
-                    userMsg = MISAResource.ServerError,
+                    userMsg = "Lỗi server, vui lòng liên hệ quản trị viên để được hỗ trợ.",
                     errorCode = "",
                     moreInfor = "",
                     traceId = ""

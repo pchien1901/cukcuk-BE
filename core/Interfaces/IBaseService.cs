@@ -12,25 +12,34 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <summary>
         /// Kiểm tra đầu vào khi post
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        /// Created by: PMCHIEN
+        /// <param name="entity">Đói tượng cần kiểm tra trước khi insert</param>
+        /// <returns>
+        /// MISAServiceResult 
+        /// (MISAServiceResult.Success = true nếu thỏa mãn, false nếu không thỏa mãn)
+        /// </returns>
+        /// Created by: PMCHIEN (31/12/2023)
         MISAServiceResult InsertService(T entity);
 
         /// <summary>
         /// Kiểm tra đầu vào khi Put
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        /// Created by: PMCHIEN
+        /// <param name="entity">Đối tượng cần kiểm tra trước khi update</param>
+        /// <returns>
+        /// MISAServiceResult
+        /// (MISAServiceResult.Success = true nếu thỏa mãn, false nếu không thỏa mãn)
+        /// </returns>
+        /// Created by: PMCHIEN (31/12/2023)
         MISAServiceResult UpdateService(T entity);
 
         /// <summary>
         /// Kiểm tra đầu vào khi Delete
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// Created by: PMCHIEN
+        /// <param name="id">id của đối tượng cần kiểm tra trước khi xóa</param>
+        /// <returns>
+        /// MISAServiceResult 
+        /// (MISAServiceResult.Success = true nếu thỏa mãn, false nếu không thỏa mãn)
+        /// </returns>
+        /// Created by: PMCHIEN (31/12/2023)
         MISAServiceResult DeleteService(string id);
     }
 }

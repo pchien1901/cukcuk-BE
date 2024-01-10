@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BaseError" xml:space="preserve">
+    <value />
+  </data>
   <data name="CustomerCodeIsDuplicated" xml:space="preserve">
     <value>Mã khách hàng đã tồn tại</value>
   </data>
   <data name="CustomerCodeRequired" xml:space="preserve">
     <value>Mã khách hàng không được để trống</value>
+  </data>
+  <data name="CustomerDoesNotExist" xml:space="preserve">
+    <value>Khách hàng chưa tồn tại trong hệ thống</value>
+  </data>
+  <data name="CustomerGroupDoesNotExist" xml:space="preserve">
+    <value>Nhóm khách hàng không tồn tại trong hệ thống</value>
   </data>
   <data name="CustomerGroupNameIsDuplicated" xml:space="preserve">
     <value>khách hàng đã tồn tại</value>
@@ -135,20 +144,41 @@
   <data name="DebitAmoutInvalid" xml:space="preserve">
     <value>Số tiền nợ không được âm, và chỉ chứa số</value>
   </data>
+  <data name="DepartmentCodeIsDuplicated" xml:space="preserve">
+    <value>Mã đơn vị đã tồn tại</value>
+  </data>
+  <data name="DepartmentDoesNotExist" xml:space="preserve">
+    <value>Đơn vị chưa tồn tại trong hệ thống</value>
+  </data>
   <data name="EmailInvalid" xml:space="preserve">
     <value>Email không đúng định dạng</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email không được để trống</value>
   </data>
+  <data name="EmployeeCodeIsDuplicated" xml:space="preserve">
+    <value>Mã nhân viên đã tồn tại</value>
+  </data>
+  <data name="EmployeeDoesNotExist" xml:space="preserve">
+    <value>Nhân viên chưa tồn tại trong hệ thống</value>
+  </data>
   <data name="FullNameRequired" xml:space="preserve">
     <value>Họ và tên không được để trống</value>
   </data>
   <data name="GenderInvalid" xml:space="preserve">
-    <value>Giới tính phải thuộc từ 0 - 2</value>
+    <value>Giới tính không hợp lệ</value>
   </data>
   <data name="PhoneNumberInvalid" xml:space="preserve">
     <value>Số điện thoại không đúng định dạng</value>
+  </data>
+  <data name="PositionDoesNotExist" xml:space="preserve">
+    <value>Chức danh không tồn tại</value>
+  </data>
+  <data name="PositionNameIsDuplicated" xml:space="preserve">
+    <value>Tên chức danh đã tồn tại</value>
+  </data>
+  <data name="RecordsDoesNotExist" xml:space="preserve">
+    <value>Đối tượng không tồn tại, vui lòng tải lại dữ liệu để được cập nhật</value>
   </data>
   <data name="ServerError" xml:space="preserve">
     <value>Lỗi server, vui lòng liên hệ quản trị viên để được hỗ trợ.</value>

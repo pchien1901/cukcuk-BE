@@ -1,4 +1,5 @@
-﻿using MISA.CUKCUK.Core.CustomValidation;
+﻿using MISA.CUKCUK.Core.Const;
+using MISA.CUKCUK.Core.CustomValidation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,8 +20,13 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng
         /// </summary>
-        [MISARequired(ErrorMessage = "Tên nhóm khách hàng không được bỏ trống")]
+        [MISARequired(ErrorMessage = MISAConst.ERROR_CUSTOMERGROUPNAME_REQUIRED)]
         public string CustomerGroupName { get; set; }
+
+        /// <summary>
+        /// Ghi chú
+        /// </summary>
+        public string? Description { get; set; }
 
         /// <summary>
         /// Người tạo

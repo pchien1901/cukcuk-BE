@@ -13,39 +13,39 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// Lấy tất cả bản ghi
         /// </summary>
         /// <returns>Danh sách các bản ghi</returns>
-        /// Created By: PMCHIEN
+        /// Created By: PMCHIEN (31/12/2023)
         IEnumerable<T> Get();
 
         /// <summary>
         /// Lấy theo Id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id của bản ghi</param>
         /// <returns>Bản ghi có id trùng khớp</returns>
-        /// Created By: PMCHIEN
+        /// Created By: PMCHIEN (31/12/2023)
         T Get(string id);
 
         /// <summary>
         /// Thêm bản ghi
         /// </summary>
-        /// <param name="customer"></param>
-        /// <returns>Số bản ghi được chèn vào DB</returns>
-        /// Created By: PMCHIEN
+        /// <param name="entity">Đối tượng cần thêm vào Database</param>
+        /// <returns>Số bản ghi được chèn vào Database</returns>
+        /// Created By: PMCHIEN (31/12/2023)
         int Insert(T entity);
 
         /// <summary>
         /// Sửa bản ghi
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="entity">Đối tượng cần chỉnh sửa vào Database</param>
         /// <returns>Số bản ghi thay đổi</returns>
-        /// Created By: PMCHIEN
+        /// Created By: PMCHIEN (31/12/2023)
         int Update(T entity);
 
         /// <summary>
         /// Xóa bản ghi theo Id
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="customer">id bản ghi cần xóa</param>
         /// <returns>Số bản ghi thay đổi</returns>
-        /// Created By: PMCHIEN
+        /// Created By: PMCHIEN (31/12/2023)
         int Delete(string id);
 
         /// <summary>
@@ -53,6 +53,7 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// </summary>
         /// <param name="ids">mảng id cần xóa</param>
         /// <returns>Số bản ghi bị thay đổi</returns>
+        /// created by: PMCHIEN  (31/12/2023)
         int DeleteAny(string[] ids);
 
        

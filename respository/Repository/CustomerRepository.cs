@@ -10,17 +10,19 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Infrastructure.Repository
 {
-    public class CustomerRepository : MISABaseRepository<Customer>, ICustomerRepository
+    public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
+        #region Constructor
         public CustomerRepository(IMISADbContext dbContext) : base(dbContext)
         {
         }
+        #endregion
 
-
+        #region Method
         /// <summary>
         /// Lấy bản ghi theo customerCode
         /// </summary>
-        /// <param name="customerCode"></param>
+        /// <param name="customerCode">CustomerCode của khách hàng</param>
         /// <returns>List<Customer></returns>
         /// Created By: PMCHIEN(27/12/2023)
         public List<Customer> GetByCode(string customerCode)
@@ -29,7 +31,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             var sql = $"SELECT * FROM Customer WHERE CustomerCode = @customerCode";
 
             // Dùng DynamicParameters chống SQL injection
-            DynamicParameters parameters = new DynamicParameters();
+            var parameters = new DynamicParameters();
             parameters.Add("@customerCode", customerCode);
 
             // Thực hiện truy vấn
@@ -42,7 +44,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
         /// <summary>
         /// Kiểm tra CustomerCode đã tồn tại chưa
         /// </summary>
-        /// <param name="customerCode"></param>
+        /// <param name="customerCode">CustomerCode của khách hàng</param>
         /// <returns>
         /// true - đã tồn tại, 
         /// false - chưa tồn tại
@@ -54,7 +56,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             string sql = $"SELECT * FROM Customer WHERE CustomerCode = @customerCode";
 
             // DynamicParameters chống sql injection
-            DynamicParameters parameters = new DynamicParameters();
+            var parameters = new DynamicParameters();
             parameters.Add("@customerCode", customerCode);
 
             // thực hiện truy vấn
@@ -68,5 +70,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
 
             return true;
         }
+
+        #endregion
     }
 }

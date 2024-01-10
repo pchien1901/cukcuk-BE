@@ -4,25 +4,31 @@ using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
+using MISA.CUKCUK.Core.Resources;
 using System.Net;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class CustomerGroupsController : ControllerBase
+    public class CustomerGroupsController : BaseController<CustomerGroup>
     {
+        #region Declaration
         ICustomerGroupRepository _customerGroupRepository;
         ICustomerGroupService _customerGroupService;
+        #endregion
 
+        #region Constructor
         public CustomerGroupsController(ICustomerGroupRepository customerGroupRepository, ICustomerGroupService customerGroupService)
         {
             _customerGroupRepository = customerGroupRepository;
             _customerGroupService = customerGroupService;
         }
+        #endregion
 
+        #region Method
         [HttpGet]
-        public IActionResult Get()
+        public override IActionResult Get()
         {
             try
             {
@@ -37,7 +43,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public override IActionResult Get(string id)
         {
             try
             {
@@ -52,7 +58,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CustomerGroup customerGroup)
+        public override IActionResult Post([FromBody] CustomerGroup customerGroup)
         {
             try
             {
@@ -68,7 +74,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] CustomerGroup customerGroup)
+        public override IActionResult Put([FromBody] CustomerGroup customerGroup)
         {
             try
             {
@@ -80,7 +86,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 }
                 else
                 {
-                    throw new MISAValidateException("Nhóm khách hàng không tồn tại trong hệ thống.");
+                    throw new MISAValidateException(MISAResource.CustomerGroupDoesNotExist);
                 }
 
 
@@ -93,12 +99,14 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public override IActionResult Delete(string id)
         {
             try
             {
                 var customerGroupName = _customerGroupRepository.Get(id).CustomerGroupName;
                 var res = _customerGroupRepository.Delete(id);
+                return StatusCode(200, res);
+                /*
                 if (res is int)
                 {
                     return StatusCode(200, res);
@@ -107,6 +115,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 {
                     throw new MISACanNotDeleteForeignField($"Không thể xóa nhóm {customerGroupName} vì có nhiều khách hàng thuộc nhóm này", "CustomerGroup");
                 }
+                */
 
             }
             catch (Exception)
@@ -115,5 +124,21 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+
+        [HttpDelete]
+        public override IActionResult Delete([FromBody] string[] ids)
+        {
+            try
+            {
+                var res = _customerGroupRepository.DeleteAny(ids);
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
     }
 }

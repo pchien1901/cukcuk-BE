@@ -1,4 +1,7 @@
-﻿using MISA.CUKCUK.Core.CustomValidation;
+﻿using Microsoft.VisualBasic;
+using MISA.CUKCUK.Core.Const;
+using MISA.CUKCUK.Core.CustomValidation;
+using MISA.CUKCUK.Core.MISAEnum;
 using MISA.CUKCUK.Core.Resources;
 using System;
 using System.Collections.Generic;
@@ -25,32 +28,32 @@ namespace core.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        [MISARequired(ErrorMessage = "Mã khách hàng không được để trống")]
+        [MISARequired(ErrorMessage = MISAConst.ERROR_CUSTOMERCODE_REQUIRED )]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
-        [MISARequired(ErrorMessage = "Email không được để trống")]
-        [MISAEmailValidate(ErrorMessage = "Email không đúng định dạng")]
+        [MISARequired(ErrorMessage = MISAConst.ERROR_EMAIL_REQUIRED)]
+        [MISAEmailValidate(ErrorMessage = MISAConst.ERROR_EMAIL_INVALID)]
         public string Email { get; set; }
 
         /// <summary>
         /// Số điện thoại
         /// </summary>
-        [MISAPhoneNumberValidate(ErrorMessage = "Số điện thoại không đúng định dạng")]
+        [MISAPhoneNumberValidate(ErrorMessage = MISAConst.ERROR_PHONENUMBER_INVALID)]
         public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// Giới tính
         /// </summary>
-        [MISAGenderValidate(ErrorMessage = "Giới tính phải thuộc từ 0 - 2")]
-        public int? Gender { get; set; }
+        [MISAGenderValidate(ErrorMessage = MISAConst.ERROR_GENDER_INVALID)]
+        public Gender? Gender { get; set; }
 
         /// <summary>
         /// Họ tên
         /// </summary>
-        [MISARequired(ErrorMessage = "Họ và tên không được để trống")]
+        [MISARequired(ErrorMessage = MISAConst.ERROR_FULLNAME_REQUIRED)]
         public string FullName { get; set; }
 
         /// <summary>
@@ -62,19 +65,34 @@ namespace core.Entities
         /// Ngày sinh
         /// </summary>
         [JsonConverter(typeof(NullableDateTimeConverter))]
-        [MISADateLessThanToday(ErrorMessage = "Ngày sinh không hợp lệ")]
+        [MISADateLessThanToday(ErrorMessage = MISAConst.ERROR_DATEOFBIRTH_INVALID)]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// Số tiền nợ
         /// </summary>
-        [MISACurrencyValidate(ErrorMessage = "Số tiền nợ không được âm")]
+        [MISACurrencyValidate(ErrorMessage = MISAConst.ERROR_DEBITAMOUT_IS_NOT_NEGATIVE)]
         public decimal? DebitAmount { get; set; }
 
         /// <summary>
         /// Tên công ty
         /// </summary>
         public string? CompanyName { get; set; }
+
+        /// <summary>
+        /// Mã số thuế
+        /// </summary>
+        public string? CompanyTaxCode { get; set;  }
+
+        /// <summary>
+        /// Mã thành viên
+        /// </summary>
+        public string? MemberCarCode { get; set; }
+
+        /// <summary>
+        /// Ghi chú
+        /// </summary>
+        public string? Note { get; set; }
 
         /*
         public string? Identity { get; set; }

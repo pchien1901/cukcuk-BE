@@ -14,7 +14,7 @@ namespace MISA.CUKCUK.Core.DTOs
             
         }
 
-        public MISAServiceResult( bool success, object data)
+        public MISAServiceResult( bool success, int data)
         {
             Success = success;
             Data = data;
@@ -26,9 +26,10 @@ namespace MISA.CUKCUK.Core.DTOs
         public bool Success { get; set; }
 
         /// <summary>
-        /// Thông tin thêm
+        /// Thông tin thêm 
+        /// Số bản ghi được cập nhật trong database
         /// </summary>
-        public object Data { get; set; }
+        public int? Data { get; set; }
 
        /*
         public HttpStatusCode StatusCode { get; set; }

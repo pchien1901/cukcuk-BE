@@ -14,31 +14,25 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Infrastructure.Repository
 {
-    public class MISABaseRepository<T>: IBaseRepository<T> where T : class
+    public class BaseRepository<T>: IBaseRepository<T> where T : class
     {
-        // thông tin kết nối
-        //string __dbContext.ConnectionString = "Host = 8.222.228.150;" +
-        //    "Port = 3306;" +
-        //    "Database = W08.PMCHIEN.MF1778;" +
-        //    "User Id = nvmanh;" +
-        //    "Password = 12345678;";
-
-
-
-        //protected IDb_dbContext.Connection _dbContext.Connection;
+        #region Declaration
         protected IMISADbContext _dbContext;
         protected string className;
+        #endregion
 
-        public MISABaseRepository(IMISADbContext dbContext)
+        #region Constructor
+        public BaseRepository(IMISADbContext dbContext)
         {
             _dbContext = dbContext;
         }
+        #endregion
 
-
+        #region Method
         /// <summary>
         /// Xóa bản ghi theo Id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">id bản ghi cần xóa</param>
         /// <returns>số bản ghi bị xóa</returns>
         /// Created By: PMCHIEN (27/12/2023)
         public int Delete(string id)
@@ -59,8 +53,6 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return result;
         }
 
-
-
         /// <summary>
         /// Lấy tất cả bản ghi
         /// </summary>
@@ -76,7 +68,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
         /// <summary>
         /// Lấy một bản ghi theo id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">id của bản ghi cần lấy</param>
         /// <returns>bản ghi cần lấy</returns>
         /// Created By: PMCHIEN (27/12/2023)
         public T? Get(string id)
@@ -88,7 +80,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
         /// <summary>
         /// Thêm bản ghi vào bảng
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">Đối tượng cần thêm vào Database</param>
         /// <returns>Số bản ghi thay đổi</returns>
         /// Created By: PMCHIEN(27/12/2023)
         /// 
@@ -98,11 +90,10 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return res;
         }
 
-
         /// <summary>
         /// Thay đổi thông tin 
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">Đối tượng cần chỉnh sửa</param>
         /// <returns>Số bản ghi bị thay đổi</returns>
         /// Created By: PMCHIEN(27/12/2023)
         /// 
@@ -111,5 +102,6 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             var res = _dbContext.Update<T>(entity);
             return res;
         }
+        #endregion
     }
 }

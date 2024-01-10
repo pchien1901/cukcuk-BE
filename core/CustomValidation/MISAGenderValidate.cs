@@ -17,7 +17,7 @@ namespace MISA.CUKCUK.Core.CustomValidation
             }
             if(int.TryParse(value.ToString(), out int gender))
             {
-                if(gender > 2 || gender < 0)
+                if(gender is not (int)MISAEnum.Gender.MALE and not (int)MISAEnum.Gender.FEMALE and not (int)MISAEnum.Gender.OTHER)
                 {
                     throw new MISAValidateException(ErrorMessage);
                 }

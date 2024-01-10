@@ -11,17 +11,20 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Infrastructure.Repository
 {
-    public class CustomerGroupRepository : MISABaseRepository<CustomerGroup>, ICustomerGroupRepository
+    public class CustomerGroupRepository : BaseRepository<CustomerGroup>, ICustomerGroupRepository
     {
+        #region Constructor
         public CustomerGroupRepository(IMISADbContext dbContext) : base(dbContext)
         {
         }
+        #endregion
 
+        #region Method
         /// <summary>
         /// Lấy các bản ghi có cùng CustomerGroupName
         /// </summary>
-        /// <param name="customerGroupName"></param>
-        /// <returns></returns>
+        /// <param name="customerGroupName">giá trị của CustomerGroupName</param>
+        /// <returns>Danh sách bản ghi</returns>
         /// Created by: PMCHIEN (27/12/2023)
         public List<CustomerGroup> GetByName(string customerGroupName)
         {
@@ -29,7 +32,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             var sql = $"SELECT * FROM CustomerGroup WHERE CustomerGroupName = @name";
 
             // Dùng DynamicParameters chống SQL injection
-            DynamicParameters parameters = new DynamicParameters();
+            var parameters = new DynamicParameters();
             parameters.Add("@name", customerGroupName);
 
             // Thực hiện truy vấn
@@ -39,11 +42,10 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return data;
         }
 
-
         /// <summary>
-        /// Kiểm tra CustomerGroupName
+        /// Kiểm tra CustomerGroupName đã tồn tại chưa
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">CustomerGroupName cần kiểm tra</param>
         /// <returns>true - CustomerGroupName đã tồn tại, false - chưa tồn tại</returns>
         /// Created by: PMCHIEN (27/12/2023)
         public bool CheckNameIsExist(string name)
@@ -52,7 +54,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             string sql = $"SELECT * FROM CustomerGroup WHERE CustomerGroupName = @customerGroupName";
 
             // DynamicParameters chống sql injection
-            DynamicParameters parameters = new DynamicParameters();
+            var parameters = new DynamicParameters();
             parameters.Add("@customerGroupName", name);
 
             // thực hiện truy vấn
@@ -66,5 +68,6 @@ namespace MISA.CUKCUK.Infrastructure.Repository
 
             return true;
         }
+        #endregion
     }
 }
