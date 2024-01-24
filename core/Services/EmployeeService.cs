@@ -15,12 +15,14 @@ namespace MISA.CUKCUK.Core.Services
     {
         #region Declaration
         IEmployeeRepository _employeeRepository;
+        IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public EmployeeService(IEmployeeRepository employeeRepository): base (employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork) : base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
@@ -44,7 +46,7 @@ namespace MISA.CUKCUK.Core.Services
         /// Created by: PMCHIEN(08/01/2024)
         protected override void ValidateObject(Employee employee)
         {
-            var isDuplicate = _employeeRepository.CheckCodeIsExist(employee.EmployeeCode);
+            var isDuplicate = _unitOfWork.Employees.CheckCodeIsExist(employee.EmployeeCode);
             if (isDuplicate)
             {
                 throw new MISAValidateException(Resources.MISAResource.EmployeeCodeIsDuplicated);
@@ -60,7 +62,7 @@ namespace MISA.CUKCUK.Core.Services
         protected override void ValidateUpdate(Employee employee)
         {
             // Kiểm tra bản ghi đã tồn tại chưa
-            var isExist = _employeeRepository.Get(employee.EmployeeId.ToString());
+            var isExist = _unitOfWork.Employees.Get(employee.EmployeeId.ToString());
             if (isExist == null)
             {
                 throw new MISAValidateException(Resources.MISAResource.RecordsDoesNotExist);
@@ -68,7 +70,7 @@ namespace MISA.CUKCUK.Core.Services
             else
             {
                 // Kiểm tra employeeCode có bị trùng với nhân viên khác không
-                var employeeByCode = _employeeRepository.GetByCode(employee.EmployeeCode);
+                var employeeByCode = _unitOfWork.Employees.GetByCode(employee.EmployeeCode);
                 switch (employeeByCode.Count)
                 {
                     // không có bản ghi nào trùng mã
@@ -89,6 +91,50 @@ namespace MISA.CUKCUK.Core.Services
                 }
 
             }
+        }
+
+        public string MaxCode()
+        {
+            var maxEmployeeCodeInDb = _unitOfWork.Employees.GetMaxCode();
+            string prefix = maxEmployeeCodeInDb.Substring(0, 2);
+            int number = int.Parse(maxEmployeeCodeInDb.Substring(3)) + 1;
+            return $"{prefix}-{number}";
+        }
+
+        /// <summary>
+        /// Kiểm tra EmployeeCode trước khi thực hiện Insert hoặc Update tại Frontend
+        /// </summary>
+        /// <param name="employee">Đối tượng cần kiểm tra</param>
+        /// <returns>true - đã tồn tại, false - chưa tồn tại</returns>
+        /// Created by: PMChien
+        public bool CheckEmployeeCodeBeforeCU(Employee employee)
+        {
+            var isDuplicate = false;
+            // lấy tất cả bản ghi cùng code
+            var employeeByCode = _unitOfWork.Employees.GetByCode(employee.EmployeeCode);
+            switch (employeeByCode.Count)
+            {
+                case 0:
+                    isDuplicate = false;
+                    break;
+                case 1:
+                    if(employee.EmployeeId != null)
+                    {
+                        if(employee.EmployeeId == employeeByCode[0].EmployeeId)
+                        {
+                            isDuplicate = false;
+                        }
+                        else
+                        {
+                            isDuplicate = true;
+                        }
+                    }
+                    break;
+                default:
+                    isDuplicate = true;
+                    break;
+            }
+            return isDuplicate;
         }
 
         //public MISAServiceResult InsertService(Employee employee)

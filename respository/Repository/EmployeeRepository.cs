@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace MISA.CUKCUK.Infrastructure.Repository
 {
@@ -30,7 +31,9 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             parameters.Add("@code", code);
 
             // thực hiện truy vấn
-            var data = _dbContext.Connection.QueryFirstOrDefault<Employee>(sql, param: parameters);
+            var data = _dbContext.Connection.QueryFirstOrDefault<Employee>(sql, param: parameters 
+                    , transaction: _dbContext.Transaction
+                );
 
             // nếu không có kết quả => EmployeeCode chưa tồn tại, trả về false
             if (data == null)
@@ -41,17 +44,29 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return true;
         }
 
-        public List<Employee> GetByCode(string code)
+        public List<Employee> GetByCode(string employeeCode)
         {
             // Truy vấn
             var sql = $"SELECT * FROM Employee WHERE EmployeeCode = @code";
 
             // Dùng DynamicParameters chống SQL injection
             var parameters = new DynamicParameters();
-            parameters.Add("@customerCode", code);
+            parameters.Add("@code", employeeCode);
 
             // Thực hiện truy vấn
-            var data = _dbContext.Connection.Query<Employee>(sql, param: parameters).ToList();
+            var data = _dbContext.Connection.Query<Employee>(sql, param: parameters, transaction: _dbContext.Transaction).ToList();
+
+            // Trả về kết quả
+            return data;
+        }
+
+        public string GetMaxCode()
+        {
+            // Truy vấn
+            var sql = $"SELECT MAX(EmployeeCode) FROM Employee";
+
+            // Thực hiện truy vấn
+            var data = _dbContext.Connection.ExecuteScalar<string>(sql, transaction: _dbContext.Transaction);
 
             // Trả về kết quả
             return data;

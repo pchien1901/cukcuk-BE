@@ -6,6 +6,7 @@ using MISA.CUKCUK.Core.Services;
 using MISA.CUKCUK.Infrastructure.Interfaces;
 using MISA.CUKCUK.Infrastructure.MISADatabaseContext;
 using MISA.CUKCUK.Infrastructure.Repository;
+using MISA.CUKCUK.Infrastructure.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,15 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader());
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,7 +43,7 @@ builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IMISADbContext, MariaDbContext>();
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
@@ -48,6 +58,8 @@ if (app.Environment.IsDevelopment())
 
 // chèn middleware
 app.UseMiddleware<HandleExceptionMiddleware>();
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

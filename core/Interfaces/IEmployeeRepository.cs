@@ -25,5 +25,12 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <returns>Danh sách các bản ghi</returns>
         /// Created By: PMCHIEN
         List<Employee> GetByCode(string code);
+
+        /// <summary>
+        /// Lấy giá trị EmployeeCode lớn nhất trong DataBase
+        /// </summary>
+        /// <returns>EmployeeCode lớn nhất</returns>
+        /// Created by: PMChien
+        string GetMaxCode();
     }
 }

@@ -9,24 +9,32 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Core.CustomValidation
 {
-    public class MISAEmailValidate: ValidationAttribute
+    public class MISAEmailValidate : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var email = value.ToString();
-            var pattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
-            Regex emailRegex = new Regex(pattern);
-            if(emailRegex.IsMatch(email))
+            if (value == null)
             {
                 return ValidationResult.Success;
             }
             else
             {
-                throw new MISAValidateException(ErrorMessage);
+                var email = value.ToString();
+                var pattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+                Regex emailRegex = new Regex(pattern);
+                if (emailRegex.IsMatch(email))
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    throw new MISAValidateException(ErrorMessage);
+                }
             }
+
 
             return base.IsValid(value, validationContext);
         }
     }
-   
+
 }

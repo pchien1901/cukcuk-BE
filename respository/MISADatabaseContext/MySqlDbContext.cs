@@ -14,7 +14,8 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
     public class MySqlDbContext: IMISADbContext
     {
         #region Property
-        public IDbConnection Connection { get; }
+        public IDbConnection Connection { get; set; }
+        public IDbTransaction Transaction { get; set; }
         #endregion
 
         #region Constructor

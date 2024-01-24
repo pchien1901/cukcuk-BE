@@ -9,7 +9,8 @@ namespace MISA.CUKCUK.Infrastructure.Interfaces
 {
      public interface IMISADbContext
     {
-        IDbConnection Connection { get; }
+        IDbConnection Connection { get; set; }
+        IDbTransaction Transaction { get; set; }
 
         /// <summary>
         /// Đóng kết nối

@@ -60,7 +60,7 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Chức danh
         /// </summary>
-        public Guid PositionId { get; set; }
+        public Guid? PositionId { get; set; }
 
         /// <summary>
         /// Số CMTND
@@ -130,6 +130,16 @@ namespace MISA.CUKCUK.Core.Entities
         /// 
         [MISADateLessThanToday(ErrorMessage = MISAConst.ERROR_DATE_INVALID)]
         public DateTime? JoinDate { get; set; }
+
+        /// <summary>
+        /// Là khách hàng
+        /// </summary>
+        public bool? IsCustomer { get; set; }
+
+        /// <summary>
+        /// Là nhà cung cấp
+        /// </summary>
+        public bool? IsSupplier { get; set; }
 
         /// <summary>
         /// Ngày tạo

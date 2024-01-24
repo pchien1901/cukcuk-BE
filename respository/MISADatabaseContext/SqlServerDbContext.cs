@@ -12,7 +12,8 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
 {
     public class SqlServerDbContext : IMISADbContext
     {
-        public IDbConnection Connection { get; }
+        public IDbConnection Connection { get; set; }
+        public IDbTransaction Transaction { get; set; }
         public SqlServerDbContext()
         {
             Connection = new SqlConnection("");

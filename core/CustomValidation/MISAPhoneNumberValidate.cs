@@ -9,21 +9,29 @@ using System.Threading.Tasks;
 
 namespace MISA.CUKCUK.Core.CustomValidation
 {
-    public class MISAPhoneNumberValidate: ValidationAttribute
+    public class MISAPhoneNumberValidate : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var phoneNumber = value.ToString();
-            var pattern = "^[0-9]+$";
-            Regex regex = new Regex(pattern);
-            if (regex.IsMatch(phoneNumber))
+            if (value == null)
             {
                 return ValidationResult.Success;
             }
             else
             {
-                throw new MISAValidateException(ErrorMessage);
+                var phoneNumber = value.ToString();
+                var pattern = "^[^a-zA-Z]*$";
+                Regex regex = new Regex(pattern);
+                if (regex.IsMatch(phoneNumber))
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    throw new MISAValidateException(ErrorMessage);
+                }
             }
+
             return base.IsValid(value, validationContext);
         }
     }

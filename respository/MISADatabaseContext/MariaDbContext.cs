@@ -14,7 +14,8 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
     public class MariaDbContext : IMISADbContext
     {
         #region Property
-        public IDbConnection Connection { get; }
+        public IDbConnection Connection { get; set; }
+        public IDbTransaction Transaction { get; set; }
         #endregion
 
         #region Constructor
@@ -37,7 +38,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             var sql = $"SELECT * FROM {className}";
 
             // Lấy dữ liệu
-            var data = Connection.Query<T>(sql);
+            var data = Connection.Query<T>(sql, transaction: Transaction);
 
             // trả về kết quả
             return data;
@@ -54,7 +55,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             parameters.Add("@id", id);
 
             // Thực hiện truy vấn
-            var data = Connection.QueryFirstOrDefault<T>(sql, param: parameters);
+            var data = Connection.QueryFirstOrDefault<T>(sql, param: parameters, transaction: Transaction);
 
             // Trả về kết quả
             return data;
@@ -109,7 +110,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             var sql = $"INSERT INTO {className} ({colNameList}) VALUES ({colParamList})";
 
             // Thực hiện truy vấn
-            var res = Connection.Execute(sql, param: parameters);
+            var res = Connection.Execute(sql, param: parameters, transaction: Transaction);
 
             // Trả về kết quả
             return res;
@@ -157,7 +158,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             parameters.Add("@id", value: typeof(T).GetProperty($"{className}Id").GetValue(entity));
 
             // Thực hiện truy vấn
-            var res = Connection.Execute(sql, param: parameters);
+            var res = Connection.Execute(sql, param: parameters, transaction: Transaction);
 
             // Trả về kết quả
             return res;
@@ -174,7 +175,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             parameters.Add("@id", id);
 
             // Thực hiện truy vấn
-            var data = Connection.Execute(sql, param: parameters);
+            var data = Connection.Execute(sql, param: parameters, transaction: Transaction);
 
             // Trả về kết quả
             return data;
@@ -198,7 +199,7 @@ namespace MISA.CUKCUK.Infrastructure.MISADatabaseContext
             parameters.Add("@ids", idsArray);
 
             // Thực hiện truy vấn
-            var data = Connection.Execute(sql, param: parameters);
+            var data = Connection.Execute(sql, param: parameters, transaction: Transaction);
 
             // Trả về kết quả
             return data;

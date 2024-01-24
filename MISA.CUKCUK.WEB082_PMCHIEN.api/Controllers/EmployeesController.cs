@@ -55,6 +55,36 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        [HttpGet("NewCode")]
+        public IActionResult GetNewCode()
+        {
+            try
+            {
+                var res = _employeeService.MaxCode();
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost("validation-code")]
+        public IActionResult CheckCodeBeforCU([FromBody] Employee employee)
+        {
+            try
+            {
+                var res = _employeeService.CheckEmployeeCodeBeforeCU(employee);
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         [HttpPost]
         public override IActionResult Post([FromBody] Employee employee)
         {
