@@ -54,7 +54,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             parameters.Add("@code", employeeCode);
 
             // Thực hiện truy vấn
-            var data = _dbContext.Connection.Query<Employee>(sql, param: parameters, transaction: _dbContext.Transaction).ToList();
+            var data = _dbContext.Connection.Query<Employee>(sql, param: parameters).ToList();
 
             // Trả về kết quả
             return data;
@@ -66,7 +66,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             var sql = $"SELECT MAX(EmployeeCode) FROM Employee";
 
             // Thực hiện truy vấn
-            var data = _dbContext.Connection.ExecuteScalar<string>(sql, transaction: _dbContext.Transaction);
+            var data = _dbContext.Connection.ExecuteScalar<string>(sql);
 
             // Trả về kết quả
             return data;

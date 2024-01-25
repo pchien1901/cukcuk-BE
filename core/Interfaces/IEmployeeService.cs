@@ -1,4 +1,5 @@
-﻿using MISA.CUKCUK.Core.Entities;
+﻿using MISA.CUKCUK.Core.DTOs.HelperDTO;
+using MISA.CUKCUK.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,6 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <param name="employee">Đối tượng cần kiểm tra</param>
         /// <returns>true - đã tồn tại, false - chưa tồn tại</returns>
         /// Created by: PMChien
-        bool CheckEmployeeCodeBeforeCU(Employee employee);
+        bool CheckEmployeeCodeBeforeCU(CheckEmployeeCode checkEmployeeCode);
     }
 }

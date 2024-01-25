@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MISA.CUKCUK.Core.DTOs.HelperDTO;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
 using MISA.CUKCUK.Core.Resources;
+using MISA.CUKCUK.Core.Services;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
@@ -71,11 +74,11 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
         [HttpPost("validation-code")]
-        public IActionResult CheckCodeBeforCU([FromBody] Employee employee)
+        public IActionResult CheckCodeBeforCU([FromBody] CheckEmployeeCode checkEmployeeCode)
         {
             try
             {
-                var res = _employeeService.CheckEmployeeCodeBeforeCU(employee);
+                var res = _employeeService.CheckEmployeeCodeBeforeCU(checkEmployeeCode);
                 return StatusCode(200, res);
             }
             catch (Exception)
@@ -91,8 +94,15 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var validate = _employeeService.InsertService(employee);
-                var res = _employeeRepository.Insert(employee);
-                return StatusCode(201, res);
+                if (validate.Success == true)
+                {
+                    return StatusCode(201, validate.Data);
+                }
+                else
+                {
+                    var devMsg = "Lỗi tại post Employee";
+                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                }
             }
             catch (Exception)
             {

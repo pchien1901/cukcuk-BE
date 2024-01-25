@@ -1,5 +1,6 @@
 ﻿using core.Entities;
 using MISA.CUKCUK.Core.DTOs;
+using MISA.CUKCUK.Core.DTOs.HelperDTO;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
@@ -104,23 +105,34 @@ namespace MISA.CUKCUK.Core.Services
         /// <summary>
         /// Kiểm tra EmployeeCode trước khi thực hiện Insert hoặc Update tại Frontend
         /// </summary>
-        /// <param name="employee">Đối tượng cần kiểm tra</param>
+        /// <param name="checkEmployeeCode">Đối tượng cần kiểm tra</param>
         /// <returns>true - đã tồn tại, false - chưa tồn tại</returns>
         /// Created by: PMChien
-        public bool CheckEmployeeCodeBeforeCU(Employee employee)
+        public bool CheckEmployeeCodeBeforeCU(CheckEmployeeCode checkEmployeeCode)
         {
             var isDuplicate = false;
             // lấy tất cả bản ghi cùng code
-            var employeeByCode = _unitOfWork.Employees.GetByCode(employee.EmployeeCode);
+            var employeeByCode = _unitOfWork.Employees.GetByCode(checkEmployeeCode.EmployeeCode);
             switch (employeeByCode.Count)
             {
+                // không có bản ghi nào trùng => không bị trùng
                 case 0:
                     isDuplicate = false;
                     break;
+                /* Có  1 bản ghi trùng:
+                 *      + Nếu đang create (IsCreate = true) => bị trùng
+                 *      + Nếu đang update (IsUpdate = true) 
+                 *          - Nếu bản ghi Db trùng bản ghi truyền vào => không trùng
+                 *          - Không trùng id => trả về true
+                */
                 case 1:
-                    if(employee.EmployeeId != null)
+                    if(checkEmployeeCode.IsCreate == true)
                     {
-                        if(employee.EmployeeId == employeeByCode[0].EmployeeId)
+                        isDuplicate = true;
+                    }
+                    if(checkEmployeeCode.IsUpdate == true)
+                    {
+                        if(checkEmployeeCode.EmployeeId == employeeByCode[0].EmployeeId.ToString())
                         {
                             isDuplicate = false;
                         }

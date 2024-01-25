@@ -54,7 +54,6 @@ namespace MISA.CUKCUK.Infrastructure.UnitOfWork
             if(_dbContext.Transaction != null)
             {
                 _dbContext.Transaction.Rollback();
-                Dispose();
             }
         }
     }
