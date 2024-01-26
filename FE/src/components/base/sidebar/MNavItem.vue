@@ -8,7 +8,7 @@
     <div :class="computedClasses"></div>
     <div :class="computedIconActive"></div>
 
-    <div v-if="!this.isLess" class="nav-item__text">{{ inputText }}</div>
+    <div v-if="!this.isLess" class="nav-item__text" :class="{ 'fade-in-text': !this.isLess}">{{ inputText }}</div>
     <span v-if="isLess" :class="tooltipClasses">
       {{ inputText }}
     </span>
@@ -110,6 +110,14 @@ export default {
      */
     handleLessSidebar(newValue) {
       try {
+        // if(newValue === true) {
+        //   this.isLess = newValue;
+        //   this.isShowText = true;
+        // }
+        // else {
+        //   this.isLess = newValue;
+        //   setTimeout(() => { this.isShowText = true }, 10);
+        // }
         this.isLess = newValue;
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);

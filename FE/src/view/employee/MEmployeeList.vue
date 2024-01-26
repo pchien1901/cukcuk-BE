@@ -19,15 +19,20 @@
     <div class="employee-page-body">
       <div class="header">
         <div class="header-left">
-          <div class="dropdown">
-            Thực hiện hàng loạt 
+          <!-- <div v-if="showMultiAction" class="dropdown" @click="toogleMultiActionContextMenu">
+            <div class="dropdown-text">Thực hiện hàng loạt </div>
             <i class="fas fa-caret-down"></i>
-            <div class="context-menu-wrapper">
+            <div v-if="showContextMenuMultiAction" class="context-menu-wrapper">
               <div class="context-menu">
                 <div class="delete-multi">Xóa</div>
+                <div class="unSelected">Bỏ chọn</div>
               </div>
             </div>
-            
+          </div> -->
+          <div v-if="showMultiAction" class="multi-action">
+            <div class="multi-action__text">Đã chọn: {{ employeeToActionMulti.length }}</div>
+            <MButton :type="'second'" :text="'Bỏ chọn'" :class="'multi-action__cancel'" />
+            <MButton :type="'primary-icon'" :text="'Xóa tất cả'" :class="'multi-action__delete'" :iconClass="'icon-trash-bin-red'"/>
           </div>
         </div>
         <div class="header-right">
@@ -52,7 +57,7 @@
       </div>
 
       <div class="employee-table">
-        <MEmployeeTable :items="employees" />
+        <MEmployeeTable :items="employees" v-model:chosenItems="employeeToActionMulti"/>
       </div>
     </div>
 
@@ -99,7 +104,7 @@ import {
   updateEmployee,
   deleteEmployee,
   deleteEmployeeById,
-getNewEmployeeCode,
+  getNewEmployeeCode,
 } from "../../js/services/employee.js";
 import { getAllDepartments, getDepartmentById } from '../../js/services/department.js';
 import { getAllPositions, getPositionById } from '../../js/services/position.js';
@@ -124,6 +129,8 @@ export default {
       showPopup: false,
       showDialog: false,
       showToast: false,
+      showMultiAction: false,
+      showContextMenuMultiAction: false,
       dialog: {
         type: this.$MEnum.DialogType.WARNING,
         mode: this.$MEnum.DialogMode.WARNING,
@@ -158,7 +165,7 @@ export default {
     this.$tinyEmitter.on("setValueToUpdateEmployee", this.setValueToUpdateEmployee)
     this.$tinyEmitter.on("updateEmployee", this.updateEmployee);
     this.$tinyEmitter.on("deleteEmployee", this.openDeleteDialog);
-    this.$tinyEmitter.on("setValueToDeleteEmployeeAny", this.openDeleteDialogAny);
+    this.$tinyEmitter.on("setValueToDeleteEmployeeAny", this.showMultiActionBtn);
   },
   beforeUnmount() {
     // Hủy Emitter
@@ -171,9 +178,49 @@ export default {
     this.$tinyEmitter.off("deleteEmployee");
     this.$tinyEmitter.off("setValueToDeleteEmployeeAny");
   },
+  watch: {
+    employeeToActionMulti(newValue) {
+      if(newValue.length > 0) {
+        this.showMultiAction = true;
+      }
+      else {
+        this.showMultiAction = false;
+        this.showContextMenuMultiAction = false;
+      }
+    }
+  },
   methods: {
     /**======================= ĐÓNG MỞ CÁC THÀNH PHẦN ================================= */
     //#region  Đóng mở các thành phần
+    /**
+     * Hiện Nút hành động hàng loạt
+     * Author: PMChien(26/01/2024)
+     */
+    showMultiActionBtn(selectedItems) {
+      try {
+        this.employeeToActionMulti = selectedItems;
+        if(this.employeeToActionMulti.length > 0) {
+          this.showMultiAction = true;
+        }
+        else {
+          this.showMultiAction = false;
+          this.showContextMenuMultiAction = false;
+        }
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+    /**
+     * Ẩn/ hiện context menu hành động hàng loạt
+     * Author: PMChien (26/01/2024)
+     */
+    toogleMultiActionContextMenu() {
+      try {
+        this.showContextMenuMultiAction = !this.showContextMenuMultiAction;
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
     /**
      * Mở popup
      * Author: PMChien

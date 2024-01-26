@@ -33,7 +33,8 @@ export default {
   align-items: center;
   justify-content: center; */
   z-index: 5;
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  background-color: transparent;
   transition: width 5s ease;
 }
 

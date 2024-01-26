@@ -27,3 +27,7 @@
 	width: 8px;
 	height: 5px;
 }
+
+.icon-trash-bin-red {
+  background: url('../../assets/img/icon/icons8-trash-20.png');
+}

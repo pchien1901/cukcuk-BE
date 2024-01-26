@@ -78,3 +78,16 @@
 .nav-item:hover .tooltip {
   display: block;
 }
+
+.fade-in-text {
+  animation: fadeIn 2s ease-in-out 0 backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

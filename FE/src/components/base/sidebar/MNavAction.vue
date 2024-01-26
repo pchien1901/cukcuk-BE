@@ -32,10 +32,16 @@ export default {
   created() {
     this.isLess = false;
   },
+  watch: {
+    // isLess() {
+    //   this.$tinyEmitter.emit("lessSideBar", this.isLess);
+    // }
+  },
   methods: {
     handleLessSidebar() {
       this.isLess = !this.isLess;
       this.$tinyEmitter.emit("lessSidebar", this.isLess);
+      console.log("isLess tại navAction: ", this.isLess);
     }
   },
   data() {

@@ -11,6 +11,7 @@
 .dialog-container {
   padding: 24px;
   background-color: #ffffff;
+  min-width: 400px;
   max-width: 600px;
   font-family: "Roboto", sans-serif;
   border: 1px solid #ebebeb;

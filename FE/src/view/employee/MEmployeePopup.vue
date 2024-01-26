@@ -420,6 +420,7 @@ export default {
       try {
         // Validate dữ liệu
         if(this.validate()) {
+          console.log("Hợp lệ");
           let isDuplicateNewCode = await this.checkNewCode();
           if(isDuplicateNewCode) {
             let msg = [`Mã nhân viên ${this.formData.employeeCode} đã tồn tại trong hệ thống`];

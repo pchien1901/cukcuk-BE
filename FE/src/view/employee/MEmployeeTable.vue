@@ -94,10 +94,12 @@ import {
 
 export default {
   name: "MEmployeeTable",
+  emits: ["update:chosenItems"],
   props: {
     /**
      * items: danh sách dữ liệu để render
      * inputData: thông tin Employee truyền vào để thực hiện update
+     * chosenItems: prop lưu id của các phần tử đã chọn
      */
     items: { type: Array, default: () => [] },
     /**dữ liệu để update */
@@ -107,9 +109,11 @@ export default {
         return {};
       },
     },
+    chosenItems: { type: Array, default: []},
   },
   created() {
     this.employees = this.items;
+    this.selectedItems = this.chosenItems;
     // let employeeRes = await getAllEmployees();
     // let departmentRes = await getAllDepartments();
     // let positionRes = await getAllPositions();
@@ -176,10 +180,18 @@ export default {
       },
       deep: true,
     },
-    selectedItems() {
-      if (this.selectedItems.length > 0) {
-        this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
+    selectedItems(newValue) {
+      try {
+        // console.log("selectedItems: ", this.selectedItems);
+        // if (this.selectedItems.length > 0) {
+        //   this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
+        // }
+        //this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
+        this.$emit("update:chosenItems", newValue);
+      } catch (error) {
+        console.error("Đã có lỗi tại emit set giá trị xóa nhiều", error);
       }
+      
     },
   },
   methods: {
