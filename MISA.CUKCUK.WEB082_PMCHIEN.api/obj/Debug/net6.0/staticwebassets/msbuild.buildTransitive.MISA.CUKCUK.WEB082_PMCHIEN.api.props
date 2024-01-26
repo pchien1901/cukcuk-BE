@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\MISA.CUKCUK.WEB082_PMCHIEN.api.props" />
-</Project>

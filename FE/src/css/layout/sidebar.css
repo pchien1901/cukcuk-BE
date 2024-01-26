@@ -1,0 +1,62 @@
+@import url('../icon/icon.css');
+
+/* SIDEBARl */
+.sidebar {
+  transition: width 0.5s ease;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.sidebar-less .sidebar-body {
+  padding: 20px 6px 0 6px;
+}
+
+.sidebar-less .nav-item {
+  padding: 0px 12px 0px 18px;
+}
+
+/* SIDEBAR HEADER */
+.sidebar-header {
+  height: 56px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header .icon-logo {
+  margin: 0px 10px;
+}
+
+.sidebar-header .sidebar-header__text {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* SIDEBAR BODY */
+/* bỏ gạch chân cho router-link*/
+a {
+  text-decoration: none;
+}
+
+.sidebar-body {
+  padding: 20px 12px 0px 12px;
+  background-color: #041434;
+  opacity: 100%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  height: calc(100vh - 44px - 65px);
+}
+
+.sidebar-body::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* SIDEBAR FOOTER  */
+.sidebar-footer {
+  height: 44px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

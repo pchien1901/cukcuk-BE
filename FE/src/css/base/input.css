@@ -1,0 +1,115 @@
+:root {
+  --text-color: #1f1f1f;
+  --border-color: #ebebeb;
+  --error-color: #e61d1d;
+
+  --btn-border-color: #e6e6e6;
+  --btn-background-color: #50b83c;
+  --btn-text-color: #ffffff;
+  --btn-hover-bgc: #57c841;
+  --btn-active-bgc: #067933;
+  --btn-icon-size: 20px;
+}
+.m-input {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  /* max-width: 250px; */
+}
+
+.m-input label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #1f1f1f;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.m-input .required-star {
+  color: #e61d1d;
+}
+
+input[type="text"].m-input-small {
+  height: 32px;
+}
+
+
+input[type="text"],input[type="file"].m-input-medium {
+  height: 36px;
+}
+
+
+input[type="text"].m-input-large {
+  height: 40px;
+}
+
+.m-input input[type="text"] {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  width: 100%;
+}
+
+.m-input input[type="text"]::placeholder {
+  font-weight: 400px;
+  font-size: 14px;
+  color: #9e9e9e;
+}
+
+.m-input input[type="text"]:hover {
+  background-color: #f6f6f6;
+}
+
+.m-input input[type="text"]:focus {
+  background-color: #ffffff;
+  outline: 1px solid #50b83c;
+}
+
+.m-input--error input {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #e61d1d !important;
+  outline: none;
+}
+
+.m-input--error input:hover {
+  background-color: #f6f6f6;
+}
+
+.m-input--error input:focus {
+  background-color: #ffffff;
+  outline: unset;
+}
+
+.m-input__error-message {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #e61d1d;
+  position: absolute;
+  bottom: 2px;
+}
+
+/* type file */
+.m-input input[type="file"] {
+  box-sizing: border-box;
+  padding: 0px 4px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  outline: none;
+  width: 100%;
+}
+
+.m-input input[type=file]::-webkit-file-upload-button {
+  height: 30px;
+  min-width: 80px;
+  padding: 0px 16px;
+  border: 1px solid var(--btn-background-color);
+  border-radius: 4px;
+  background-color: var(--btn-background-color);
+  color: var(--btn-text-color);
+  margin-top: 2px;
+}

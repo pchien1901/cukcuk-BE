@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container-right {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 200px);
+  height: 100vh;
+  transition: width 0.5s ease;
+}
+
+.container-right--large {
+  width: calc(100% - 56px);
+}
+
+.header {
+  width:  100%;
+  height: 56px;
+  background-color: #FFFFFF;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #041434;
+}
+
+.sidebar-less {
+  width: 56px;
+  height: 100vh;
+  background-color: #041434;
+}
+
+.main-content {
+  width: 100%; 
+  height: calc(100% - 56px);
+  background-color: #EEEFF1;
+  /* transition: width 0.5s ease; */
+}
+
+.main-content--large {
+  width: 100%; 
+}

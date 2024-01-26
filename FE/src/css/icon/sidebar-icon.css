@@ -1,0 +1,263 @@
+/* ICON ỨNG DỤNG  */
+.icon-menu {
+  /* background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -578px -16px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2.3; */
+  background: url('../../assets/img/icon/icons8-menu-24.png');
+  width: 24px;
+  height: 24px;
+}
+
+.icon-logo {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -616px -507px;
+	background-size: 1008px 953px;
+	width: 22px;
+	height: 23px;
+}
+
+.icon-overview {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -16px -815px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 10px;
+  scale: 2;
+}
+
+.icon-cash {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -39px -815px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-deposits {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -60px -816px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-buy {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -82px -816px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 9px;
+  scale: 2;
+
+}
+
+.icon-sell {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -103px -815px;
+	background-size: 1008px 953px;
+	width: 10px;
+	height: 9px;
+  scale: 2;
+
+}
+
+.icon-bill {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -127px -816px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-warehouse{
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -147px -816px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-tools {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -169px -816px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-fixed-assets {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -191px -816px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-tax {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -213px -817px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-price {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -235px -816px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-synthetic {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -257px -816px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-budget {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -191px -832px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-report {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -276px -818px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 7px;
+  scale: 2;
+}
+
+.icon-financial-analysis {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -103px -833px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 7px;
+  scale: 2;
+}
+
+/* MENU ACTIVE ICON */
+.icon-overview-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -16px -793px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 10px;
+  scale: 2;
+}
+
+.icon-cash-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -39px -794px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-deposits-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -60px -795px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-buy-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -82px -794px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 9px;
+  scale: 2;
+
+}
+
+.icon-sell-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat  -103px -794px;
+	background-size: 1008px 953px;
+	width: 10px;
+	height: 9px;
+  scale: 2;
+
+}
+
+.icon-bill-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -127px -794px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-warehouse-active{
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -147px -794px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-tools-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -169px -795px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-fixed-assets-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -191px -794px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-tax-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -213px -795px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-price-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -235px -795px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-synthetic-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -257px -795px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 9px;
+  scale: 2;
+}
+
+.icon-budget-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -213px -832px;
+	background-size: 1008px 953px;
+	width: 8px;
+	height: 8px;
+  scale: 2;
+}
+
+.icon-report-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -276px -796px;
+	background-size: 1008px 953px;
+	width: 7px;
+	height: 7px;
+  scale: 2;
+}
+
+.icon-financial-analysis-active {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -125px -833px;
+	background-size: 1008px 953px;
+	width: 9px;
+	height: 7px;
+  scale: 2;
+}

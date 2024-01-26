@@ -1,0 +1,112 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.dialog-container {
+  padding: 24px;
+  background-color: #ffffff;
+  max-width: 600px;
+  font-family: "Roboto", sans-serif;
+  border: 1px solid #ebebeb;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+  display: block;
+  z-index: 1010;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1f1f1f;
+}
+
+.dialog-header .dialog-header__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.dialog-content {
+  padding: 20px 0px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.dialog-content ul {
+  margin: 0 0 0 12px;
+  padding-inline-start: 16px;
+}
+
+.unsetLiStyle {
+  list-style: none;
+}
+/* .dialog-content li {
+  list-style: none;
+} */
+
+/** CÁC ICON CỦA DIALOG */
+.iconWarning {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -598px -463px;
+	width: 36px;
+	height: 37px;
+}
+.iconInfo {
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat -672px -462px;
+  width: 36px;
+  height: 36px;
+}
+
+.iconError {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -752px -462px;
+	width: 36px;
+	height: 36px;
+}
+
+.dialog-content i {
+  font-size: 20px;
+  color: #e61d1d;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: end;
+}
+
+.dialog-footer .dialog-footer__btn-cancel {
+  margin-right: 8px;
+}
+
+/**cancel dialog button */
+.m-cancel-btn {
+  background-color: transparent;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #e61d1d !important;
+  border: none;
+  outline: none;
+  height: 36px;
+  width: auto;
+  padding: 0px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.m-cancel-btn:hover {
+  background-color: #ebebeb;
+  cursor: pointer;
+}
+
+.m-cancel-btn:active {
+  background-color: #eeeff1;
+}

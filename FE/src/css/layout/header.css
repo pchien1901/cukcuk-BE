@@ -1,0 +1,43 @@
+@import url('../icon/icon.css');
+
+/* HEADERLEFTl */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.header-left .icon-menu-line {
+  padding-right: 8px;
+}
+
+.header-left .header-left__company-name {
+  font-size: 12px;
+}
+
+.header-left .icon-arrow-down {
+  transform: scale(2);
+  margin-left: 10px;
+}
+
+/* HEADER RIGHT */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right .user-name {
+  margin: 0px 12px ;
+  font-size: 14px;
+}
+
+.header-right .icon-arrow-down {
+  transform: scale(2);
+  margin-right: 16px;
+}
