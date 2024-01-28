@@ -1,3 +1,11 @@
+/* CHUNG */
+
+.table-wrapper {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  height: 100%;
+}
+
 .table-container {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
@@ -12,8 +20,87 @@ table {
   border-right: unset;
 }
 
+/* TABLE HEADER */
+.table-wrapper__header {
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-wrapper__header .header-left {
+  justify-content: flex-start;
+  margin-left: 12px;
+  padding: 0px;
+}
+
+/* HEADER - MULTI ACTION */
+.table-wrapper__header .header-left .multi-action {
+  display: flex;
+  align-items: center;
+}
+
+.table-wrapper__header .header-left .multi-action__text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  margin-left: 12px;
+  width: 80px;
+}
+
+/* HEADER RIGHT - SEARCH - LOAD - IMPORT */
+.table-wrapper__header .header-right {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.table-wrapper__header .header-right .button-center {
+  margin: 0px 4px 0px 8px;
+}
+
+.table-wrapper__header input[placeholder] {
+  width: 230px;
+}
+
+.table-wrapper__header input[placeholder]::placeholder {
+  font-style: italic;
+}
+
+.table-wrapper__header .header-left .multi-action__cancel {
+  color: #e61d1d;
+  margin: 0px 12px 0px 0px;
+  border: 1px solid transparent;
+}
+
+.table-wrapper__header .header-left .multi-action__cancel:hover {
+  background-color: #ebebeb;
+}
+
+.table-wrapper__header .header-left .multi-action__cancel:active {
+  background-color: #eeeff1;
+}
+
+.table-wrapper__header .header-left .multi-action__delete {
+  background-color: #f5f5f5;
+  color: var(--text-color);
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.table-wrapper__header .header-left .multi-action__delete:hover {
+  background-color: #ebebeb;
+}
+
+.table-wrapper__header .header-left .multi-action__delete:active {
+  background-color: #eeeff1;
+}
+
+/* BẢNG CHÍNH  */
 .table-container {
-  height: calc(100% - 56px);
+  height: calc(100% - 56px - 60px);
   overflow-y: scroll;
   overflow-x: scroll;
   margin: 0px 12px;
@@ -75,7 +162,7 @@ th {
   font-weight: 500;
   background-color: #f5f5f5;
   text-align: center;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 tr {
@@ -133,8 +220,34 @@ td .action-cell .m-btn-icon {
   /* background-color: transparent; */
 }
 
+.action-btns {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 24px;
+  padding: 0;
+  border: unset;
+  background-color: transparent;
+  z-index: 2;
+  visibility: hidden;
+}
+
+.action-btns:hover {
+  background-color: transparent;
+}
+
+tr:hover .action-btns {
+  visibility: visible;
+}
+
+.btn-action-table {
+  border-radius: 50%;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
+}
+
 .btn-context-menu {
   position: relative;
+  margin-left: 8px;
 }
 
 .btn-context-menu .context-menu {
@@ -164,4 +277,48 @@ td .action-cell .m-btn-icon {
 
 .context-menu div:active {
   background-color: rgba(80, 184, 60, 0.1);
+}
+
+/* FOOTER - PAGINATION */
+.table-footer {
+  height: 56px;
+  box-sizing: border-box;
+}
+
+/* PAGINATION */
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f5f5f5;
+  height: 56px;
+}
+
+.total-records {
+  margin-left: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.fa-chevron-left {
+  margin: 0px 8px 0px 22px;
+}
+
+.lists-records {
+  margin-left: 16px;
+  font-weight: 700;
+  color: #616161;
+}
+
+.dropdown-records {
+  height: 36px;
+  width: 76px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  margin-left: 16px;
 }

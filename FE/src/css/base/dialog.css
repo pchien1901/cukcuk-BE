@@ -80,6 +80,11 @@
 
 .dialog-footer {
   display: flex;
+  justify-content: space-between;
+}
+
+.dialog-footer__right {
+  display: flex;
   justify-content: end;
 }
 

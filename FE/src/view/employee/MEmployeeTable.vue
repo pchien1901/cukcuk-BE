@@ -1,61 +1,79 @@
 <template>
-  <div class="table-container">
-    <table>
-      <thead>
-        <th>
-          <MCheckbox v-model="selectAll" />
-        </th>
-        <th>Mã nhân viên</th>
-        <th>Tên nhân viên</th>
-        <th>Giới tính</th>
-        <th>Ngày sinh</th>
-        <th>Số CMTND</th>
-        <th>Chức danh</th>
-        <th>Tên đơn vị</th>
-        <th>Số tài khoản</th>
-        <th>Tên ngân hàng</th>
-        <th>Chi nhánh ngân hàng</th>
-        <th>Chức năng</th>
-      </thead>
-      <tbody>
-        <tr
-          v-for="employee in employees"
-          :key="employee.EmployeeId"
-          :class="{ checked: employee.IsChecked }"
-        >
-          <td>
-            <MCheckbox v-model="employee.IsChecked" />
-          </td>
-          <td>{{ cellValue(employee.EmployeeCode) }}</td>
-          <td>{{ cellValue(employee.FullName) }}</td>
-          <td>{{ gender(employee.Gender) }}</td>
-          <td>{{ dateOfBirth(employee.DateOfBirth) }}</td>
-          <td>{{ cellValue(employee.IdentityNumber) }}</td>
-          <td>{{ cellValue(employee.PositionName) }}</td>
-          <td>{{ cellValue(employee.DepartmentName) }}</td>
-          <td>{{ cellValue(employee.BankAccountNumber) }}</td>
-          <td>{{ cellValue(employee.BankName) }}</td>
-          <td>{{ cellValue(employee.Branch) }}</td>
-          <td>
-            <div class="action-cell">
-              <MButton
-                :type="'link'"
-                :text="'Sửa'"
-                @click="
-                  () => this.emitSetValueToUpdateEmployee(employee.EmployeeId)
-                "
-              />
+  <div class="table-wrapper">
+    <div class="table-wrapper__header">
+      <div class="header-left">
+        <div v-if="showMultiAction" class="multi-action">
+          <div class="multi-action__text">Đã chọn: {{ selectedItems.length }}</div>
+          <MButton :type="'second'" :text="'Bỏ chọn'" :class="'multi-action__cancel'" @click="cancelSelectedItems"/>
+          <MButton :type="'primary-icon'" :text="'Xóa tất cả'" :class="'multi-action__delete'" :iconClass="'icon-trash-bin-red'" @click="openDeleteDialogAny"/>
+        </div>
+      </div>
+      <div class="header-right">
+        <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" />
+        <MButton
+          :type="'icon'"
+          :iconClass="'icon-reload'"
+          title="Tải lại"
+          tooltip="Tải lại"
+          tooltipPosition="bottom"
+          :class="'button-center'"
+          @click="emitLoadData"
+        />
+        <MButton
+          :type="'icon'"
+          :iconClass="'icon-excel-svg'"
+          title="Nhập"
+          tooltip="Nhập"
+          tooltipPosition="bottom"
+        />
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <th>
+            <MCheckbox v-model="selectAll" />
+          </th>
+          <th>Mã nhân viên</th>
+          <th>Tên nhân viên</th>
+          <th>Giới tính</th>
+          <th>Ngày sinh</th>
+          <th>Số CMTND</th>
+          <th>Chức danh</th>
+          <th>Tên đơn vị</th>
+          <th>Số tài khoản</th>
+          <th>Tên ngân hàng</th>
+          <th>Chi nhánh ngân hàng</th>
+        </thead>
+        <tbody>
+          <tr
+            v-for="employee in employees"
+            :key="employee.EmployeeId"
+            :class="{ checked: employee.IsChecked }"
+          >
+            <td>
+              <MCheckbox v-model="employee.IsChecked" />
+            </td>
+            <td>{{ cellValue(employee.EmployeeCode) }}</td>
+            <td>{{ cellValue(employee.FullName) }}</td>
+            <td>{{ gender(employee.Gender) }}</td>
+            <td>{{ dateOfBirth(employee.DateOfBirth) }}</td>
+            <td>{{ cellValue(employee.IdentityNumber) }}</td>
+            <td>{{ cellValue(employee.PositionName) }}</td>
+            <td>{{ cellValue(employee.DepartmentName) }}</td>
+            <td>{{ cellValue(employee.BankAccountNumber) }}</td>
+            <td>{{ cellValue(employee.BankName) }}</td>
+            <td>{{ cellValue(employee.Branch) }}</td>
+            <td class="action-btns">
+              <MButton type="icon" :iconClass="'icon-edit'" :class="'btn-action-table'" :tooltip="'Sửa'" :tooltipPosition="'top'"
+              @click="() => emitSetValueToUpdateEmployee(employee.EmployeeId)"/>
               <div class="btn-context-menu">
-                <MButton
-                  :type="'icon'"
-                  :iconClass="'icon-arrow-blue'"
-                  @click="
-                    () => {
-                      employee.IsShowMenu = !employee.IsShowMenu;
-                    }
-                  "
-                  :tooltip="'Lựa chọn'"
-                  :tooltipPosition="'top'"
+                <MButton :type="'icon'" :iconClass="'icon-three-dot'" :class="'btn-action-table'" :tooltip="'Lựa chọn'" :tooltipPosition="'top'"
+                    @click="
+                      () => {
+                        employee.IsShowMenu = !employee.IsShowMenu;
+                      }
+                    "
                 />
                 <div v-if="employee.IsShowMenu" class="context-menu">
                   <div
@@ -66,19 +84,43 @@
                   </div>
                   <div
                     class="delete"
-                    @click="() => this.emitSetValueToDeleteEmployee(employee)"
+                    @click="() => this.openDeleteDialog(employee.EmployeeId)"
                   >
                     Xóa
                   </div>
-                  <!-- <div class="stop">Ngừng sử dụng</div> -->
                 </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-footer">
+      <div class="pagination-footer">
+    <div class="total-records">Tổng: <b>{{ items.length }}</b></div>
+    <div class="pagination">
+      <label>Số bản ghi/trang</label>
+      <select name="" id="" class="dropdown-records">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <!-- <div class="lists-records"><b>1</b> - <b>9</b> records</div> -->
+      <div class="icon-pagination">
+        <i class="fas fa-chevron-left"></i>
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    </div>
   </div>
+    </div>
+  </div>
+  
+  <MDialog v-if="this.dialog.showDeleteDialog" :type="this.dialog.type" :mode="this.dialog.mode"
+  :title="this.dialog.title" :text="this.dialog.text"
+  :primaryAction="this.dialog.primaryAction" 
+  :closeFunction="closeDeleteDialog"
+  />
 </template>
 
 <script>
@@ -90,16 +132,14 @@ import {
   convertDateFormat,
   getGenderLabel,
 } from "../../js/ulti/convert-data.js";
-//import { allEmployees } from './total-employee-data.js';
+import { baseEmit, baseEmitWithParam } from '../../js/ulti/emit.js';
 
 export default {
   name: "MEmployeeTable",
-  emits: ["update:chosenItems"],
   props: {
     /**
      * items: danh sách dữ liệu để render
      * inputData: thông tin Employee truyền vào để thực hiện update
-     * chosenItems: prop lưu id của các phần tử đã chọn
      */
     items: { type: Array, default: () => [] },
     /**dữ liệu để update */
@@ -109,39 +149,9 @@ export default {
         return {};
       },
     },
-    chosenItems: { type: Array, default: []},
   },
   created() {
     this.employees = this.items;
-    this.selectedItems = this.chosenItems;
-    // let employeeRes = await getAllEmployees();
-    // let departmentRes = await getAllDepartments();
-    // let positionRes = await getAllPositions();
-    // let allEmployees = employeeRes.data;
-    // let allDepartment = departmentRes.data;
-    // let allPosition = positionRes.data;
-
-    // // console.log("employee: ", allEmployees);
-    // console.log(allEmployees);
-    // //Thêm PositionName và DepartmentName cho employees
-    // this.employees = allEmployees;
-
-    // for (const employee of this.employees) {
-    //   for (const department of allDepartment) {
-    //     if (employee.DepartmentId === department.DepartmentId) {
-    //       employee.DepartmentName = department.DepartmentName;
-    //     }
-    //   }
-
-    //   for (const position of allPosition) {
-    //     if (employee.PositionId === position.PositionId) {
-    //       employee.PositionName = position.PositionName;
-    //     }
-    //   }
-
-    //   employee.IsChecked = false;
-    //   employee.IsShowMenu = false;
-    // }
   },
   updated() {
     this.employees = this.items;
@@ -152,10 +162,22 @@ export default {
        * employees: mảng employee hiển thị
        * selectAll: Biến quản lí trạng thái của checkbox selectAll
        * selectedItems: mảng các Id đã được chọn để xóa
+       * showMultiAction: biến boolen ẩn/ hiện multi action
+       * showDeleteDialog: ẩn / hiện dialog
        */
       employees: this.items,
       selectAll: false,
       selectedItems: [],
+      primaryAction: null,
+      showMultiAction: false,
+      dialog: {
+        showDeleteDialog: false,
+        type: this.$MEnum.DialogType.WARNING,
+        mode: this.$MEnum.DialogMode.DELETE,
+        title: this.$MResource["VN"].DeleteEmployeeTitle,
+        text: [this.$MResource["VN"].DeleteEmployeeMessage],
+        primaryAction: null,
+      }
     };
   },
   watch: {
@@ -180,21 +202,35 @@ export default {
       },
       deep: true,
     },
-    selectedItems(newValue) {
+    selectedItems() {
       try {
-        // console.log("selectedItems: ", this.selectedItems);
-        // if (this.selectedItems.length > 0) {
-        //   this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
-        // }
-        //this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
-        this.$emit("update:chosenItems", newValue);
+        if(this.selectedItems.length > 0) {
+          this.showMultiAction = true;
+        }
+        else {
+          this.showMultiAction = false;
+          this.selectAll = false;
+        }
       } catch (error) {
-        console.error("Đã có lỗi tại emit set giá trị xóa nhiều", error);
+        console.error("Đã có lỗi : ", error);
       }
       
     },
   },
   methods: {
+    //#region  Emit : emit các sự kiện loadData, update, duplicate
+    /**
+     * Gọi Emit để load lại dữ liệu
+     * Author: PMChien
+     */
+    emitLoadData() {
+      try {
+        this.$tinyEmitter.emit("loadData");
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+
     /**
      * Emit để update Employee
      * @param {*} id id của Employee cần update
@@ -202,11 +238,13 @@ export default {
      */
     emitSetValueToUpdateEmployee(id) {
       try {
+        console.log("id: ", id);
         this.$tinyEmitter.emit("setValueToUpdateEmployee", id);
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+
     /**
      * Emit "duplicateEmployee" để nhân bản
      * @param {*} data Dữ liệu cần nhân bản
@@ -219,30 +257,63 @@ export default {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+    //#endregion
+
+    //#region Dialog
     /**
-     * Emit "deleteEmployee" để xóa
-     * @param {*} data employee gửi đi để thực hiện xóa (cần có EmployeeId và EmployeeCode)
+     * Hàm đóng delete Dialog
      * Author: PMChien
      */
-    emitSetValueToDeleteEmployee(data) {
+    closeDeleteDialog() {
       try {
-        console.log("Emit deleteEmployee tại hàng: ", data);
-        this.$tinyEmitter.emit("deleteEmployee", data);
+        this.dialog.showDeleteDialog = false;
+        console.log("Đóng dialog");
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
     /**
-     * Emit setValueToDeleteEmployeeAny để xóa nhiều bản ghi
-     * Author: PMChien (25/01/2024)
+     * Mở Dialog xác nhận xóa 1 nhân viên, truyền id vào để xóa 1 nhân viên
+     * Author: PMChien
      */
-    emitDeleteEmployeeAny() {
+    openDeleteDialog(id) {
       try {
-        this.$tinyEmitter.emit("setValueToDeleteEmployeeAny", this.selectedItems);
+        // set giá trị cho Dialog
+        this.dialog.primaryAction = () => { baseEmitWithParam("deleteEmployee", id) };
+        this.dialog.showDeleteDialog = true;
       } catch (error) {
-        console.error("Đã xảy ra lỗi :", error);
+        console.error("Đã xảy ra lỗi:  ", error);
       }
     },
+    /**
+     * Mở Dialog xác nhận xóa nhiều nhân viên, truyền mảng các id vào để xóa nhiều nhân viên
+     */
+    openDeleteDialogAny() {
+      try {
+        // tạo hành động emit xóa nhiều cho primary button
+        this.dialog.primaryAction = () => { baseEmitWithParam("deleteEmployeeAny", this.selectedItems) };
+        this.dialog.showDeleteDialog = true;
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+    //#endregion
+
+    //#region MultiAction
+    cancelSelectedItems() {
+      try {
+        for (let employee of this.employees) {
+          if(employee.IsChecked) {
+            employee.IsChecked = false;
+          }
+        }
+      } catch (error) {
+        console.error("Đã có lỗi xảy ra: ", error);
+      }
+    },
+    //#endregion
+
+    //#region Hàm bổ trợ
     /**
      * Kiểm tra EmployeeId có thuộc selectedItems không
      * @param {*} id
@@ -280,6 +351,7 @@ export default {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+
     /**
      * tạo giá trị mặc định cho ô là null
      * @param {string} text
@@ -295,6 +367,7 @@ export default {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+    //#endregion
   },
 };
 </script>

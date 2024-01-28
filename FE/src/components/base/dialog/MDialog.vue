@@ -29,26 +29,31 @@
         </div>
       </div>
       <div class="dialog-footer">
-        <MButton
-          v-if="mode === this.$MEnum.DialogMode.DELETE || mode === this.$MEnum.DialogMode.FULL"
-          :type="'second'"
-          :text="cancelBtnText"
-          :class="'dialog-footer__btn-cancel btn-close-dialog'"
-          @click="closeDialog"
-        />
-        <MButton
-          v-if="mode === this.$MEnum.DialogMode.FULL"
-          :type="'second'"
-          :text="secondBtnText"
-          :class="'dialog-footer__btn-cancel btn-close-dialog'"
-          @click="secondAction"
-        />
-        <MButton
-          :type="'primary'"
-          :text="'Đồng ý'"
-          :class="'m-primary-btn btn-accept-dialog'"
-          @click="handleClickBtn"
-        />
+        <div class="dialog-footer__left">
+          <MButton
+            v-if="mode === this.$MEnum.DialogMode.DELETE || mode === this.$MEnum.DialogMode.FULL"
+            :type="'second'"
+            :text="cancelBtnText"
+            :class="'dialog-footer__btn-cancel btn-close-dialog'"
+            @click="closeDialog"
+          />
+        </div>
+        <div class="dialog-footer__right">
+          <MButton
+            v-if="mode === this.$MEnum.DialogMode.FULL"
+            :type="'second'"
+            :text="secondBtnText"
+            :class="'dialog-footer__btn-cancel btn-close-dialog'"
+            @click="secondAction"
+          />
+          <MButton
+            :type="'primary'"
+            :text="'Đồng ý'"
+            :class="'m-primary-btn btn-accept-dialog'"
+            @click="handleClickBtn"
+          />
+        </div>
+        
       </div>
     </div>
   </div>
@@ -83,8 +88,8 @@ export default {
     // hàm thao tác với nút chính dialog
     primaryAction: Function,
     secondAction: Function,
-    primaryBtnText: { type: String, default: "" },
-    secondBtnText: { type: String, default: "" },
+    primaryBtnText: { type: String, default: "Đồng ý" },
+    secondBtnText: { type: String, default: "Không" },
     cancelBtnText: { type: String, default: "Hủy" },
   },
   data() {

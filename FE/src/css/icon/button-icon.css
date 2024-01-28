@@ -31,3 +31,15 @@
 .icon-trash-bin-red {
   background: url('../../assets/img/icon/icons8-trash-20.png');
 }
+
+.icon-edit {
+  background: url('../../assets/img/icon/icons8-pencil-16.png');
+  width: 16px;
+  height: 16px;
+}
+
+.icon-three-dot {
+  background: url('../../assets/img/icon/icons8-ellipsis-16.png');
+  width: 16px;
+  height: 16px;
+}

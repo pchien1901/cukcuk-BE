@@ -22,6 +22,14 @@ const MResource = {
     DeleteCustomerTitle: "Xóa khách hàng",
     ValidateDialogTitle: "Cảnh báo",
     DeleteCustomerMessage: "Người dùng bị xóa sẽ không thể khôi phục, bạn vẫn sẽ xóa người dùng ?",
+    DeleteEmployeeTitle: "Xóa nhân viên",
+    DeleteEmployeeMessage: "Nhân viên bị xóa sẽ không thể khôi phục, bạn vẫn sẽ xóa nhân viên ?",
+    EmployeeCodeDuplicate: "Mã nhân viên đã tồn tại trong hệ thống",
+    UpdateEmployeeTitle: "Xác nhận thay đổi",
+    UpdateEmployeeMessage: "Xữ liệu đã bị thay đổi, bạn có muốn cất không?",
+    PrimaryBtnText: "Đồng ý",
+    PrimaryBtnTextConfirm: "Có",
+    SecondBtnTextConfirm: "Không",
 
     // toast
     AddCustomerSuccess: "Thêm khách hàng thành công.",

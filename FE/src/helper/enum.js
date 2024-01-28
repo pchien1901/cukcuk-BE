@@ -18,7 +18,7 @@ const MEnum = {
   DialogType: {
     WARNING: 0,
     ERROR: 1,
-    INFOR: 2,
+    INFO: 2,
   },
   ImportState: {
     SELECT: 0,

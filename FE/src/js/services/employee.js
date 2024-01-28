@@ -74,6 +74,20 @@ export const getNewEmployeeCode = async () => {
 }
 
 /**
+ * Hàm lấy thông tin nhân viên cả DepartmentName và PositionName
+ * @returns Danh sách nhân viên gồm cả DepartmentName và PositionName
+ * Author: PMChien 28/01/2024
+ */
+export const getEmployeeInfo = async ()  => {
+  try {
+    let res = await axios.get(`${apiURL}/Employees/information`);
+    return res.data;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi");
+  }
+}
+
+/**
  * Kiểm tra trùng mã trước khi Insert và Update
  * @param {*} employee Đối tượng cần kiểm tra
  * @returns true - đã bị trùng, false -chưa
@@ -158,15 +172,30 @@ export const deleteEmployeeById = async (id) => {
  * @returns số bản ghi bị thay đổi
  * Author: PMChien
  */
-export const deleteEmployee = async(data) => {
+// export const deleteEmployee = async(data) => {
+//   try {
+//     let res = await axios.post(`${apiURL}/Employees/batch-deletion`, data);
+//     return res;
+//   } catch (error) {
+//     console.error("Đã xảy ra lỗi lúc xóa danh sách Employee: ", error);
+//     let status = error.response.status;
+//     if(status >= 400) {
+//       return error.response;
+//     }
+//   }
+// }
+
+export const deleteEmployee = async (data) => {
   try {
-    let res = await axios.delete(`${apiURL}/Employees`, data);
-    return res;
-  } catch (error) {
-    console.error("Đã xảy ra lỗi lúc xóa danh sách Employee: ", error);
-    let status = error.response.status;
-    if(status >= 400) {
-      return error.response;
+    let result = 0;
+    for (const id of data.ids) {
+      let res = await deleteEmployeeById(id);
+      if(res.data) {
+        result += res.data;
+      }
     }
+    return result;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi tại xóa nhiều employee: ", error);
   }
 }

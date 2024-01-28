@@ -34,6 +34,11 @@ export default {
     };
   },
   emits: ['update:modelValue'],
+  created() {
+    if(this.modelValue) {
+      this.selectedOption = this.modelValue;
+    }
+  },
   watch: {
     selectedOption(newValue) {
       this.$emit('update:modelValue', newValue);

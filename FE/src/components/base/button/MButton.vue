@@ -10,6 +10,7 @@
     @click="handleClick"
     :title="title"
     :disabled="disabled"
+    @mouseout="handleMouseOut"
   >
     <div :class="iconClass"></div>
     <span v-if="isShowTooltip" :class="tooltipClasses">
@@ -36,6 +37,7 @@ export default {
    * id: id của button
    * class: class của button
    * iconClass: class của icon (nếu là icon button hoặc primary icon button)
+   * iconAwsClass: class của icon (icon font awesome nếu dùng)
    * text: Chữ hiển thị trong button
    * title: chú thích nếu cần
    * tooltip: nội dung của tooltip nếu là icon button
@@ -62,6 +64,7 @@ export default {
     class: String,
     title: String,
     iconClass: String,
+    iconAwsClass: String,
     tooltip: { type: String, default: "", },
     tooltipPosition: {
       type: String,
@@ -71,7 +74,7 @@ export default {
       }
     },
   },
-  emits: ["click"],
+  emits: ["click", "mouseout"],
   computed: {
     /**
      * Tính toán class cho button
@@ -155,6 +158,18 @@ export default {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+
+    /**
+     * Gọi sự kiện moveout được truyền vào
+     * Author: PMChien
+     */
+    handleMouseOut() {
+      try {
+        this.$emit("mouseout");
+      } catch (error) {
+        console.error("Đã có lỗi: ", error);
+      }
+    }
   }
 }
 </script>
