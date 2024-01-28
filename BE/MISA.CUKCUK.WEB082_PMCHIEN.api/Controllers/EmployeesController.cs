@@ -1,6 +1,7 @@
-﻿using core.Entities;
+﻿//using core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MISA.CUKCUK.Core.DTOs.CrudDTOs;
 using MISA.CUKCUK.Core.DTOs.HelperDTO;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
@@ -17,13 +18,15 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         #region Declaration
         IEmployeeRepository _employeeRepository;
         IEmployeeService _employeeService;
+        IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService)
+        public EmployeesController(IEmployeeRepository employeeRepository, IEmployeeService employeeService, IUnitOfWork unitOfWork)
         {
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
@@ -35,6 +38,38 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             {
                 var employees = _employeeRepository.Get();
                 return StatusCode(200, employees);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("paging")]
+        public IActionResult GetByPage(
+            [FromQuery(Name = "page")] int page = 1,
+            [FromQuery(Name = "size")] int size = 10,
+            [FromQuery(Name = "text")] string? text = null
+            )
+        {
+            try
+            {
+                var searchText = "";
+                if(text != null)
+                {
+                    searchText = text;
+                }
+                var result = _employeeService.PageService(page, size, searchText);
+                if(result.Success)
+                {
+                    return StatusCode(200, result.DataObject);
+                }
+                else
+                {
+                    var devMsg = "Lỗi tại employee controller, GetByPage";
+                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                }
             }
             catch (Exception)
             {
@@ -64,6 +99,21 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var res = _employeeService.MaxCode();
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet("information")]
+        public IActionResult GetEmployeeInfo()
+        {
+            try
+            {
+                var res = _unitOfWork.Employees.GetEmployeeInfo();
                 return StatusCode(200, res);
             }
             catch (Exception)
@@ -156,12 +206,12 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpPost("batch-deletion")]
         public override IActionResult Delete([FromBody] string[] ids)
         {
             try
             {
-                var res = _employeeRepository.DeleteAny(ids);
+                var res = _unitOfWork.Employees.DeleteAny(ids);
                 return StatusCode(200, res);
             }
             catch (Exception)

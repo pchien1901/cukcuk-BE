@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.CUKCUK.Core.DTOs;
+using MISA.CUKCUK.Core.DTOs.CrudDTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
@@ -79,7 +80,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var validate = _customerGroupService.UpdateService(customerGroup);
-                if (validate.Success = true)
+                if (validate.Success == true)
                 {
                     var res = _customerGroupRepository.Update(customerGroup);
                     return StatusCode(200, res);

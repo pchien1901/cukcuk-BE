@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj": {}
+    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj": {
+    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj",
+        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj",
         "projectName": "MISA.CUKCUK.Core",
-        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj",
+        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj",
         "packagesPath": "C:\\Users\\judai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\obj\\",
+        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\judai\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[2.1.24, )"
             },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -89,85 +93,14 @@
         }
       }
     },
-    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj": {
+    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\MISA.CUKCUK.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj",
-        "projectName": "MISA.CUKCUK.WEB082_PMCHIEN.api",
-        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj",
-        "packagesPath": "C:\\Users\\judai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\MISA.CUKCUK.WEB082_PMCHIEN.api\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\judai\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {
-              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj": {
-                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj"
-              },
-              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\MISA.CUKCUK.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\MISA.CUKCUK.Infrastructure.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "dependencies": {
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.5.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\MISA.CUKCUK.Infrastructure.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\MISA.CUKCUK.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\MISA.CUKCUK.Infrastructure.csproj",
         "projectName": "MISA.CUKCUK.Infrastructure",
-        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\MISA.CUKCUK.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\MISA.CUKCUK.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\judai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\respository\\obj\\",
+        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\judai\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -184,8 +117,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj": {
-                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\core\\MISA.CUKCUK.Core.csproj"
+              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj": {
+                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj"
               }
             }
           }
@@ -229,6 +162,77 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj",
+        "projectName": "MISA.CUKCUK.WEB082_PMCHIEN.api",
+        "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj",
+        "packagesPath": "C:\\Users\\judai\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\judai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj": {
+                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Core\\MISA.CUKCUK.Core.csproj"
+              },
+              "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\MISA.CUKCUK.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.Infrastructure\\MISA.CUKCUK.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\core\MISA.CUKCUK.Core.csproj" />
-    <ProjectReference Include="..\respository\MISA.CUKCUK.Infrastructure.csproj" />
+    <ProjectReference Include="..\MISA.CUKCUK.Core\MISA.CUKCUK.Core.csproj" />
+    <ProjectReference Include="..\MISA.CUKCUK.Infrastructure\MISA.CUKCUK.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
