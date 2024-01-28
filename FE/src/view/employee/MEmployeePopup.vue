@@ -35,6 +35,7 @@
               :class="'width-1 mr'"
               :error="formError.EmployeeCode"
               v-model="formData.EmployeeCode"
+              ref="employeeCode"
             />
             <MInput
               :type="'text'"
@@ -365,6 +366,7 @@ export default {
   },
   mounted() {
     this.$tinyEmitter.on("resetEmployeeForm", this.resetForm);
+    this.$nextTick(() => { this.$refs.employeeCode.onFocus(); });
   },
   beforeUnmount() {
     this.$tinyEmitter.off("resetEmployeeForm");
@@ -479,14 +481,20 @@ export default {
           let isChange = false;
           for (const key in this.formData) {
             if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
-              if(key !== 'DateOfBirth') {
+              if(key !== 'DateOfBirth' && key !== 'IdentityDate') {
                 if(this.formData[key] !== this.inputData[key]) {
                   isChange = true;
+                  //console.log(`Giá trị khác biệt tại key ${key}, inputData là : ${this.inputData[key]}, formData là :  ${this.formData[key]}` )
                 }
               }
               else {
-                let stringDate = createDateString(this.inputData);
-                if(this.formData[key] !== stringDate) {
+                let stringDoB = createDateString(this.inputData.DateOfBirth);
+                let stringIdentityDate = createDateString(this.inputData.IdentityDate);
+                if(key === 'DateOfBirth' && this.formData[key] !== stringDoB) {
+                  //console.log(`Giá trị khác biệt tại key ${key}, createDateString là : ${stringDoB}, formData là :  ${this.formData[key]}` )
+                  isChange = true;
+                }
+                if(key === 'IdentityDate' && this.formData[key] !== stringIdentityDate) {
                   isChange = true;
                 }
               }

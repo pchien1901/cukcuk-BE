@@ -13,6 +13,8 @@
       :placeholder="this.placeholder"
       v-model="inputValue"
       :title="this.title"
+      ref="inputValue"
+      @keydown.enter="emit('handleEnter')"
     />
     
     <input 
@@ -67,7 +69,7 @@ export default {
     label: { type: String, default: ""},
     modelValue: String,
   },
-  emits: ["update:modelValue", "fileUploaded"],
+  emits: ["update:modelValue", "fileUploaded", "handleEnter"],
   data() {
     return {
       inputValue: this.modelValue,
@@ -119,6 +121,14 @@ export default {
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
+    },
+
+    /**
+     * set focus cho input
+     * Author: PMChien
+     */
+    onFocus() {
+      this.$refs.inputValue.focus();
     }
   },
 

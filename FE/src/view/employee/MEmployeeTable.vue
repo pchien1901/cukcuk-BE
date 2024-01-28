@@ -25,6 +25,7 @@
           title="Nhập"
           tooltip="Nhập"
           tooltipPosition="bottom"
+          @click="goToImportPage"
         />
       </div>
     </div>
@@ -253,6 +254,20 @@ export default {
     emitDuplicate(data) {
       try {
         this.$tinyEmitter.emit("duplicateEmployee", data);
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+    //#endregion
+
+    //#region 
+    /**
+     * Chuyển đến trang import Employee khi ấn button Nhập
+     * Author: PMChien
+     */
+    goToImportPage() {
+      try {
+        this.$router.push('/nhan-vien/nhap-khau');
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }

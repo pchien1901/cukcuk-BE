@@ -19,6 +19,7 @@ import MLoading from '../src/components/base/loading/MLoading.vue';
 
 // view
 import MEmployeeList from '../src/view/employee/MEmployeeList.vue';
+import MImportEmployee from '../src/view/employee/MImportEmployee.vue';
 
 //  lib
 import axios from "axios";
@@ -54,7 +55,8 @@ app
 
 // router
 const routes = [
-  {path: "/nhan-vien", name: 'EmployeeRouter', component: MEmployeeList}
+  {path: "/nhan-vien", name: 'EmployeeRouter', component: MEmployeeList},
+  {path: "/nhan-vien/nhap-khau", name: 'ImportEmployeeRouter', component: MImportEmployee}
 ]
 
 const router = createRouter({

@@ -61,7 +61,7 @@ function convertDateFormat(dateOfBirth) {
  */
 function createDateString(date) {
   try {
-    if(date && date.length > 10) {
+    if(date && date.length >= 10) {
       let dateString = date.substring(0, 10);
       let regexDate = /^\d{4}-\d{2}-\d{2}$/;
       if(regexDate.test(dateString)) {
