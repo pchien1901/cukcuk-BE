@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.CUKCUK.Core.DTOs.CrudDTOs;
 using MISA.CUKCUK.Core.DTOs.HelperDTO;
+using MISA.CUKCUK.Core.DTOs.ImportDTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
@@ -31,6 +32,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         #endregion
 
         #region Method
+        #region Get
         [HttpGet]
         public override IActionResult Get()
         {
@@ -122,7 +124,10 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+        #endregion
 
+
+        #region Post
         [HttpPost("validation-code")]
         public IActionResult CheckCodeBeforCU([FromBody] CheckEmployeeCode checkEmployeeCode)
         {
@@ -162,6 +167,46 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         }
 
 
+        [HttpPost("validation-import")]
+        public IActionResult ValidateImport(IFormFile fileImport)
+        {
+            try
+            {
+                var res = _employeeService.ValidateImportService(fileImport);
+                return StatusCode(200, res);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost("import")]
+        public IActionResult ImportEmployeeFromFile(List<EmployeeImport> employeeList)
+        {
+            try
+            {
+                var res = _employeeService.ImportEmployee(employeeList);
+                if(res.Success)
+                {
+                    return StatusCode(201, res.Data);
+                }
+                else
+                {
+                    var devMsg = "Có lỗi tại ImportEmployeeFromFile - EmployeeControler";
+                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region put
         [HttpPut("{id}")]
         public override IActionResult Put([FromBody] Employee employee)
         {
@@ -183,7 +228,9 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+        #endregion
 
+        #region delete
         [HttpDelete("{id}")]
         public override IActionResult Delete(string id)
         {
@@ -220,6 +267,8 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+        #endregion
+
         #endregion
     }
 }

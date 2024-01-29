@@ -14,6 +14,7 @@ namespace MISA.CUKCUK.Core.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<CustomerImport, Customer>();
+            CreateMap<EmployeeImport, Employee>();
         }
     }
 }

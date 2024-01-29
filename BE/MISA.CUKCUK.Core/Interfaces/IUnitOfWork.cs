@@ -12,6 +12,8 @@ namespace MISA.CUKCUK.Core.Interfaces
         ICustomerRepository Customers { get; set; }
         ICustomerGroupRepository CustomerGroups { get; set; }
         IEmployeeRepository Employees { get; set; }
+        public IPositionRepository Positions { get; set; }
+        public IDepartmentRepository Departments { get; set; }
 
         /// <summary>
         /// Bắt đầu một transaction

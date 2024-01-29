@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\MISAEmployeeImportResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MISAEmployeeImportResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MISAResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -26,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\MISAEmployeeImportResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MISAEmployeeImportResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\MISAResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MISAResource.Designer.cs</LastGenOutput>

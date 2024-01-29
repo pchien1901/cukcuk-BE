@@ -1,5 +1,7 @@
-﻿using MISA.CUKCUK.Core.DTOs;
+﻿using Microsoft.AspNetCore.Http;
+using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.DTOs.HelperDTO;
+using MISA.CUKCUK.Core.DTOs.ImportDTOs;
 using MISA.CUKCUK.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -35,5 +37,26 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <returns>MISAServiceResul</returns>
         /// Created by: PMChien
         MISAServiceResult PageService(int page, int pageSize, string? key);
+
+        /// <summary>
+        /// Hàm kiểm tra tệp excel và dữ liệu trong tệp
+        /// </summary>
+        /// <param name="fileImport">file để import</param>
+        /// <returns>danh sách EmployeeImport chứa thông tin đã được validate</returns>
+        /// Created by: PMChien
+        IEnumerable<EmployeeImport> ValidateImportService(IFormFile fileImport);
+
+        /// <summary>
+        /// Hàm lưu các giá trị EmployeeImport được validate từ trước vào database
+        /// </summary>
+        /// <param name="employeeList">danh sách EmployeeList đã được trả về cho frontend từ ValidateImportService</param>
+        /// <returns>
+        /// MISAServiceResult {
+        ///     Success = true - thêm thành công,
+        ///     Data = số lượng bản ghi thay đổi
+        /// }
+        /// </returns>
+        /// Created by: PMChien
+        MISAServiceResult ImportEmployee(List<EmployeeImport> employeeList);
     }
 }

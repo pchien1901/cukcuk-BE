@@ -11,6 +11,11 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
 {
     public class EmployeeImport
     {
+        public EmployeeImport()
+        {
+            this.ImportInvalidErrors = new List<string>();
+        }
+
         /// <summary>
         /// Id của nhân viên
         /// </summary>
@@ -35,16 +40,43 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         public Gender? Gender { get; set; }
 
         /// <summary>
+        /// giới tính - dạng chuỗi
+        /// </summary>
+        public string? GenderString { get; set; }
+
+        /// <summary>
+        /// Quốc tịch
+        /// </summary>
+        public string?Nationality { get; set; }
+
+        /// <summary>
+        /// Dân tộc
+        /// </summary>
+        public string? Ethnicity { get; set; }
+
+        /// <summary>
+        /// Số hợp đồng lao động
+        /// </summary>
+        public string? ContractNumber { get; set; }
+
+        /// <summary>
+        /// Loại hợp đồng lao động
+        /// </summary>
+        public string? ContractType { get; set; }
+
+        /// <summary>
         /// Ngày sinh
         /// </summary>
         /// 
         public DateTime? DateOfBirth { get; set; }
 
+        public string? DateOfBirthString { get; set; }
+
         /// <summary>
         /// id của đơn vị làm việc (Bắt buộc)
         /// </summary>
         /// 
-        public Guid DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
 
         /// <summary>
         /// tên đơn vị làm việc (bắt buộc)
@@ -57,6 +89,11 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         public Guid? PositionId { get; set; }
 
         /// <summary>
+        /// Tên vị trí
+        /// </summary>
+        public string? PositionName { get; set; }
+
+        /// <summary>
         /// Số CMTND
         /// </summary>
         public string? IdentityNumber { get; set; }
@@ -65,8 +102,13 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         /// Ngày cấp CMTND
         /// </summary>
         /// 
-        [MISADateLessThanToday(ErrorMessage = MISAConst.ERROR_IDENTITYDATE_INVALID)]
         public DateTime? IdentityDate { get; set; }
+
+        /// <summary>
+        /// Chuỗi ngày từ excel
+        /// </summary>
+        public string? IdentityDateString { get; set; }
+
 
         /// <summary>
         /// Nơi cấp CMTND
@@ -81,26 +123,22 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         /// <summary>
         /// Số điện thoại di động
         /// </summary>
-        [MISAPhoneNumberValidate(ErrorMessage = MISAConst.ERROR_PHONENUMBER_INVALID)]
         public string? MobilePhoneNumber { get; set; }
 
         /// <summary>
         /// Số điện thoại cố định
         /// </summary>
-        [MISAPhoneNumberValidate(ErrorMessage = MISAConst.ERROR_PHONENUMBER_INVALID)]
         public string? LandlinePhoneNumber { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
         /// 
-        [MISAEmailValidate(ErrorMessage = MISAConst.ERROR_EMAIL_INVALID)]
         public string? Email { get; set; }
 
         /// <summary>
         /// LƯơng
         /// </summary>
-        [MISACurrencyValidate(ErrorMessage = MISAConst.ERROR_CURRENCY_INVALID)]
         public decimal? Salary { get; set; }
 
         /// <summary>
@@ -122,7 +160,6 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         /// Ngày tham gia
         /// </summary>
         /// 
-        [MISADateLessThanToday(ErrorMessage = MISAConst.ERROR_DATE_INVALID)]
         public DateTime? JoinDate { get; set; }
 
         /// <summary>
@@ -154,5 +191,20 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         /// Người chỉnh sửa
         /// </summary>
         public string? ModifiedBy { get; set; }
+
+        /// <summary>
+        /// Các thông báo lỗi trả về
+        /// </summary>
+        public List<string> ImportInvalidErrors { get; set; }
+
+        /// <summary>
+        /// Trường thể hiện đã import chưa true - đã import, false - chưa import
+        /// </summary>
+        public bool? IsImported { get; set; }
+
+        /// <summary>
+        /// Trường thể hiện có thể import hay không true - có thể import (validate đúng hết), false - không
+        /// </summary>
+        public bool? CanImported { get; set; }
     }
 }

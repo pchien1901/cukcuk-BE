@@ -40,3 +40,4 @@ C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCU
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\bin\Debug\net6.0\MISA.CUKCUK.Core.dll
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\bin\Debug\net6.0\MISA.CUKCUK.Core.pdb
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\ref\MISA.CUKCUK.Core.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\MISA.CUKCUK.Core.Resources.MISAEmployeeImportResource.resources

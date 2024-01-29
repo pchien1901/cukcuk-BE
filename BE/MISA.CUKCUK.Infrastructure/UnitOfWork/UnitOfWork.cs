@@ -16,14 +16,18 @@ namespace MISA.CUKCUK.Infrastructure.UnitOfWork
         public ICustomerRepository Customers { get; set; }
         public ICustomerGroupRepository CustomerGroups { get; set; }
         public IEmployeeRepository Employees { get; set; }
+        public IPositionRepository Positions { get; set; }
+        public IDepartmentRepository Departments { get; set; }
         bool _disposed;
 
-        public UnitOfWork(IMISADbContext dbContext, ICustomerRepository customerRepository, ICustomerGroupRepository customerGroups, IEmployeeRepository employees)
+        public UnitOfWork(IMISADbContext dbContext, ICustomerRepository customerRepository, ICustomerGroupRepository customerGroups, IEmployeeRepository employees, IPositionRepository positions, IDepartmentRepository departments)
         {
             _dbContext = dbContext;
             Customers = customerRepository;
             CustomerGroups = customerGroups;
             Employees = employees;
+            Positions = positions;
+            Departments = departments;
         }
 
         public void BeginTransaction()
