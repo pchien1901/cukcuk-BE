@@ -42,3 +42,10 @@
 	width: 36px;
 	height: 36px;
 }
+
+.icon-search {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1041px -89px;
+	width: 22px;
+	height: 22px;
+  scale: 0.9;
+}

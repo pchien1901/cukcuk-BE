@@ -74,7 +74,7 @@ export const getNewEmployeeCode = async () => {
 }
 
 /**
- * Hàm lấy thông tin nhân viên cả DepartmentName và PositionName
+ * Hàm lấy tất cả thông tin nhân viên cả DepartmentName và PositionName
  * @returns Danh sách nhân viên gồm cả DepartmentName và PositionName
  * Author: PMChien 28/01/2024
  */
@@ -84,6 +84,29 @@ export const getEmployeeInfo = async ()  => {
     return res.data;
   } catch (error) {
     console.error("Đã xảy ra lỗi");
+  }
+}
+
+/**
+ * Hàm lấy thông tin nhân viên theo chuỗi tìm kiếm và phân trang
+ * @param {int} currentPage số trang hiện tại
+ * @param {int} pageSize số bản ghi/ trang
+ * @param {string} text từ khóa tìm kiếm
+ * @returns object gồm có ListRecord: danh sách bản ghi, CurrentPage: trang hiện tại, TotalPage: tổng số trang
+ * Author: PMChien
+ */
+export const getEmployeeInfoByPage = async (currentPage = 1, pageSize = 10, text = "") => {
+  try {
+    if(!text) {
+      text = "";
+    }
+    if(currentPage < 1) {
+      currentPage = 1;
+    }
+    let res = await axios.get(`${apiURL}/Employees/paging/?page=${currentPage}&size=${pageSize}&text=${text}`);
+    return res.data;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
   }
 }
 

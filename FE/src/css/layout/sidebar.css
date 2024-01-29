@@ -34,6 +34,9 @@
   font-weight: 700;
 }
 
+.sidebar-less .sidebar-header__text, .sidebar-less .icon-menu {
+  display: none;
+}
 /* SIDEBAR BODY */
 /* bỏ gạch chân cho router-link*/
 a {

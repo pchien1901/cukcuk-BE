@@ -9,7 +9,9 @@
         </div>
       </div>
       <div class="header-right">
-        <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" />
+        <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" v-model="searchText" :iconClass="'icon-search'"
+        @handleEnter="() => { this.emitLoadData(); }" :title="this.$MResource['VN'].SearchEmployeeTitle"
+        />
         <MButton
           :type="'icon'"
           :iconClass="'icon-reload'"
@@ -98,19 +100,17 @@
     </div>
     <div class="table-footer">
       <div class="pagination-footer">
-    <div class="total-records">Tổng: <b>{{ items.length }}</b></div>
+    <div class="total-records">Tổng: <b>{{ totalRecords }}</b></div>
     <div class="pagination">
       <label>Số bản ghi/trang</label>
-      <select name="" id="" class="dropdown-records">
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
-      <!-- <div class="lists-records"><b>1</b> - <b>9</b> records</div> -->
+      <MDropdown :items="pagingItem" position="top" v-model="this.pagination.PageSize"/>
+      <div class="lists-records"><b>{{this.startIndex}}</b> - <b>{{ this.endIndex }}</b> bản ghi</div>
       <div class="icon-pagination">
-        <i class="fas fa-chevron-left"></i>
-        <i class="fas fa-chevron-right"></i>
+        <div class="pageBefore" @click="goToPreviousPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === 1 }"
+        ><MIcon :iconAwsClass="'fas fa-chevron-left'" :tooltip="'Trang trước'" :tooltipPosition="'top'"/></div>
+        <div class="pageAfter"  @click="goToTheNextPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === this.totalPage }"
+        ><MIcon :iconAwsClass="'fas fa-chevron-right'" :tooltip="'Trang sau'" :tooltipPosition="'top'"/></div>
+        
       </div>
     </div>
   </div>
@@ -125,6 +125,7 @@
 </template>
 
 <script>
+import { getEmployeeInfo } from '@/js/services/employee.js';
 /* eslint-disable */
 // import { getAllEmployees } from "../../js/services/employee.js";
 // import { getAllDepartments } from "../../js/services/department.js";
@@ -141,6 +142,7 @@ export default {
     /**
      * items: danh sách dữ liệu để render
      * inputData: thông tin Employee truyền vào để thực hiện update
+     * totalPage: tổng số trang
      */
     items: { type: Array, default: () => [] },
     /**dữ liệu để update */
@@ -150,9 +152,12 @@ export default {
         return {};
       },
     },
+    totalPage: Number,
   },
-  created() {
+  async created() {
     this.employees = this.items;
+    let totalEmployees = await getEmployeeInfo();
+    this.totalRecords = totalEmployees.length;
   },
   updated() {
     this.employees = this.items;
@@ -160,16 +165,29 @@ export default {
   data() {
     return {
       /**
+       * totalRecords: tổng tất cả bản ghi
        * employees: mảng employee hiển thị
        * selectAll: Biến quản lí trạng thái của checkbox selectAll
        * selectedItems: mảng các Id đã được chọn để xóa
+       * searchText: giá trị tại ô tìm kiếm theo mã, tên nhân viên
        * showMultiAction: biến boolen ẩn/ hiện multi action
-       * showDeleteDialog: ẩn / hiện dialog
+       * dialog: biến object quản lí dialog khi người dùng xóa
+       *  + showDeleteDialog: ẩn/hiện dialog
+       *  + type: Loại icon/ icon delete
+       *  + mode: kiểu dialog - kiểu DELETE có 2 nút 
+       *  + title: Tiêu đề dialog
+       *  + text: nội dung dialog - kiểu mảng
+       *  + primaryAction: hành động của nút chính trong dialog
+       * pagination: biến object quản lí pagination
+       *  + CurrentPage: trang hiện tại
+       *  + PageSize: số lượng bản ghi / trang
+       *  + startIndex: số thứ tự bản ghi bắt đầu = (CurrentPage - 1)*PageSize + 1
        */
       employees: this.items,
+      totalRecords: null,
       selectAll: false,
       selectedItems: [],
-      primaryAction: null,
+      searchText: "",
       showMultiAction: false,
       dialog: {
         showDeleteDialog: false,
@@ -178,8 +196,31 @@ export default {
         title: this.$MResource["VN"].DeleteEmployeeTitle,
         text: [this.$MResource["VN"].DeleteEmployeeMessage],
         primaryAction: null,
-      }
+      },
+      pagination: {
+        CurrentPage: 1,
+        PageSize: 10,
+      },
+      pagingItem: [
+        {value: 10, text: 10},
+        {value: 25, text: 25},
+        {value: 50, text: 50},
+        {value: 100, text: 100},
+      ]
     };
+  },
+  computed: {
+    startIndex() {
+      return (this.pagination.CurrentPage - 1)*this.pagination.PageSize + 1;
+    },
+    endIndex() {
+      if(this.pagination.CurrentPage === this.totalPage) {
+        return  (this.pagination.CurrentPage - 1)*this.pagination.PageSize + this.items.length;
+      }
+      else {
+        return (this.pagination.CurrentPage - 1)*this.pagination.PageSize + this.pagination.PageSize;
+      }
+    }
   },
   watch: {
     selectAll() {
@@ -215,8 +256,13 @@ export default {
       } catch (error) {
         console.error("Đã có lỗi : ", error);
       }
-      
     },
+    pagination: {
+      handler() {
+        this.emitLoadData();
+      },
+      deep: true,
+    }
   },
   methods: {
     //#region  Emit : emit các sự kiện loadData, update, duplicate
@@ -226,7 +272,7 @@ export default {
      */
     emitLoadData() {
       try {
-        this.$tinyEmitter.emit("loadData");
+        this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
@@ -282,7 +328,7 @@ export default {
     closeDeleteDialog() {
       try {
         this.dialog.showDeleteDialog = false;
-        console.log("Đóng dialog");
+        this.selectedItems = [];
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
@@ -321,6 +367,36 @@ export default {
           if(employee.IsChecked) {
             employee.IsChecked = false;
           }
+        }
+      } catch (error) {
+        console.error("Đã có lỗi xảy ra: ", error);
+      }
+    },
+    //#endregion
+
+    //#region Phân trang
+    /**
+     * Chuyển tới trang trước
+     * Author: PMChien
+     */
+    goToPreviousPage() {
+      try {
+        if(this.pagination.CurrentPage > 1) {
+          this.pagination.CurrentPage -= 1;
+        }
+      } catch (error) {
+        console.error("Đã có lỗi xảy ra: ", error);
+      }
+    },
+
+    /**
+     * Đi tới trang sau
+     * Author: PMChien
+     */
+    goToTheNextPage() {
+      try {
+        if(this.pagination.CurrentPage < this.totalPage) {
+          this.pagination.CurrentPage += 1;
         }
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);

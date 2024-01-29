@@ -50,6 +50,9 @@ const MResource = {
 
     // error
     Error: "Không thành công, đã có lỗi xảy ra",
+
+    // employee table
+    SearchEmployeeTitle: "Nhấn Enter để tìm kiếm",
   },
   EN: {
     CustomerNotEmpty: "Mã khách hàng không được để trống",

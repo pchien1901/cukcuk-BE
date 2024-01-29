@@ -14,6 +14,8 @@ import MRadioInput from '../src/components/base/input/MRadioInput.vue';
 import MTextInput from '../src/components/base/input/MTextInput.vue';
 import MCombobox from '../src/components/base/combobox/MCombobox.vue';
 import MLoading from '../src/components/base/loading/MLoading.vue';
+import MIcon from '../src/components/base/icon/MIcon.vue';
+import MDropdown from '../src/components/base/combobox/MDropdown.vue';
 
 //  custom component
 
@@ -49,6 +51,8 @@ app
     .component("MRadioInput", MRadioInput)
     .component("MCombobox", MCombobox)
     .component("MLoading", MLoading)
+    .component("MIcon", MIcon)
+    .component("MDropdown", MDropdown)
 
     // view
     .component("MEmployeeList", MEmployeeList)

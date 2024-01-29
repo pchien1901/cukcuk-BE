@@ -1,5 +1,8 @@
 <template>
   <div :class="computedIconClasses" @click="handleClick">
+    <i :class="iconAwsClass">
+    
+    </i>
     <span v-if="isShowTooltip" :class="tooltipClasses">
       {{ tooltip }}
     </span>
@@ -14,6 +17,7 @@ export default {
   props: {
     tooltip: { type: String, default: ""},
     iconClass: { type: String, default: ""},
+    iconAwsClass: String,
     tooltipPosition: {
       type: String,
       default: "right",

@@ -4,7 +4,9 @@
       {{ label }}
       <span v-if="isRequired" class="required-star">*</span>
     </label>
-    <input
+    
+    <div class="m-text-input-wrapper">
+      <input
       v-if="type === 'text'"
       type="text"
       :class="computedClasses"
@@ -14,8 +16,10 @@
       v-model="inputValue"
       :title="this.title"
       ref="inputValue"
-      @keydown.enter="emit('handleEnter')"
+      @keydown.enter="this.$emit('handleEnter')"
     />
+    <div v-if="iconClass !== null && iconClass !== '' && iconClass !== undefined" class="m-input__icon" :class="iconClass"></div>
+    </div>
     
     <input 
       v-if="type === 'file'"
@@ -46,6 +50,7 @@ export default {
    * title: chú thích nếu trường có viết tắt
    * placeholder: placeholder
    * label: Tên label
+   * iconClass: tên class icon
    */
   props: {
     type: {
@@ -68,6 +73,7 @@ export default {
     placeholder: String,
     label: { type: String, default: ""},
     modelValue: String,
+    iconClass: String,
   },
   emits: ["update:modelValue", "fileUploaded", "handleEnter"],
   data() {

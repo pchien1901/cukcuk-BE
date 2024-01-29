@@ -17,7 +17,7 @@
 
     <!-- BODY -->
     <div class="employee-page-body">
-      <MEmployeeTable :items="employees"/>
+      <MEmployeeTable :items="employees" :totalPage="totalPage"/>
     </div>
 
     <!-- POPUP -->
@@ -62,6 +62,7 @@ import {
   deleteEmployeeById,
   getNewEmployeeCode,
 getEmployeeInfo,
+getEmployeeInfoByPage,
 } from "../../js/services/employee.js";
 import { getAllDepartments, getDepartmentById } from '../../js/services/department.js';
 import { getAllPositions, getPositionById } from '../../js/services/position.js';
@@ -102,13 +103,14 @@ export default {
         message: "",
         action: null,
       },
+      totalPage: null,
       inputData: {},
       isShowLoading: true,
     };
   },
   async created() {
     this.isShowLoading = true;
-    this.loadData();
+    this.loadData(1, 10, "");
     setTimeout(() => { this.isShowLoading = false}, 2000);
   },
   mounted() {
@@ -212,12 +214,12 @@ export default {
      * Lấy các dữ liệu từ api
      * Author: PMChien (25/01/2024)
      */
-    async loadData() {
+    async loadData(page = 1, pageSize = 10, text = "") {
       try {
         // gọi api
-        let allEmployees = await getEmployeeInfo();
-          this.employees = allEmployees;
-
+        let allEmployees = await getEmployeeInfoByPage(page, pageSize, text);
+          this.employees = allEmployees.ListRecord;
+          this.totalPage = allEmployees.TotalPage;
           /** 
            * thêm trường
            * DepartmentName: Tên đơn vị 
@@ -237,12 +239,12 @@ export default {
      * Hàm gọi loadData và tạo hiệu ứng loading khi button Tải lại click
      * Author: PMChien
      */
-    handleLoadingData() {
+    handleLoadingData(page, pageSize, text) {
       try {
         // Tạo hiệu ứng loading
         this.isShowLoading = true;
         // LoadData
-        this.loadData();
+        this.loadData(page, pageSize, text);
         // Tắt hiệu ứng loading
         setTimeout(() => { this.isShowLoading = false }, 2000);
       } catch (error) {
@@ -310,7 +312,7 @@ export default {
         if(this.handleResponse(res)) {
           this.toast.message = this.$MResource["VN"].DeleteEmployeeSuccess;
           this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
-          this.handleLoadingData();
+          this.handleLoadingData("");
           this.openToast();
         }
       } catch (error) {
@@ -332,7 +334,7 @@ export default {
           if(this.handleResponse(res)) {
             this.toast.message = this.$MResource["VN"].DeleteEmployeeSuccess;
             this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
-            this.handleLoadingData();
+            this.handleLoadingData("");
             this.openToast();
           }
         }
