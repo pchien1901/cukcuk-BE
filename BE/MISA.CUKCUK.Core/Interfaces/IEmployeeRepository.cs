@@ -52,6 +52,14 @@ namespace MISA.CUKCUK.Core.Interfaces
         int GetPageCount<EmployeeInfo>(int pageSize, string? text);
 
         /// <summary>
+        /// Đếm số lượng bản ghi tìm được theo từ khóa text
+        /// </summary>
+        /// <param name="text">Từ khóa tìm kiếm</param>
+        /// <returns>Tổng số bản ghi tìm được theo từ khóa</returns>
+        /// Created by: PMChien
+        int CountSearchRecord(string? text);
+
+        /// <summary>
         /// Hàm lấy EmployeeInfo theo trang
         /// </summary>
         /// <param name="offset">vị trí bắt đầu lấy bản ghi</param>

@@ -639,7 +639,8 @@ namespace MISA.CUKCUK.Core.Services
                 {
                     ListRecord = employeeInfoByPage,
                     CurrentPage = page,
-                    TotalPage = _unitOfWork.Employees.GetPageCount<EmployeeInfo>(pageSize,text)
+                    TotalPage = _unitOfWork.Employees.GetPageCount<EmployeeInfo>(pageSize,text),
+                    TotalRecord = _unitOfWork.Employees.CountSearchRecord(text)
                 };
                 return new MISAServiceResult
                 {

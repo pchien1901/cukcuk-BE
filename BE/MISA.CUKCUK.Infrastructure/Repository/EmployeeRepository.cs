@@ -32,7 +32,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             parameters.Add("@code", code);
 
             // thực hiện truy vấn
-            var data = _dbContext.Connection.QueryFirstOrDefault<Employee>(sql, param: parameters 
+            var data = _dbContext.Connection.QueryFirstOrDefault<Employee>(sql, param: parameters
                     , transaction: _dbContext.Transaction
                 );
 
@@ -94,7 +94,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             // tên procedure
             var proc = "Proc_GetEmployeeInfoPageCount";
             var searchText = "";
-            if(!String.IsNullOrEmpty(text))
+            if (!String.IsNullOrEmpty(text))
             {
                 searchText = text;
             }
@@ -121,6 +121,23 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return data;
 
 
+        }
+
+        public int CountSearchRecord(string? text)
+        {
+            // tên procedure
+            var proc = "Proc_CountEmployeeSearchResult";
+            var searchText = "";
+            if (!String.IsNullOrEmpty(text))
+            {
+                searchText = text;
+            }
+            var param = new DynamicParameters();
+            param.Add("text", searchText);
+
+            // thực hiện truy vấn
+            var totalRecords = _dbContext.Connection.QuerySingle<int>(proc, param, commandType: System.Data.CommandType.StoredProcedure);
+            return totalRecords;
         }
         #endregion
     }

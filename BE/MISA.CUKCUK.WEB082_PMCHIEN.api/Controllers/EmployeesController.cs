@@ -253,8 +253,8 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
-        [HttpPost("batch-deletion")]
-        public override IActionResult Delete([FromBody] string[] ids)
+        [HttpDelete]
+        public override IActionResult Delete( string[] ids)
         {
             try
             {
