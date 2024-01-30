@@ -10,7 +10,7 @@
       </div>
       <div class="header-right">
         <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" v-model="searchText" :iconClass="'icon-search'"
-        @handleEnter="() => { this.emitLoadData(); }" :title="this.$MResource['VN'].SearchEmployeeTitle"
+        @handleEnter="handleSearchEnter" :title="this.$MResource['VN'].SearchEmployeeTitle"
         />
         <MButton
           :type="'icon'"
@@ -100,7 +100,7 @@
     </div>
     <div class="table-footer">
       <div class="pagination-footer">
-    <div class="total-records">Tổng: <b>{{ totalRecords }}</b></div>
+    <div class="total-records">Tổng: <b>{{ totalRecord }}</b></div>
     <div class="pagination">
       <label>Số bản ghi/trang</label>
       <MDropdown :items="pagingItem" position="top" v-model="this.pagination.PageSize"/>
@@ -125,7 +125,6 @@
 </template>
 
 <script>
-import { getEmployeeInfo } from '@/js/services/employee.js';
 /* eslint-disable */
 // import { getAllEmployees } from "../../js/services/employee.js";
 // import { getAllDepartments } from "../../js/services/department.js";
@@ -153,19 +152,19 @@ export default {
       },
     },
     totalPage: Number,
+    totalRecord: Number,
   },
-  async created() {
-    this.employees = this.items;
-    let totalEmployees = await getEmployeeInfo();
-    this.totalRecords = totalEmployees.length;
-  },
+  // async created() {
+  //   this.employees = this.items;
+  //   let totalEmployees = await getEmployeeInfo();
+  //   this.totalRecords = totalEmployees.length;
+  // },
   updated() {
     this.employees = this.items;
   },
   data() {
     return {
       /**
-       * totalRecords: tổng tất cả bản ghi
        * employees: mảng employee hiển thị
        * selectAll: Biến quản lí trạng thái của checkbox selectAll
        * selectedItems: mảng các Id đã được chọn để xóa
@@ -184,7 +183,6 @@ export default {
        *  + startIndex: số thứ tự bản ghi bắt đầu = (CurrentPage - 1)*PageSize + 1
        */
       employees: this.items,
-      totalRecords: null,
       selectAll: false,
       selectedItems: [],
       searchText: "",
@@ -262,7 +260,12 @@ export default {
         this.emitLoadData();
       },
       deep: true,
-    }
+    },
+    // async items() {
+    //   this.employees = this.items;
+    //   let totalEmployees = await getEmployeeInfo();
+    //   this.totalRecords = totalEmployees.length;
+    // }
   },
   methods: {
     //#region  Emit : emit các sự kiện loadData, update, duplicate
@@ -285,7 +288,6 @@ export default {
      */
     emitSetValueToUpdateEmployee(id) {
       try {
-        console.log("id: ", id);
         this.$tinyEmitter.emit("setValueToUpdateEmployee", id);
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
@@ -300,6 +302,19 @@ export default {
     emitDuplicate(data) {
       try {
         this.$tinyEmitter.emit("duplicateEmployee", data);
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+
+    /**
+     * Gọi khi thanh tìm kiếm nhấn enter, gọi hàm emit và xóa dữ liệu tìm kiếm
+     * Author: PMChien
+     */
+    handleSearchEnter() {
+      try {
+        this.emitLoadData();
+        this.searchText = "";
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }

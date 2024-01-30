@@ -17,7 +17,7 @@
 
     <!-- BODY -->
     <div class="employee-page-body">
-      <MEmployeeTable :items="employees" :totalPage="totalPage"/>
+      <MEmployeeTable :items="employees" :totalPage="totalPage" :totalRecord="totalRecord"/>
     </div>
 
     <!-- POPUP -->
@@ -104,6 +104,7 @@ export default {
         action: null,
       },
       totalPage: null,
+      totalRecord: null,
       inputData: {},
       isShowLoading: true,
     };
@@ -220,10 +221,9 @@ export default {
         let allEmployees = await getEmployeeInfoByPage(page, pageSize, text);
           this.employees = allEmployees.ListRecord;
           this.totalPage = allEmployees.TotalPage;
+          this.totalRecord = allEmployees.TotalRecord;
           /** 
            * thêm trường
-           * DepartmentName: Tên đơn vị 
-           * PositionName: Tên vị trí
            * IsChecked: đánh dấu checkbox được chọn
            * IsShowMenu: show menu context
            * */ 
@@ -267,7 +267,6 @@ export default {
         let status = res.status;
         if(status >= 200 && status < 300) {
           let employee = res.data;
-          console.log("inputData: ", this.inputData);
           this.inputData = {...employee, IsUpdate: true, IsDuplicate: false, IsCreate: false};
           this.showPopup = true;
         }
@@ -296,7 +295,7 @@ export default {
         this.inputData.EmployeeCode = await getNewEmployeeCode();
         this.showPopup = true;
       } catch (error) {
-        console.log("Đã có lỗi xảy ra: ", error);
+        console.error("Đã có lỗi xảy ra: ", error);
       }
     }
     ,
@@ -327,9 +326,7 @@ export default {
     async deleteEmployeeAny(ids) {
       try {
         if(Array.isArray(ids) && ids.length > 0) {
-          console.log("mảng id xóa: ", ids);
           let data = { ids: ids };
-          console.log("đối tượng gửi trong frombody: ", data);
           let res = await deleteEmployee(data);
           if(this.handleResponse(res)) {
             this.toast.message = this.$MResource["VN"].DeleteEmployeeSuccess;
@@ -357,8 +354,6 @@ export default {
         else {
           let status = res.status;
           let message = "";
-          console.log(res);
-          console.log("response status: ", status);
           if(res.userMsg) {
             message = res.userMsg
           }

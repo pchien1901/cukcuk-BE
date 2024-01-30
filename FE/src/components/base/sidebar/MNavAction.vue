@@ -41,7 +41,6 @@ export default {
     handleLessSidebar() {
       this.isLess = !this.isLess;
       this.$tinyEmitter.emit("lessSidebar", this.isLess);
-      console.log("isLess tại navAction: ", this.isLess);
     }
   },
   data() {

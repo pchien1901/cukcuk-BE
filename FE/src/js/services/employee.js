@@ -118,7 +118,6 @@ export const getEmployeeInfoByPage = async (currentPage = 1, pageSize = 10, text
  */
 export const checkEmployeeCodeBeforeCU = async (data) => {
   try {
-    console.log("Dữ liệu gửi đi: ", data);
     let res = await axios.post(`${apiURL}/Employees/validation-code`, data);
     console.log(res);
     return res.data;
@@ -128,6 +127,27 @@ export const checkEmployeeCodeBeforeCU = async (data) => {
     if(status >= 400)  {
       return error.response;
     }
+  }
+}
+
+/**
+ * Validate dữ liệu trong file excel
+ * @param {FormData} data dữ liệu gửi bằng file
+ * @returns Danh sách thông tin lấy từ file excel
+ * Author: PMChien
+ */
+export const validateFile = async (file) => {
+  try {
+    let formData = new FormData();
+    formData.append("fileImport", file);
+    let res = await axios.post(`${apiURL}/Employees/validation-import`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }
+  });
+    return res.data;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
   }
 }
 

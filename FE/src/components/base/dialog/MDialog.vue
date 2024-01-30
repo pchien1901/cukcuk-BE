@@ -104,7 +104,6 @@ export default {
      */
     closeDialog() {
       try {
-        console.log("Close Dialog");
         this.showWaringDialog = false;
         this.closeFunction();
       } catch (error) {

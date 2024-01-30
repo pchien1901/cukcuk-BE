@@ -5,10 +5,18 @@
         <div class="popup-header__left">
           <div class="title">Thông tin nhân viên</div>
           <div class="checkbox-wrapper">
-            <MCheckbox v-model="formData.IsCustomer" :value="formData.IsCustomer" /> <span>Là khách hàng</span>
+            <MCheckbox
+              v-model="formData.IsCustomer"
+              :value="formData.IsCustomer"
+            />
+            <span>Là khách hàng</span>
           </div>
           <div class="checkbox-wrapper">
-            <MCheckbox v-model="formData.IsSupplier" :value="formData.IsSupplier" /> <span>Là nhà cung cấp</span>
+            <MCheckbox
+              v-model="formData.IsSupplier"
+              :value="formData.IsSupplier"
+            />
+            <span>Là nhà cung cấp</span>
           </div>
         </div>
         <div class="popup-header__right">
@@ -21,7 +29,7 @@
             :class="'icon-cancel-popup'"
             :tooltip="'Thoát'"
             :tooltipPosition="'top'"
-            @click="closeFunction"
+            @click="handleCloseFunction"
           />
         </div>
       </div>
@@ -57,10 +65,10 @@
             />
           </div>
           <div class="popup-control">
-            <MCombobox 
-              :label="'Chức danh'" 
-              :items="positions" 
-              v-model="formData.PositionId" 
+            <MCombobox
+              :label="'Chức danh'"
+              :items="positions"
+              v-model="formData.PositionId"
               :iconAwsClass="'fas fa-caret-down'"
             />
           </div>
@@ -68,8 +76,12 @@
 
         <div class="group-2">
           <div class="row popup-control">
-            <MDatePicker :label="'Ngày sinh'" :class="'width-1 mr'" 
-            v-model="formData.DateOfBirth" :error="formError.DateOfBirth"/>
+            <MDatePicker
+              :label="'Ngày sinh'"
+              :class="'width-1 mr'"
+              v-model="formData.DateOfBirth"
+              :error="formError.DateOfBirth"
+            />
             <MRadioInput
               :inputClass="'m-width-2'"
               :label="'Giới tính'"
@@ -87,23 +99,31 @@
               v-model="formData.IdentityNumber"
               :value="formData.IdentityNumber"
             />
-            <MDatePicker 
-              :label="'Ngày cấp'" 
-              :class="'width-1'" 
-              :error="formError.IdentityDate" 
+            <MDatePicker
+              :label="'Ngày cấp'"
+              :class="'width-1'"
+              :error="formError.IdentityDate"
               v-model="formData.IdentityDate"
             />
           </div>
           <div class="popup-control">
-            <MInput :type="'text'" :label="'Nơi cấp'" v-model="formData.IdentityPlace"
-            :value="formData.IdentityPlace"
+            <MInput
+              :type="'text'"
+              :label="'Nơi cấp'"
+              v-model="formData.IdentityPlace"
+              :value="formData.IdentityPlace"
             />
           </div>
         </div>
 
         <div class="group-3">
           <div class="popup-control">
-            <MInput :type="'text'" :label="'Địa chỉ'" v-model="formData.Address" :value="formData.Address"/>
+            <MInput
+              :type="'text'"
+              :label="'Địa chỉ'"
+              v-model="formData.Address"
+              :value="formData.Address"
+            />
           </div>
           <div class="row popup-control">
             <MInput
@@ -124,8 +144,13 @@
               v-model="formData.LandlinePhoneNumber"
               :value="formData.LandlinePhoneNumber"
             />
-            <MInput :type="'text'" :label="'Email'" class="width-4" :error="formError.Email" v-model="formData.Email"
-            :value="formData.Email"
+            <MInput
+              :type="'text'"
+              :label="'Email'"
+              class="width-4"
+              :error="formError.Email"
+              v-model="formData.Email"
+              :value="formData.Email"
             />
           </div>
           <div class="row popup-control">
@@ -143,17 +168,36 @@
               v-model="formData.BankName"
               :value="formData.BankName"
             />
-            <MInput :type="'text'" :label="'Chi nhánh'" class="width-4" v-model="formData.Branch" :value="formData.Branch"/>
+            <MInput
+              :type="'text'"
+              :label="'Chi nhánh'"
+              class="width-4"
+              v-model="formData.Branch"
+              :value="formData.Branch"
+            />
           </div>
         </div>
       </div>
       <div class="popup-footer">
         <div class="popup-footer__left">
-          <MButton :type="'second'" :text="'Hủy'" @click="closeFunction" />
+          <MButton
+            :type="'second'"
+            :text="'Hủy'"
+            @click="handleCloseFunction"
+          />
         </div>
         <div class="popup-footer__right row">
-          <MButton :type="'second'" :text="'Cất'" class="mr" @click="handleSubmit" />
-          <MButton :type="'primary'" :text="'Cất và Thêm'" @click="handleSubmitPro"/>
+          <MButton
+            :type="'second'"
+            :text="'Cất'"
+            class="mr"
+            @click="handleSubmit"
+          />
+          <MButton
+            :type="'primary'"
+            :text="'Cất và Thêm'"
+            @click="handleSubmitPro"
+          />
         </div>
       </div>
     </div>
@@ -164,7 +208,11 @@
       :title="this.dialog.title"
       :text="this.dialog.text"
       :mode="this.dialog.mode"
-      :closeFunction="() => { this.dialog.showDialog = false; }"
+      :closeFunction="
+        () => {
+          this.dialog.showDialog = false;
+        }
+      "
       :primaryAction="this.dialog.primaryAction"
       :secondAction="this.dialog.secondAction"
       :primaryBtnText="this.dialog.primaryBtnText"
@@ -178,7 +226,11 @@
         :type="toast.type"
         :message="toast.message"
         :action="toast.action"
-        :closeFunction="() => {this.toast.showToast = false}"
+        :closeFunction="
+          () => {
+            this.toast.showToast = false;
+          }
+        "
       />
     </div>
   </div>
@@ -187,12 +239,26 @@
 <script>
 /* eslint-disable */
 import MIcon from "../../components/base/icon/MIcon.vue";
-import { allDepartment } from "./total-department.js";
-import { allPosition } from "./total-position.js";
-import { removeBlankKey, createDateString } from '../../js/ulti/convert-data.js';
-import { getNewEmployeeCode, checkEmployeeCodeBeforeCU, createEmployee, updateEmployee } from "../../js/services/employee.js";
-import { getPositionById } from "../../js/services/position.js";
-import { getDepartmentById } from "../../js/services/department.js";
+// import { allDepartment } from "./total-department.js";
+// import { allPosition } from "./total-position.js";
+import {
+  removeBlankKey,
+  createDateString,
+} from "../../js/ulti/convert-data.js";
+import {
+  getNewEmployeeCode,
+  checkEmployeeCodeBeforeCU,
+  createEmployee,
+  updateEmployee,
+} from "../../js/services/employee.js";
+import {
+  getPositionById,
+  getAllPositions,
+} from "../../js/services/position.js";
+import {
+  getDepartmentById,
+  getAllDepartments,
+} from "../../js/services/department.js";
 
 export default {
   name: "MEmployeePopup",
@@ -200,7 +266,7 @@ export default {
   props: {
     /**
      * closeFunction: Hàm đóng Popup
-     * 
+     *
      */
     closeFunction: Function,
     inputData: { type: Object },
@@ -214,7 +280,7 @@ export default {
      * formData: dữ liệu form để gửi server
      * formError: lỗi của các trường
      * formMode: trạng thái của popup: ADD - THÊM, UPDATE - SỬA
-     * dialog: chứa thông tin của dialog 
+     * dialog: chứa thông tin của dialog
      *  + showDialog: ẩn/ hiện dialog
      *  + type: Loại của icon :error, warning, info
      *  + mode: kiểu của dialog: warning - cảnh báo cỏ 1 nút bấm, error - xác nhận lỗi có 2 nút, full - có đủ 3 nút
@@ -222,7 +288,7 @@ export default {
      *  + text: nội dung của dialog, kiểu Array
      * toast: chứa thông tin của toast message
      *  + showToast: ẩn/ hiện toast
-     *  
+     *
      */
     return {
       departments: [],
@@ -236,7 +302,7 @@ export default {
       dialogMessage: [],
       formData: {
         EmployeeCode: null,
-        FullName:null,
+        FullName: null,
         DepartmentId: null,
         PositionId: null,
         DateOfBirth: null,
@@ -256,7 +322,7 @@ export default {
       },
       formError: {
         EmployeeCode: "",
-        FullName:"",
+        FullName: "",
         department: "",
         position: "",
         DateOfBirth: "",
@@ -271,7 +337,7 @@ export default {
         BankAccount: "",
         BankName: "",
         Branch: "",
-      }, 
+      },
       formMode: this.$MEnum.FormMode.ADD,
       dialog: {
         showDialog: false,
@@ -292,56 +358,59 @@ export default {
       },
     };
   },
-  computed: {
-  },
+  computed: {},
   async created() {
-    if(this.inputData.IsUpdate === true) {
-          this.formMode = this.$MEnum.FormMode.UPDATE;
-          this.formData.EmployeeId = this.inputData.EmployeeId;
-          this.formData.IsCustomer = this.inputData.IsCustomer;
-          this.formData.IsSupplier = this.inputData.IsSupplier;
-          this.formData.EmployeeCode = this.inputData.EmployeeCode;
-          this.formData.FullName = this.inputData.FullName;
-          this.formData.DepartmentId = this.inputData.DepartmentId;
-          this.formData.PositionId = this.inputData.PositionId;
-          this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-          this.formData.Gender = this.inputData.Gender;
-          this.formData.IdentityNumber = this.inputData.IdentityNumber;
-          this.formData.IdentityDate = createDateString(this.inputData.IdentityDate);
-          this.formData.IdentityPlace = this.inputData.IdentityPlace;
-          this.formData.Address = this.inputData.Address; 
-          this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-          this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-          this.formData.Email = this.inputData.Email;
-          this.formData.BankAccount = this.inputData.BankAccount;
-          this.formData.BankName = this.inputData.BankName;
-          this.formData.Branch = this.inputData.Branch;
-        }
-        else if(this.inputData.IsDuplicate === true) {
-          this.formMode === this.$MEnum.FormMode.DUPLICATE
-          this.formData.IsCustomer = this.inputData.IsCustomer;
-          this.formData.IsSupplier = this.inputData.IsSupplier;
-          this.formData.EmployeeCode = this.inputData.EmployeeCode;
-          this.formData.FullName = this.inputData.FullName;
-          this.formData.DepartmentId = this.inputData.DepartmentId;
-          this.formData.PositionId = this.inputData.PositionId;
-          this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-          this.formData.Gender = this.inputData.Gender;
-          this.formData.IdentityNumber = this.inputData.IdentityNumber;
-          this.formData.IdentityDate = createDateString(this.inputData.IdentityDate);
-          this.formData.IdentityPlace = this.inputData.IdentityPlace;
-          this.formData.Address = this.inputData.Address; 
-          this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-          this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-          this.formData.Email = this.inputData.Email;
-          this.formData.BankAccount = this.inputData.BankAccount;
-          this.formData.BankName = this.inputData.BankName;
-          this.formData.Branch = this.inputData.Branch;
-        }
-        else {
-          this.resetForm();
-          console.log("resetForm");
-        }
+    if (this.inputData.IsUpdate === true) {
+      this.formMode = this.$MEnum.FormMode.UPDATE;
+      this.formData.EmployeeId = this.inputData.EmployeeId;
+      this.formData.IsCustomer = this.inputData.IsCustomer;
+      this.formData.IsSupplier = this.inputData.IsSupplier;
+      this.formData.EmployeeCode = this.inputData.EmployeeCode;
+      this.formData.FullName = this.inputData.FullName;
+      this.formData.DepartmentId = this.inputData.DepartmentId;
+      this.formData.PositionId = this.inputData.PositionId;
+      this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+      this.formData.Gender = this.inputData.Gender;
+      this.formData.IdentityNumber = this.inputData.IdentityNumber;
+      this.formData.IdentityDate = createDateString(
+        this.inputData.IdentityDate
+      );
+      this.formData.IdentityPlace = this.inputData.IdentityPlace;
+      this.formData.Address = this.inputData.Address;
+      this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
+      this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
+      this.formData.Email = this.inputData.Email;
+      this.formData.BankAccount = this.inputData.BankAccount;
+      this.formData.BankName = this.inputData.BankName;
+      this.formData.Branch = this.inputData.Branch;
+    } else if (this.inputData.IsDuplicate === true) {
+      this.formMode === this.$MEnum.FormMode.DUPLICATE;
+      this.formData.IsCustomer = this.inputData.IsCustomer;
+      this.formData.IsSupplier = this.inputData.IsSupplier;
+      this.formData.EmployeeCode = this.inputData.EmployeeCode;
+      this.formData.FullName = this.inputData.FullName;
+      this.formData.DepartmentId = this.inputData.DepartmentId;
+      this.formData.PositionId = this.inputData.PositionId;
+      this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+      this.formData.Gender = this.inputData.Gender;
+      this.formData.IdentityNumber = this.inputData.IdentityNumber;
+      this.formData.IdentityDate = createDateString(
+        this.inputData.IdentityDate
+      );
+      this.formData.IdentityPlace = this.inputData.IdentityPlace;
+      this.formData.Address = this.inputData.Address;
+      this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
+      this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
+      this.formData.Email = this.inputData.Email;
+      this.formData.BankAccount = this.inputData.BankAccount;
+      this.formData.BankName = this.inputData.BankName;
+      this.formData.Branch = this.inputData.Branch;
+    } else {
+      this.resetForm();
+      console.log("resetForm");
+    }
+    let allDepartment = await getAllDepartments();
+    let allPosition = await getAllPositions();
     let departmentArr = [];
     let positionArr = [];
     // Thêm giá trị cho combobox Departments
@@ -366,36 +435,35 @@ export default {
   },
   mounted() {
     this.$tinyEmitter.on("resetEmployeeForm", this.resetForm);
-    this.$nextTick(() => { this.$refs.employeeCode.onFocus(); });
+    this.$nextTick(() => {
+      this.$refs.employeeCode.onFocus();
+    });
   },
   beforeUnmount() {
     this.$tinyEmitter.off("resetEmployeeForm");
   },
-  watch: {
-  },
+  watch: {},
   methods: {
     /**
-     * Hàm gọi khi button "Cất và thêm mới được gọi", thêm(sửa) vào database sau đó 
+     * Hàm gọi khi button "Cất và thêm mới được gọi", thêm(sửa) vào database sau đó
      * Author: PMChien
      */
     async handleSubmitPro() {
       try {
-        if(this.validate()) {
+        if (this.validate()) {
           let isDuplicateNewCode = await this.checkNewCode();
-          if(isDuplicateNewCode) {
+          if (isDuplicateNewCode) {
             // let msg = [`Mã nhân viên ${this.formData.EmployeeCode} đã tồn tại trong hệ thống`];
             // this.$tinyEmitter.emit("openValidateDialog", msg);
             this.dialog.type = this.$MEnum.DialogType.WARNING;
             this.dialog.mode = this.$MEnum.DialogMode.WARNING;
             this.dialog.text = [this.$MResource["VN"].EmployeeCodeDuplicate];
             this.dialog.showDialog = true;
-          }
-          else {
+          } else {
             this.emitData();
+            this.toast.showToast = true;
+            this.resetForm();
           }
-        }
-        else {
-          console.log("Không hợp lệ", this.formError);
         }
       } catch (error) {
         console.error("Đã có lỗi: ", error);
@@ -408,31 +476,31 @@ export default {
     async handleSubmit() {
       try {
         // Validate dữ liệu
-        if(this.validate()) {
-          console.log("Hợp lệ");
+        if (this.validate()) {
           let isDuplicateNewCode = await this.checkNewCode();
-          if(isDuplicateNewCode) {
+          if (isDuplicateNewCode) {
             this.dialog.type = this.$MEnum.DialogType.WARNING;
             this.dialog.mode = this.$MEnum.DialogMode.WARNING;
             this.dialog.text = [this.$MResource["VN"].EmployeeCodeDuplicate];
             this.dialog.showDialog = true;
-          }
-          else {
-            if(this.formMode === this.$MEnum.FormMode.ADD || this.formMode === this.$MEnum.FormMode.DUPLICATE) {
+          } else {
+            if (
+              this.formMode === this.$MEnum.FormMode.ADD ||
+              this.formMode === this.$MEnum.FormMode.DUPLICATE
+            ) {
               this.emitData();
               this.$tinyEmitter.emit("loadData");
               this.$tinyEmitter.emit("openToast", this.toast);
+              //this.toast.showToast = true;
+              this.closeFunction();
+            } else {
+              this.emitData();
+              this.toast.showToast = true;
               this.closeFunction();
             }
-            else {
-              this.emitData();
-            }
-            
+
             // this.closeFunction();
           }
-        }
-        else {
-          console.log("Không hợp lệ", this.formError);
         }
       } catch (error) {
         console.error("Đã có lỗi: ", error);
@@ -444,20 +512,22 @@ export default {
     async checkNewCode() {
       try {
         /**
-           * Đối tượng khởi tạo để kiểm tra mã đã tồn tại chưa gồm
-           * EmployeeId: id của employee cần check
-           * EmployeeCode: Mã cần check,
-           * isCreate: có phải đang trạng thái ADD không
-           * isUpdate: có phải đang trạng tái UPDATE không
-           */
-           let DTOCheckCode = {
-              EmployeeId: this.formData.EmployeeId ? this.formData.EmployeeId : null,
-              EmployeeCode: this.formData.EmployeeCode.trim(),
-              isCreate: this.formMode === this.$MEnum.FormMode.ADD,
-              isUpdate: this.formMode === this.$MEnum.FormMode.UPDATE
-            };
-            let checkEmployeeCode = await checkEmployeeCodeBeforeCU(DTOCheckCode);
-            return checkEmployeeCode;
+         * Đối tượng khởi tạo để kiểm tra mã đã tồn tại chưa gồm
+         * EmployeeId: id của employee cần check
+         * EmployeeCode: Mã cần check,
+         * isCreate: có phải đang trạng thái ADD không
+         * isUpdate: có phải đang trạng tái UPDATE không
+         */
+        let DTOCheckCode = {
+          EmployeeId: this.formData.EmployeeId
+            ? this.formData.EmployeeId
+            : null,
+          EmployeeCode: this.formData.EmployeeCode.trim(),
+          isCreate: this.formMode === this.$MEnum.FormMode.ADD,
+          isUpdate: this.formMode === this.$MEnum.FormMode.UPDATE,
+        };
+        let checkEmployeeCode = await checkEmployeeCodeBeforeCU(DTOCheckCode);
+        return checkEmployeeCode;
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
@@ -469,95 +539,124 @@ export default {
     async emitData() {
       try {
         let data = removeBlankKey(this.formData);
-        if (this.formMode === this.$MEnum.FormMode.ADD || this.formMode === this.$MEnum.FormMode.DUPLICATE) {
+        if (
+          this.formMode === this.$MEnum.FormMode.ADD ||
+          this.formMode === this.$MEnum.FormMode.DUPLICATE
+        ) {
           let res = await createEmployee(data);
-          if(this.handleResponse(res)) {
+          if (this.handleResponse(res)) {
             this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
             this.toast.message = this.$MResource["VN"].AddEmployeeSuccess;
           }
-
         } else if (this.formMode === this.$MEnum.FormMode.UPDATE) {
-          // kiểm tra dữ liệu có thay đổi không
-          let isChange = false;
-          for (const key in this.formData) {
-            if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
-              if(key !== 'DateOfBirth' && key !== 'IdentityDate') {
-                if(this.formData[key] !== this.inputData[key]) {
-                  isChange = true;
-                  //console.log(`Giá trị khác biệt tại key ${key}, inputData là : ${this.inputData[key]}, formData là :  ${this.formData[key]}` )
-                }
-              }
-              else {
-                let stringDoB = createDateString(this.inputData.DateOfBirth);
-                let stringIdentityDate = createDateString(this.inputData.IdentityDate);
-                if(key === 'DateOfBirth' && this.formData[key] !== stringDoB) {
-                  //console.log(`Giá trị khác biệt tại key ${key}, createDateString là : ${stringDoB}, formData là :  ${this.formData[key]}` )
-                  isChange = true;
-                }
-                if(key === 'IdentityDate' && this.formData[key] !== stringIdentityDate) {
-                  isChange = true;
-                }
-              }
-              
-            }
+          let res = await updateEmployee(data, this.formData.EmployeeId);
+          if (this.handleResponse(res)) {
+            this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
+            this.toast.message = this.$MResource["VN"].EditEmployeeSuccess;
+            this.toast.showToast = true;
+            this.$tinyEmitter.emit("loadData");
+            this.formMode = this.$MEnum.FormMode.ADD;
+            delete this.formData.EmployeeId;
           }
-
-          // Nếu bị thay đổi
-          if(isChange) {
-            // Mở Dialog
-            this.dialog.title = this.$MResource["VN"].UpdateEmployeeTitle;
-            this.dialog.text = [this.$MResource["VN"].UpdateEmployeeMessage];
-            this.dialog.mode = this.$MEnum.DialogMode.FULL;
-            this.dialog.type = this.$MEnum.DialogType.INFO;
-            // nút chính sẽ lưu dữ liệu và đóng form
-            this.dialog.primaryAction = async () => {
-              let res = await updateEmployee(data, this.formData.EmployeeId);
-              if(this.handleResponse(res)) {
-                this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
-                this.toast.message = this.$MResource["VN"].EditEmployeeSuccess;
-                this.toast.showToast = true;
-                this.$tinyEmitter.emit("loadData");
-              }
-              this.resetForm();
-            };
-            // nút phụ sẽ đóng form
-            this.dialog.secondAction = () => {
-              this.dialog.showDialog = false;
-              this.closeFunction();
-            };
-            this.dialog.showDialog = true;
-          }
-          else {
-            // nếu không có gì thay đổi thì gọi api
-            let res = await updateEmployee(data, this.formData.EmployeeId);
-              if(this.handleResponse(res)) {
-                this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
-                this.toast.message = this.$MResource["VN"].EditEmployeeSuccess;
-                this.toast.showToast = true;
-              }
-          }
-          
+          this.formMode = this.$MEnum.FormMode.ADD;
         }
       } catch (error) {
         console.error("Đã có lỗi: ", error);
       }
     },
+
+    /**
+     * Xử lí khi nút đóng Popup được gọi, trong trường hợp sửa dữ liệu thì phải kiểm tra dữ liệu có trùng không, nếu không trùng mở dialog
+     * Author: PMChien
+     */
+    async handleCloseFunction() {
+      let data = removeBlankKey(this.formData);
+      if (
+        this.formMode === this.$MEnum.FormMode.ADD ||
+        this.formMode === this.$MEnum.FormMode.DUPLICATE
+      ) {
+        this.closeFunction();
+      } else {
+        // kiểm tra dữ liệu có thay đổi không
+        let isChange = false;
+        for (const key in this.formData) {
+          if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
+            if (key !== "DateOfBirth" && key !== "IdentityDate") {
+              if (this.formData[key] !== this.inputData[key]) {
+                isChange = true;
+                //console.log(`Giá trị khác biệt tại key ${key}, inputData là : ${this.inputData[key]}, formData là :  ${this.formData[key]}` )
+              }
+            } else {
+              let stringDoB = createDateString(this.inputData.DateOfBirth);
+              let stringIdentityDate = createDateString(
+                this.inputData.IdentityDate
+              );
+              if (key === "DateOfBirth" && this.formData[key] !== stringDoB) {
+                //console.log(`Giá trị khác biệt tại key ${key}, createDateString là : ${stringDoB}, formData là :  ${this.formData[key]}` )
+                isChange = true;
+              }
+              if (
+                key === "IdentityDate" &&
+                this.formData[key] !== stringIdentityDate
+              ) {
+                isChange = true;
+              }
+            }
+          }
+        }
+
+        // Nếu bị thay đổi
+        if (isChange) {
+          // Mở Dialog
+          this.dialog.title = this.$MResource["VN"].UpdateEmployeeTitle;
+          this.dialog.text = [this.$MResource["VN"].UpdateEmployeeMessage];
+          this.dialog.mode = this.$MEnum.DialogMode.FULL;
+          this.dialog.type = this.$MEnum.DialogType.INFO;
+          // nút chính sẽ lưu dữ liệu và đóng form
+          this.dialog.primaryAction = async () => {
+            let res = await updateEmployee(data, this.formData.EmployeeId);
+            if (this.handleResponse(res)) {
+              this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
+              this.toast.message = this.$MResource["VN"].EditEmployeeSuccess;
+              this.toast.showToast = true;
+              this.$tinyEmitter.emit("loadData");
+            }
+            this.resetForm();
+          };
+          // nút phụ sẽ đóng form
+          this.dialog.secondAction = () => {
+            this.dialog.showDialog = false;
+            this.closeFunction();
+          };
+          this.dialog.showDialog = true;
+        } else {
+          // nếu không có gì thay đổi thì đóng Popup
+          // let res = await updateEmployee(data, this.formData.EmployeeId);
+          //   if(this.handleResponse(res)) {
+          //     this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
+          //     this.toast.message = this.$MResource["VN"].EditEmployeeSuccess;
+          //     this.toast.showToast = true;
+          //   }
+          this.closeFunction();
+        }
+      }
+    },
+
     /**
      * Xử lí respose từ axios trả về
      * Author: PMChien
      */
-     handleResponse(res) {
+    handleResponse(res) {
       try {
-        if(Number.isInteger(res)) {
+        if (Number.isInteger(res)) {
           return true;
-        }
-        else {
+        } else {
           let status = res.status;
           let message = "";
           console.log(res);
           console.log("response status: ", status);
-          if(res.userMsg) {
-            message = res.userMsg
+          if (res.userMsg) {
+            message = res.userMsg;
           }
           switch (status) {
             case 200:
@@ -591,13 +690,12 @@ export default {
               break;
           }
         }
-        
+
         return false;
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
-    }
-    ,
+    },
     /**
      * Hàm Validate dữ liệu form
      * Author: PMChien
@@ -606,7 +704,7 @@ export default {
       try {
         let isValid = true;
         let checkRequired = true;
-        
+
         //reset lỗi
         for (const key in this.formError) {
           if (Object.hasOwnProperty.call(this.formError, key)) {
@@ -614,9 +712,9 @@ export default {
           }
         }
         this.dialogMessage = [];
-        
+
         // validate EmployeeCode
-        if(!this.formData.EmployeeCode) {
+        if (!this.formData.EmployeeCode) {
           this.formError.EmployeeCode = this.$MResource["VN"].FieldIsNotEmpty;
           this.dialogMessage.push(this.$MResource["VN"].EmployeeCodeIsNotEmpty);
           isValid = false;
@@ -624,7 +722,7 @@ export default {
         }
 
         // validate fullname
-        if(!this.formData.FullName) {
+        if (!this.formData.FullName) {
           this.formError.FullName = this.$MResource["VN"].FieldIsNotEmpty;
           this.dialogMessage.push(this.$MResource["VN"].FullNameIsNotEmpty);
           isValid = false;
@@ -632,7 +730,7 @@ export default {
         }
 
         // DepartmentId
-        if(!this.formData.DepartmentId) {
+        if (!this.formData.DepartmentId) {
           this.formError.department = this.$MResource["VN"].FieldIsNotEmpty;
           this.dialogMessage.push(this.$MResource["VN"].DepartmentIdIsNotEmpty);
           isValid = false;
@@ -640,59 +738,57 @@ export default {
         }
 
         // DateOfBirth
-        if(this.formData.DateOfBirth) {
+        if (this.formData.DateOfBirth) {
           let today = new Date();
           let dob = new Date(this.formData.DateOfBirth);
-          if(
-            dob > today ||
-            (dob.getFullYear() === today.getFullYear() &&
-              dob.getMonth() === today.getMonth() &&
-              dob.getDate() === today.getDate())
-          ) {
+          if (dob > today) {
             this.formError.DateOfBirth = this.$MResource["VN"].DoBInvalid;
             isValid = false;
           }
         }
 
-        // IdentityNumber 
-        if(this.formData.IdentityNumber) {
-         let regexIdentity =  /^\d{9}$/;
-         if(!regexIdentity.test(this.formData.IdentityNumber)) {
-          this.formError.IdentityNumber = this.$MResource["VN"].MemberCardCodeIsNotFormat;
-          isValid = false;
-         }
+        // IdentityNumber
+        if (this.formData.IdentityNumber) {
+          let regexIdentity = /^\d{9}$/;
+          if (!regexIdentity.test(this.formData.IdentityNumber)) {
+            this.formError.IdentityNumber =
+              this.$MResource["VN"].MemberCardCodeIsNotFormat;
+            isValid = false;
+          }
         }
 
         // IdentityDate
-        if(this.formData.IdentityDate) {
+        if (this.formData.IdentityDate) {
           let today = new Date();
           let IdentityDateCheck = new Date(this.formData.IdentityDate);
-          if(IdentityDateCheck > today) {
+          if (IdentityDateCheck > today) {
             this.formError.IdentityDate = this.$MResource["VN"].DoRInvalid;
-            isValid = false
+            isValid = false;
           }
         }
 
         // MobilePhoneNumber
-        if(this.formData.MobilePhoneNumber) {
+        if (this.formData.MobilePhoneNumber) {
           let phoneRegex = /^[^a-zA-Z]*$/;
-          if(!phoneRegex.test(this.formData.MobilePhoneNumber)) {
-            this.formError.MobilePhoneNumber = this.$MResource["VN"].PhoneNumberIsNotFormat;
+          if (!phoneRegex.test(this.formData.MobilePhoneNumber)) {
+            this.formError.MobilePhoneNumber =
+              this.$MResource["VN"].PhoneNumberIsNotFormat;
             isValid = false;
           }
         }
 
         // LandlinePhoneNumber
-        if(this.formData.LandlinePhoneNumber) {
+        if (this.formData.LandlinePhoneNumber) {
           let phoneRegex = /^[^a-zA-Z]*$/;
-          if(!phoneRegex.test(this.formData.LandlinePhoneNumber)) {
-            this.formError.LandlinePhoneNumber = this.$MResource["VN"].PhoneNumberIsNotFormat;
+          if (!phoneRegex.test(this.formData.LandlinePhoneNumber)) {
+            this.formError.LandlinePhoneNumber =
+              this.$MResource["VN"].PhoneNumberIsNotFormat;
             isValid = false;
           }
         }
 
         // Email
-        if(this.formData.Email) {
+        if (this.formData.Email) {
           const regexEmail =
             /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
           if (!regexEmail.test(this.formData.Email)) {
@@ -701,7 +797,7 @@ export default {
           }
         }
 
-        if(!checkRequired) {
+        if (!checkRequired) {
           this.dialog.type = this.$MEnum.DialogType.ERROR;
           this.dialog.mode = this.$MEnum.DialogMode.WARNING;
           this.dialog.text = this.dialogMessage;
@@ -727,7 +823,7 @@ export default {
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }
-    }
+    },
   },
 };
 </script>
