@@ -486,9 +486,10 @@ export default {
             this.dialog.showDialog = true;
             this.dialog.listStyle = true;
           } else {
-            this.emitData();
+            await this.emitData();
+            await this.$tinyEmitter.emit("loadData");
             this.toast.showToast = true;
-            this.resetForm();
+            await this.resetForm();
           }
         }
       } catch (error) {
@@ -574,6 +575,7 @@ export default {
           if (this.handleResponse(res)) {
             this.toast.type = this.$MResource["VN"].ToastTypeSuccess;
             this.toast.message = this.$MResource["VN"].AddEmployeeSuccess;
+            // this.$tinyEmitter.emit("loadData");
           }
         } else if (this.formMode === this.$MEnum.FormMode.UPDATE) {
           let res = await updateEmployee(data, this.formData.EmployeeId);
