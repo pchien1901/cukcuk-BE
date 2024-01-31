@@ -217,6 +217,7 @@
       :secondAction="this.dialog.secondAction"
       :primaryBtnText="this.dialog.primaryBtnText"
       :cancelBtnText="this.dialog.cancelBtnText"
+      :listStyle="this.dialog.listStyle"
     />
 
     <!-- TOAST -->
@@ -349,6 +350,7 @@ export default {
         secondAction: null,
         primaryBtnText: this.$MResource["VN"].PrimaryBtnText,
         secondBtnText: this.$MResource["VN"].SecondBtnTextConfirm,
+        listStyle: true
       },
       toast: {
         showToast: false,
@@ -362,52 +364,75 @@ export default {
   async created() {
     if (this.inputData.IsUpdate === true) {
       this.formMode = this.$MEnum.FormMode.UPDATE;
+      // this.formData.EmployeeId = this.inputData.EmployeeId;
+      // this.formData.IsCustomer = this.inputData.IsCustomer;
+      // this.formData.IsSupplier = this.inputData.IsSupplier;
+      // this.formData.EmployeeCode = this.inputData.EmployeeCode;
+      // this.formData.FullName = this.inputData.FullName;
+      // this.formData.DepartmentId = this.inputData.DepartmentId;
+      // this.formData.PositionId = this.inputData.PositionId;
+      // this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+      // this.formData.Gender = this.inputData.Gender;
+      // this.formData.IdentityNumber = this.inputData.IdentityNumber;
+      // this.formData.IdentityDate = createDateString(
+      //   this.inputData.IdentityDate
+      // );
+      // this.formData.IdentityPlace = this.inputData.IdentityPlace;
+      // this.formData.Address = this.inputData.Address;
+      // this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
+      // this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
+      // this.formData.Email = this.inputData.Email;
+      // this.formData.BankAccount = this.inputData.BankAccount;
+      // this.formData.BankName = this.inputData.BankName;
+      // this.formData.Branch = this.inputData.Branch;
+
+      for (const key in this.inputData) {
+        if (Object.hasOwnProperty.call(this.formData, key)) {
+          this.formData[key] = this.inputData[key];
+        }
+      }
       this.formData.EmployeeId = this.inputData.EmployeeId;
-      this.formData.IsCustomer = this.inputData.IsCustomer;
-      this.formData.IsSupplier = this.inputData.IsSupplier;
-      this.formData.EmployeeCode = this.inputData.EmployeeCode;
-      this.formData.FullName = this.inputData.FullName;
-      this.formData.DepartmentId = this.inputData.DepartmentId;
-      this.formData.PositionId = this.inputData.PositionId;
       this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      this.formData.Gender = this.inputData.Gender;
-      this.formData.IdentityNumber = this.inputData.IdentityNumber;
       this.formData.IdentityDate = createDateString(
         this.inputData.IdentityDate
       );
-      this.formData.IdentityPlace = this.inputData.IdentityPlace;
-      this.formData.Address = this.inputData.Address;
-      this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-      this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-      this.formData.Email = this.inputData.Email;
-      this.formData.BankAccount = this.inputData.BankAccount;
-      this.formData.BankName = this.inputData.BankName;
-      this.formData.Branch = this.inputData.Branch;
     } else if (this.inputData.IsDuplicate === true) {
       this.formMode === this.$MEnum.FormMode.DUPLICATE;
-      this.formData.IsCustomer = this.inputData.IsCustomer;
-      this.formData.IsSupplier = this.inputData.IsSupplier;
-      this.formData.EmployeeCode = this.inputData.EmployeeCode;
-      this.formData.FullName = this.inputData.FullName;
-      this.formData.DepartmentId = this.inputData.DepartmentId;
-      this.formData.PositionId = this.inputData.PositionId;
+      // this.formData.IsCustomer = this.inputData.IsCustomer;
+      // this.formData.IsSupplier = this.inputData.IsSupplier;
+      // this.formData.EmployeeCode = this.inputData.EmployeeCode;
+      // this.formData.FullName = this.inputData.FullName;
+      // this.formData.DepartmentId = this.inputData.DepartmentId;
+      // this.formData.PositionId = this.inputData.PositionId;
+      // this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+      // this.formData.Gender = this.inputData.Gender;
+      // this.formData.IdentityNumber = this.inputData.IdentityNumber;
+      // this.formData.IdentityDate = createDateString(
+      //   this.inputData.IdentityDate
+      // );
+      // this.formData.IdentityPlace = this.inputData.IdentityPlace;
+      // this.formData.Address = this.inputData.Address;
+      // this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
+      // this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
+      // this.formData.Email = this.inputData.Email;
+      // this.formData.BankAccount = this.inputData.BankAccount;
+      // this.formData.BankName = this.inputData.BankName;
+      // this.formData.Branch = this.inputData.Branch;
+
+
+      for (const key in this.inputData) {
+        if (Object.hasOwnProperty.call(this.formData, key)) {
+          this.formData[key] = this.inputData[key];
+        }
+      }
+      this.formData.EmployeeId = this.inputData.EmployeeId;
       this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      this.formData.Gender = this.inputData.Gender;
-      this.formData.IdentityNumber = this.inputData.IdentityNumber;
       this.formData.IdentityDate = createDateString(
         this.inputData.IdentityDate
       );
-      this.formData.IdentityPlace = this.inputData.IdentityPlace;
-      this.formData.Address = this.inputData.Address;
-      this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-      this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-      this.formData.Email = this.inputData.Email;
-      this.formData.BankAccount = this.inputData.BankAccount;
-      this.formData.BankName = this.inputData.BankName;
-      this.formData.Branch = this.inputData.Branch;
     } else {
       this.resetForm();
-      console.log("resetForm");
+      // console.log("resetForm");
     }
     let allDepartment = await getAllDepartments();
     let allPosition = await getAllPositions();
@@ -459,6 +484,7 @@ export default {
             this.dialog.mode = this.$MEnum.DialogMode.WARNING;
             this.dialog.text = [this.$MResource["VN"].EmployeeCodeDuplicate];
             this.dialog.showDialog = true;
+            this.dialog.listStyle = true;
           } else {
             this.emitData();
             this.toast.showToast = true;
@@ -483,6 +509,7 @@ export default {
             this.dialog.mode = this.$MEnum.DialogMode.WARNING;
             this.dialog.text = [this.$MResource["VN"].EmployeeCodeDuplicate];
             this.dialog.showDialog = true;
+            this.dialog.listStyle = true;
           } else {
             if (
               this.formMode === this.$MEnum.FormMode.ADD ||
@@ -582,9 +609,13 @@ export default {
         for (const key in this.formData) {
           if (Object.prototype.hasOwnProperty.call(this.formData, key)) {
             if (key !== "DateOfBirth" && key !== "IdentityDate") {
+              if(!this.formData[key] && !this.inputData[key]) 
+                {
+                  continue;
+                }
               if (this.formData[key] !== this.inputData[key]) {
                 isChange = true;
-                //console.log(`Giá trị khác biệt tại key ${key}, inputData là : ${this.inputData[key]}, formData là :  ${this.formData[key]}` )
+                console.log(`Giá trị khác biệt tại key ${key}, inputData là : ${this.inputData[key]}, formData là :  ${this.formData[key]}` )
               }
             } else {
               let stringDoB = createDateString(this.inputData.DateOfBirth);
@@ -592,7 +623,7 @@ export default {
                 this.inputData.IdentityDate
               );
               if (key === "DateOfBirth" && this.formData[key] !== stringDoB) {
-                //console.log(`Giá trị khác biệt tại key ${key}, createDateString là : ${stringDoB}, formData là :  ${this.formData[key]}` )
+                console.log(`Giá trị khác biệt tại key ${key}, createDateString là : ${stringDoB}, formData là :  ${this.formData[key]}` )
                 isChange = true;
               }
               if (
@@ -612,7 +643,8 @@ export default {
           this.dialog.text = [this.$MResource["VN"].UpdateEmployeeMessage];
           this.dialog.mode = this.$MEnum.DialogMode.FULL;
           this.dialog.type = this.$MEnum.DialogType.INFO;
-          // nút chính sẽ lưu dữ liệu và đóng form
+          this.dialog.listStyle = false;
+          // nút chính sẽ lưu dữ liệu và đóng form, chuyển formMode về add
           this.dialog.primaryAction = async () => {
             let res = await updateEmployee(data, this.formData.EmployeeId);
             if (this.handleResponse(res)) {
@@ -798,9 +830,11 @@ export default {
         }
 
         if (!checkRequired) {
+          this.dialog.title = this.$MResource["VN"].ValidateDialogTitle;
           this.dialog.type = this.$MEnum.DialogType.ERROR;
           this.dialog.mode = this.$MEnum.DialogMode.WARNING;
           this.dialog.text = this.dialogMessage;
+          this.dialog.listStyle = true;
           this.dialog.showDialog = true;
         }
         return isValid && checkRequired;
@@ -809,7 +843,7 @@ export default {
       }
     },
     /**
-     * Reset form
+     * Reset form, formMode sẽ về ADD
      * Author: PMChien
      */
     async resetForm() {
@@ -820,6 +854,7 @@ export default {
           }
         }
         this.formData.EmployeeCode = await getNewEmployeeCode();
+        this.formMode = this.$MEnum.FormMode.ADD;
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }

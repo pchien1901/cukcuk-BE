@@ -100,20 +100,19 @@
     </div>
     <div class="table-footer">
       <div class="pagination-footer">
-    <div class="total-records">Tổng: <b>{{ totalRecord }}</b></div>
-    <div class="pagination">
-      <label>Số bản ghi/trang</label>
-      <MDropdown :items="pagingItem" position="top" v-model="this.pagination.PageSize"/>
-      <div class="lists-records"><b>{{this.startIndex}}</b> - <b>{{ this.endIndex }}</b> bản ghi</div>
-      <div class="icon-pagination">
-        <div class="pageBefore" @click="goToPreviousPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === 1 }"
-        ><MIcon :iconAwsClass="'fas fa-chevron-left'" :tooltip="'Trang trước'" :tooltipPosition="'top'"/></div>
-        <div class="pageAfter"  @click="goToTheNextPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === this.totalPage }"
-        ><MIcon :iconAwsClass="'fas fa-chevron-right'" :tooltip="'Trang sau'" :tooltipPosition="'top'"/></div>
-        
+      <div class="total-records">Tổng: <b>{{ totalRecord }}</b></div>
+      <div class="pagination">
+        <label>Số bản ghi/trang</label>
+        <MDropdown :items="pagingItem" position="top" v-model="this.pagination.PageSize"/>
+        <div class="lists-records"><b>{{this.startIndex}}</b> - <b>{{ this.endIndex }}</b> bản ghi</div>
+        <div class="icon-pagination">
+          <div class="pageBefore" @click="goToPreviousPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === 1 }"
+          ><MIcon :iconAwsClass="'fas fa-chevron-left'" :tooltip="'Trang trước'" :tooltipPosition="'top'"/></div>
+          <div class="pageAfter"  @click="goToTheNextPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === this.totalPage }"
+          ><MIcon :iconAwsClass="'fas fa-chevron-right'" :tooltip="'Trang sau'" :tooltipPosition="'top'"/></div>  
+        </div>
       </div>
     </div>
-  </div>
     </div>
   </div>
   

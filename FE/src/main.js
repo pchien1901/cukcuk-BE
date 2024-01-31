@@ -18,6 +18,7 @@ import MIcon from '../src/components/base/icon/MIcon.vue';
 import MDropdown from '../src/components/base/combobox/MDropdown.vue';
 
 //  custom component
+import MEmployeeImportTable from '../src/view/employee/MEmployeeImportTable.vue';
 
 // view
 import MEmployeeList from '../src/view/employee/MEmployeeList.vue';
@@ -56,6 +57,8 @@ app
 
     // view
     .component("MEmployeeList", MEmployeeList)
+    .component("MEmployeeImportTable", MEmployeeImportTable)
+
 
 // router
 const routes = [

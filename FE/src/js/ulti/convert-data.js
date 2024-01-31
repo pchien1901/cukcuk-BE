@@ -113,4 +113,25 @@ function removeBlankKey(data) {
   }
 }
 
-export { getGenderLabel, convertDateFormat, createDateString, removeBlankKey };
+/**
+     * định dạng số với dấu phẩy hàng nghìn
+     * @param {*} number
+     * @returns số được định dạng
+     * Author: PHẠM MINH CHIẾN (29/11/2023)
+     */
+function formatNumberWithCommas(number) {
+  try {
+    if(number) {
+      // Sử dụng toLocaleString để định dạng số với dấu phẩy hàng nghìn
+      return number.toLocaleString("vi-VN");
+    }
+    else {
+      return "";
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+export { getGenderLabel, convertDateFormat, createDateString, removeBlankKey, formatNumberWithCommas };

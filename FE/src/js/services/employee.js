@@ -145,9 +145,28 @@ export const validateFile = async (file) => {
       "Content-Type": "multipart/form-data",
     }
   });
-    return res.data;
+    return res;
   } catch (error) {
     console.error("Đã xảy ra lỗi: ", error);
+    return error.response;
+  }
+}
+
+/**
+ * thực hiện import
+ * @param {string} importKey chuỗi để thực hiện import
+ * @returns thông tin { Imported: số dòng import được, Total: tổng số dòng}
+ * Author: PMChien
+ */
+export const importFile = async (importKey) => {
+  try {
+    let formData = new FormData();
+    formData.append("keyImport", importKey);
+    let res = await axios.post(`${apiURL}/Employees/${importKey}`, formData);
+    return res;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
+    return error.response;
   }
 }
 

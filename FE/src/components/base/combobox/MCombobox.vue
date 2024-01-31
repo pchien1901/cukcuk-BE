@@ -131,6 +131,7 @@ export default {
     },
     modelValue(newValue) {
       let data = this.items.filter(item => item.value === newValue);
+      //console.log(data);
       if(data.length > 0) {
         this.inputValue = data[0].text;
       } 
@@ -146,19 +147,31 @@ export default {
     },
     errorMsg(newValue) {
       this.$emit("update:error", newValue);
+    },
+    items(newValue) {
+      this.inputItems = newValue;
+      let data = this.inputItems.filter(item => item.value === this.modelValue);
+      //console.log("data: ", data, "modelValue: ", this.modelValue, "inputItems: ", this.inputItems);
+      if(data.length > 0) {
+        this.inputValue = data[0].text;
+      }
+      else {
+        this.inputValue = null;
+      }
     }
   },
   created() {
-    if(!this.modelValue) {
-      this.inputValue = null;
-    }
-    let data = this.items.filter(item => item.value === this.modelValue);
-    if(data.length > 0) {
-      this.inputValue = data[0].text;
-    }
-    else {
-      this.inputValue = null;
-    }
+    // if(!this.modelValue) {
+    //   this.inputValue = null;
+    // }
+    // let data = this.inputItems.filter(item => item.value === this.modelValue);
+    // console.log("data: ", data, "modelValue: ", this.modelValue, "inputItems: ", this.inputItems);
+    // if(data.length > 0) {
+    //   this.inputValue = data[0].text;
+    // }
+    // else {
+    //   this.inputValue = null;
+    // }
   },
   // update() {
   //   this.inputValue = this.value;
@@ -277,7 +290,7 @@ export default {
       inputItems: this.items,
 
       // giá trị của input 
-      inputValue: this.modelValue,
+      inputValue: "",
 
       // dữ liệu được chọn
       selectedItem: this.items.find(item => item.text === this.modelValue),

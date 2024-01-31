@@ -46,12 +46,16 @@
 
 .m-btn--disabled {
   opacity: 56%;
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 
 .m-btn--disabled:hover {
-  background-color: transparent;
+  /* background-color: transparent; */
   cursor: unset;
+}
+
+.m-btn--disabled:active {
+  background-color: unset;
 }
 
 button:disabled {
@@ -85,6 +89,10 @@ button[disabled]:hover {
 
 .m-btn-primary:active {
   background-color: var(--btn-active-bgc);
+}
+
+button[disabled].m-btn-primary:active {
+  background-color: var(--btn-background-color);
 }
 
 /* SECOND BUTTON */
@@ -167,11 +175,11 @@ button[disabled]:hover {
 
 .m-btn--disabled {
   opacity: 56%;
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 
 .m-btn--disabled:hover {
-  background-color: transparent;
+  /* background-color: transparent; */
   cursor: unset;
 }
 

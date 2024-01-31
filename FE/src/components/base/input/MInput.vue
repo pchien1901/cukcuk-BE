@@ -21,15 +21,14 @@
     <div v-if="iconClass !== null && iconClass !== '' && iconClass !== undefined" class="m-input__icon" :class="iconClass"></div>
     </div>
     
-    <input 
-      v-if="type === 'file'"
-      type="file"
-      :class="computedClasses"
-      :id="id"
-      :name="name"
+    <div v-if="type === 'file'" class="m-input-file-wrapper">
+      <div class="m-input-file__text">{{ file.fileName }}</div>
+      <input type="file" :class="computedClasses" :id="id" :name="name"
       @change="handleFileChange"
-      ref="fileInput"
-    />
+      ref="fileInput"/>
+      <button class="m-input-file__btn m-btn m-btn-medium" @click="() => { this.$refs.fileInput.click(); }">{{ file.buttonText }}</button>
+    </div>
+    
     <div v-if="errorMessage" class="m-input__error-message">
       {{ errorMessage }}
     </div>
@@ -79,6 +78,10 @@ export default {
   data() {
     return {
       inputValue: this.modelValue,
+      file: {
+        fileName: this.$MResource["VN"].Input.TypeFile.FileNameDefault,
+        buttonText: this.$MResource["VN"].Input.TypeFile.ButtonText,
+      }
     };
   },
   computed: {
@@ -122,7 +125,12 @@ export default {
         if(fileInput.files.length > 0) {
           // lấy giá trị khi có sự kiện change
           let selectedFile = fileInput.files[0];
+          // đặt lại tên hiển thị
+          this.file.fileName = selectedFile.name;
           this.$emit("fileUploaded", selectedFile);
+        }
+        else {
+          this.file.fileName = this.$MResource["VN"].Input.TypeFile.FileNameDefault;
         }
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);

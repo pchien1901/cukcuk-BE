@@ -8,7 +8,7 @@
           :class="'m-cancel-btn btn-close-dialog'"
           :size="'medium'"
           :iconClass="'icon-cancel-red'"
-          @click="handleClickBtn"
+          @click="closeDialog"
         />
       </div>
       <div class="dialog-content">
@@ -21,7 +21,7 @@
             <li
               v-for="(item, index) in text"
               :key="index"
-              :class="{ unsetLiStyle: true }"
+              :class="{ unsetLiStyle: !this.listStyle }"
             >
               {{ item }}
             </li>
@@ -91,6 +91,7 @@ export default {
     primaryBtnText: { type: String, default: "Đồng ý" },
     secondBtnText: { type: String, default: "Không" },
     cancelBtnText: { type: String, default: "Hủy" },
+    listStyle: { type: Boolean, default: false}
   },
   data() {
     return {
