@@ -81,7 +81,7 @@ namespace MISA.CUKCUK.Core.DTOs.ImportDTOs
         /// <summary>
         /// tên đơn vị làm việc (bắt buộc)
         /// </summary>
-        public string Departmentname { get; set; }
+        public string DepartmentName { get; set; }
 
         /// <summary>
         /// Chức danh

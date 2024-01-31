@@ -15,7 +15,7 @@ namespace MISA.CUKCUK.Core.Entities
         /// <summary>
         /// Id của nhân viên
         /// </summary>
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
         /// <summary>
         /// Mã nhân viên (bắt buộc)
@@ -50,7 +50,7 @@ namespace MISA.CUKCUK.Core.Entities
         /// </summary>
         /// 
         [MISARequired(ErrorMessage = MISAConst.ERROR_DEPARTMENTID_REQUIRED)]
-        public Guid DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
 
         /// <summary>
         /// Tên đơn vị làm việc (bắt buộc)

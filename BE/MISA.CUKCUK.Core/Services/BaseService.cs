@@ -1,4 +1,5 @@
-﻿using MISA.CUKCUK.Core.DTOs;
+﻿using Microsoft.Extensions.Caching.Memory;
+using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,14 @@ namespace MISA.CUKCUK.Core.Services
     {
         #region Declaration
         protected IBaseRepository<T> repository;
+        protected IMemoryCache memoryCache;
         #endregion
 
         #region Constructor
-        public BaseService(IBaseRepository<T> repository)
+        public BaseService(IBaseRepository<T> repository, IMemoryCache memoryCache)
         {
             this.repository = repository;
+            this.memoryCache = memoryCache;
         }
         #endregion
 

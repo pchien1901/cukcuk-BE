@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
@@ -20,7 +21,7 @@ namespace MISA.CUKCUK.Core.Services
         #endregion
 
         #region Constructor
-        public CustomerService(ICustomerRepository customerRepository): base(customerRepository)
+        public CustomerService(ICustomerRepository customerRepository, IMemoryCache memoryCache): base(customerRepository, memoryCache)
         {
             _customerRepository = customerRepository;
         }

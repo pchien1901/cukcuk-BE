@@ -172,8 +172,16 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         {
             try
             {
-                var res = _employeeService.ValidateImportService(fileImport);
-                return StatusCode(200, res);
+                var res = _employeeService.ReadImportFile(fileImport);
+                if(res.Success)
+                {
+                    return StatusCode(200, res.DataObject);
+                }
+                else
+                {
+                    var devMsg = "Có lỗi tại ImportEmployeeFromFile - EmployeeControler";
+                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                }
             }
             catch (Exception)
             {
@@ -182,20 +190,26 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
-        [HttpPost("import")]
-        public IActionResult ImportEmployeeFromFile(List<EmployeeImport> employeeList)
+        [HttpPost("{keyImport}")]
+        public IActionResult ImportEmployeeFromFile(string keyImport)
         {
             try
             {
-                var res = _employeeService.ImportEmployee(employeeList);
+                var res = _employeeService.ImportEmployee(keyImport);
                 if(res.Success)
                 {
-                    return StatusCode(201, res.Data);
+                    return StatusCode(201, res.DataObject);
                 }
                 else
                 {
-                    var devMsg = "Có lỗi tại ImportEmployeeFromFile - EmployeeControler";
-                    throw new MISAControllerException(MISAResource.BaseError, devMsg);
+                    return StatusCode(500, new { 
+                        devMsg = "Lỗi tại ImportEmployeeFromFile, employee controller",
+                        userMsg = "Nhập khẩu không thành công.",
+                        errorCode = "",
+                        moreInfor = "",
+                        traceId = "",
+                        data = res.DataObject
+                    });
                 }
             }
             catch (Exception)

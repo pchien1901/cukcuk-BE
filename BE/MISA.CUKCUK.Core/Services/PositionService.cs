@@ -1,4 +1,5 @@
 ﻿//using core.Entities;
+using Microsoft.Extensions.Caching.Memory;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
@@ -18,7 +19,7 @@ namespace MISA.CUKCUK.Core.Services
         #endregion
 
         #region Constructor
-        public PositionService(IPositionRepository positionRepository): base(positionRepository)
+        public PositionService(IPositionRepository positionRepository, IMemoryCache memoryCache): base(positionRepository, memoryCache)
         {
             this.positionRepository = positionRepository;
         }

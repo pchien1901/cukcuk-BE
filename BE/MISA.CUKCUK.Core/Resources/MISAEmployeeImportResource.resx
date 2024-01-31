@@ -118,18 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DepartmentNotExist" xml:space="preserve">
-    <value>Đơn vị không có trong hệ thống</value>
+    <value>Đơn vị không có trong hệ thống.</value>
   </data>
   <data name="EmployeeCodeDuplicateInDB" xml:space="preserve">
-    <value>Mã nhân viên đã trùng trong hệ thống</value>
+    <value>Mã nhân viên đã trùng trong hệ thống.</value>
   </data>
   <data name="EmployeeCodeDuplicateInFile" xml:space="preserve">
-    <value>Mã nhân viên đã trùng với nhân viên khác trong tệp</value>
+    <value>Mã nhân viên đã trùng với nhân viên khác trong tệp.</value>
   </data>
   <data name="EmployeeCodeIsRequired" xml:space="preserve">
-    <value>Mã nhân viên không được để trống</value>
+    <value>Mã nhân viên không được để trống.</value>
+  </data>
+  <data name="FileIsNotExcel" xml:space="preserve">
+    <value>File nhập khẩu phải là file Excel.</value>
+  </data>
+  <data name="FileIsRequired" xml:space="preserve">
+    <value>File không được để trống.</value>
   </data>
   <data name="PositionNotExist" xml:space="preserve">
-    <value>Chức vụ không có trong hệ thống</value>
+    <value>Chức vụ không có trong hệ thống.</value>
   </data>
 </root>

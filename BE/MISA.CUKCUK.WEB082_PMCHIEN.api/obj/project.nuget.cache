@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pXI48Igwwjq5EM0+ulPHEi57mEUg8WPIzrwXKWnTRM73oQipvLlmAcgiMNGx89xz12WY8SIWz7T1yFtibewTQA==",
+  "dgSpecHash": "PJ6EInVa/V3/Fis4wQi+JaMB5tbhrh9Du04YlDqzKTRmUIMqCs0gUSYugh00PKRhQy0JaUmGkRxnBspC2fcT+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\judai\\E\\code\\MISA\\misa-backend\\MISA.CUKCUK.WEB082_PMCHIEN\\BE\\MISA.CUKCUK.WEB082_PMCHIEN.api\\MISA.CUKCUK.WEB082_PMCHIEN.api.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\judai\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\judai\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\6.0.0\\microsoft.extensions.configuration.fileextensions.6.0.0.nupkg.sha512",

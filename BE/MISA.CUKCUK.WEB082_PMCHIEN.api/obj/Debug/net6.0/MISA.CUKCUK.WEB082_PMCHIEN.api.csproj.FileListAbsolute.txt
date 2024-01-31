@@ -162,3 +162,4 @@ C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCU
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.WEB082_PMCHIEN.api\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll

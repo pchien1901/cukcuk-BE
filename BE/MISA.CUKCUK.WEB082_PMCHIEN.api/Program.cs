@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using MISA.CUKCUK.Core;
+using MISA.CUKCUK.Core.AutoMapper;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
 using MISA.CUKCUK.Core.Services;
@@ -44,6 +45,13 @@ builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IMISADbContext, MariaDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// memory cache
+builder.Services.AddMemoryCache();
+
+// auto mapper
+builder.Services.AddAutoMapper
+    (typeof(AutoMapperProfile).Assembly);
 
 var app = builder.Build();
 

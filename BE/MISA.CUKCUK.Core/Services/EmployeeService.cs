@@ -1,6 +1,8 @@
 ﻿//using core.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
+using MISA.CUKCUK.Core.AutoMapper;
 using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.DTOs.CrudDTOs;
 using MISA.CUKCUK.Core.DTOs.HelperDTO;
@@ -8,6 +10,7 @@ using MISA.CUKCUK.Core.DTOs.ImportDTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
 using MISA.CUKCUK.Core.Interfaces;
+using MISA.CUKCUK.Core.MISAEnum;
 using MISA.CUKCUK.Core.Resources;
 using OfficeOpenXml;
 using System;
@@ -28,7 +31,7 @@ namespace MISA.CUKCUK.Core.Services
         #endregion
 
         #region Constructor
-        public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork) : base(employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork, IMemoryCache memoryCache) : base(employeeRepository, memoryCache)
         {
             _employeeRepository = employeeRepository;
             _unitOfWork = unitOfWork;
@@ -170,7 +173,7 @@ namespace MISA.CUKCUK.Core.Services
         }
 
         /// <summary>
-        /// Validate file trước khi import
+        /// Validate, lưu file vào memory cache file trước khi import
         /// </summary>
         /// <param name="fileImport">file excel</param>
         /// <returns>Danh sách thông tin nhân viên từ file và trạng thái có thể thêm hay không</returns>
@@ -178,6 +181,7 @@ namespace MISA.CUKCUK.Core.Services
         {
             CheckFileImport(fileImport);
             var employeeInfoList = new List<EmployeeImport>();
+            var employees = new List<Employee>();
             using (var stream = new MemoryStream())
             {
                 // Copy tệp vào stream
@@ -230,15 +234,17 @@ namespace MISA.CUKCUK.Core.Services
                             // Tạo đối tượng EmployeeImport
                             var validateEmployee = new EmployeeImport
                             {
+                                EmployeeId = Guid.NewGuid(),
                                 EmployeeCode = employeeCode,
                                 FullName = worksheet.Cells[row, 3]?.Value?.ToString()?.Trim(),
                                 PositionName = positionName,
-                                Departmentname = departmentName,
+                                DepartmentName = departmentName,
                                 IdentityNumber = worksheet.Cells[row, 6]?.Value?.ToString()?.Trim(),
                                 IdentityPlace = worksheet.Cells[row, 7]?.Value?.ToString()?.Trim(),
                                 IdentityDateString = identityDateInExcel,
                                 DateOfBirthString = dobInExcel,
                                 GenderString = worksheet.Cells[row, 10]?.Value?.ToString()?.Trim(),
+                                Gender = ProcessGender(gender),
                                 Nationality = worksheet.Cells[row, 11]?.Value?.ToString()?.Trim(),
                                 Ethnicity = worksheet.Cells[row, 12]?.Value?.ToString()?.Trim(),
                                 MobilePhoneNumber = worksheet.Cells[row, 13]?.Value?.ToString()?.Trim(),
@@ -311,6 +317,8 @@ namespace MISA.CUKCUK.Core.Services
                             }
 
                             employeeInfoList.Add(validateEmployee);
+                            //var employee = mapper.Map<Employee>(validateEmployee);
+                            //employees.Add(employee);
                         }
 
                         // Kiểm tra mã bị trùng trong tệp chưa
@@ -349,38 +357,114 @@ namespace MISA.CUKCUK.Core.Services
                             }
                             
                         }
+
+                        //foreach (var employeeImport in employeeInfoList)
+                        //{
+                        //    if(employeeImport.CanImported == false)
+                        //    {
+
+                        //    }
+                        //}
                     }
                 }
             }
             return employeeInfoList;
         }
 
+        public MISAServiceResult ReadImportFile(IFormFile fileImport)
+        {
+            var employeeImport = ValidateImportService(fileImport);
+            // Tạo thông tin import mới
+            var importInfo = new ImportInfo(String.Format("EmployeeImport_{0}", Guid.NewGuid()), employeeImport);
+
+            // Lưu dữ liệu vào cache:
+            memoryCache.Set(importInfo.ImportKey, employeeImport);
+            return new MISAServiceResult
+            {
+                Success = true,
+                DataObject = importInfo
+            };
+
+        }
+
         /// <summary>
         /// Thực hiện thêm các thông tin từ file vào database
         /// </summary>
-        /// <param name="employeeList">Danh sách EmployeeImport đã gửi từ trước cho Frontend</param>
+        /// <param name="keyImport">keyImport để lấy dữ liệu trong memory cache</param>
         /// <returns>
-        /// MISAServiceResult { Success = true nếu thêm thành công, Data = số bản ghi thay đổi }
+        /// MISAServiceResult { Success = true nếu thêm thành công, DataObject = số bản ghi thêm thành công }
         /// </returns>
         /// Created by: PMChien
-        public MISAServiceResult ImportEmployee(List<EmployeeImport> employeeList)
+        public MISAServiceResult ImportEmployee(string keyImport)
         {
             var result = 0;
-            foreach (var employeeImport in employeeList)
+            var employeeList = (List<EmployeeImport>) memoryCache.Get(keyImport);
+            _unitOfWork.BeginTransaction();
+            try
             {
-                if(employeeImport.CanImported == true)
+                //foreach (var employeeImport in employeeList)
+                //{
+                //    if(employeeImport.CanImported == true)
+                //    {
+                //        var employee = mapper.Map<Employee>(employeeImport);
+                //        var res = _unitOfWork.Employees.Insert(employee);
+                //        result += res;
+                //    }
+                //}
+                //return new MISAServiceResult
+                //{
+                //    Success = true,
+                //    DataObject = employeeList
+                //};
+                var employees = new List<Employee>();
+                foreach (var item in employeeList)
                 {
-                    var employee = mapper.Map<Employee>(employeeImport);
+                    if(item.CanImported == true)
+                    {
+                        var employee = new Employee
+                        {
+                            EmployeeId = item.EmployeeId,
+                            EmployeeCode = item.EmployeeCode,
+                            FullName = item.FullName,
+                            Gender = item.Gender,
+                            DateOfBirth = item.DateOfBirth,
+                            DepartmentId = item.DepartmentId,
+                            PositionId = item.PositionId,
+                            IdentityNumber = item.IdentityNumber,
+                            IdentityDate = item.IdentityDate,
+                            IdentityPlace = item.IdentityPlace,
+                            Address = item.Address,
+                            MobilePhoneNumber = item.MobilePhoneNumber,
+                            Email = item.Email,
+                            Salary = item.Salary,
+                        };
+                        employees.Add(employee);
+                    }
+                }
+                //var employees = mapper.Map<IEnumerable<EmployeeImport>, IEnumerable<Employee>>(validEmployeeImportList);
+                foreach (var employee in employees)
+                {
                     var res = _unitOfWork.Employees.Insert(employee);
                     result += res;
                 }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            _unitOfWork.Commit();
             if (result == 0)
             {
                 return new MISAServiceResult
                 {
                     Success = false,
-                    Data = result
+                    DataObject = new
+                    {
+                        Imported = result,
+                        Total = employeeList.Count
+                    }
                 };
             }
             else
@@ -388,7 +472,11 @@ namespace MISA.CUKCUK.Core.Services
                 return new MISAServiceResult
                 {
                     Success = true,
-                    Data = result
+                    DataObject = new
+                    {
+                        Imported = result,
+                        Total = employeeList.Count
+                    }
                 };
             }
         }
@@ -578,7 +666,7 @@ namespace MISA.CUKCUK.Core.Services
         }
 
         /// <summary>
-        /// Kiểm tra PositionName có trong hệ thống không
+        /// Kiểm tra DepartmentName có trong hệ thống không
         /// </summary>
         /// <param name="name">Tên cần kiểm tra</param>
         /// <returns>MISAServiceResult</returns>
@@ -607,6 +695,39 @@ namespace MISA.CUKCUK.Core.Services
                 Success = false,
                 DataObject = new EmployeeImport{ DepartmentId = null }
             };
+        }
+
+        /// <summary>
+        /// Chuyển gender dạng chuỗi về Enum Gender
+        /// </summary>
+        /// <param name="genderString">Chuỗi gender</param>
+        /// <returns>Enum Gender nếu chuyển được, null nếu không chuyển được</returns>
+        /// Created by: PMChien
+        private Gender? ProcessGender(string genderString)
+        {
+            if(string.IsNullOrEmpty(genderString))
+            {
+                return null;
+            }
+            else
+            {
+                if(genderString == "Nam")
+                {
+                    return Gender.MALE;
+                }
+                else if(genderString == "Nữ")
+                {
+                    return Gender.FEMALE;
+                }
+                else if(genderString == "Khác")
+                {
+                    return Gender.OTHER;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         /// <summary>
@@ -667,11 +788,11 @@ namespace MISA.CUKCUK.Core.Services
         {
             if (fileImport == null || fileImport.Length <= 0)
             {
-                throw new MISAValidateException("File nhập khẩu không được để trống");
+                throw new MISAValidateException(MISAEmployeeImportResource.FileIsRequired);
             }
             if(!Path.GetExtension(fileImport.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
-                throw new MISAValidateException("File nhập khẩu phải là file Excel.");
+                throw new MISAValidateException(MISAEmployeeImportResource.FileIsNotExcel);
             }
         }
 

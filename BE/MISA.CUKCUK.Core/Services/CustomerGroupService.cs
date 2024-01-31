@@ -1,4 +1,5 @@
 ﻿//using core.Entities;
+using Microsoft.Extensions.Caching.Memory;
 using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
@@ -18,7 +19,7 @@ namespace MISA.CUKCUK.Core.Services
         #endregion
 
         #region Constructor
-        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository): base(customerGroupRepository)
+        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository, IMemoryCache memoryCache): base(customerGroupRepository, memoryCache)
         {
             _customerGroupRepository = customerGroupRepository;
         }

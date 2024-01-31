@@ -49,14 +49,27 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <summary>
         /// Hàm lưu các giá trị EmployeeImport được validate từ trước vào database
         /// </summary>
-        /// <param name="employeeList">danh sách EmployeeList đã được trả về cho frontend từ ValidateImportService</param>
+        /// <param name="keyImport">keyImport để lấy dữ liệu từ memory cache</param>
         /// <returns>
         /// MISAServiceResult {
         ///     Success = true - thêm thành công,
-        ///     Data = số lượng bản ghi thay đổi
+        ///     Data = số bản ghi thêm thành công / thất bại
         /// }
         /// </returns>
         /// Created by: PMChien
-        MISAServiceResult ImportEmployee(List<EmployeeImport> employeeList);
+        MISAServiceResult ImportEmployee(string keyImport);
+
+        /// <summary>
+        /// Đọc thông tin file import, lưu thông tin file import vào memory cache
+        /// </summary>
+        /// <param name="fileImport">file cần import</param>
+        /// <returns>
+        /// MISAServiceResult {
+        ///     Success = true,
+        ///     DataObject = importInfo { ImportKey và ImportData } cần để sau này import
+        /// }
+        /// </returns>
+        /// Created by: PMChien
+        MISAServiceResult ReadImportFile(IFormFile fileImport);
     }
 }

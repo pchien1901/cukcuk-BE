@@ -61,7 +61,7 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Đơn vị không có trong hệ thống.
+        ///   Looks up a localized string similar to Đơn vị không có trong hệ thống..
         /// </summary>
         public static string DepartmentNotExist {
             get {
@@ -70,7 +70,7 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã nhân viên đã trùng trong hệ thống.
+        ///   Looks up a localized string similar to Mã nhân viên đã trùng trong hệ thống..
         /// </summary>
         public static string EmployeeCodeDuplicateInDB {
             get {
@@ -79,7 +79,7 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã nhân viên đã trùng với nhân viên khác trong tệp.
+        ///   Looks up a localized string similar to Mã nhân viên đã trùng với nhân viên khác trong tệp..
         /// </summary>
         public static string EmployeeCodeDuplicateInFile {
             get {
@@ -88,7 +88,7 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã nhân viên không được để trống.
+        ///   Looks up a localized string similar to Mã nhân viên không được để trống..
         /// </summary>
         public static string EmployeeCodeIsRequired {
             get {
@@ -97,7 +97,25 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chức vụ không có trong hệ thống.
+        ///   Looks up a localized string similar to File nhập khẩu phải là file Excel..
+        /// </summary>
+        public static string FileIsNotExcel {
+            get {
+                return ResourceManager.GetString("FileIsNotExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File không được để trống..
+        /// </summary>
+        public static string FileIsRequired {
+            get {
+                return ResourceManager.GetString("FileIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chức vụ không có trong hệ thống..
         /// </summary>
         public static string PositionNotExist {
             get {
