@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using MISA.ImportDemo.Core.Entities;
 using MISA.ImportDemo.Core.Enumeration;
 using MISA.ImportDemo.Core.Enums;
@@ -649,13 +650,16 @@ namespace MISA.ImportDemo.Core.Services
                 /*
                  DEBUG: Lỗi tại đây vì nếu là double thì nó sẽ mặc định thành năm 1899 + cellValue ngày
                  */
-                
-                int year = Convert.ToInt32(cellValue);
-                if(year > 0)
+                string yearPattern = @"^\d{4}$";
+                // Nếu só nhập vào là một năm
+                if(Regex.IsMatch(cellValue.ToString(), yearPattern))
                 {
-                    return new DateTime(year, 1, 1);
+                    int year = Convert.ToInt32(cellValue);
+                    if(year > 0)
+                    {
+                        return new DateTime(year, 1, 1);
+                    }
                 }
-                
                 //return DateTime.FromOADate((double)cellValue);
             }
             var dateString = cellValue.ToString();
