@@ -363,68 +363,31 @@ export default {
   computed: {},
   async created() {
     if (this.inputData.IsUpdate === true) {
+      // chuyển trạng thái của popup về UPDATE
       this.formMode = this.$MEnum.FormMode.UPDATE;
-      // this.formData.EmployeeId = this.inputData.EmployeeId;
-      // this.formData.IsCustomer = this.inputData.IsCustomer;
-      // this.formData.IsSupplier = this.inputData.IsSupplier;
-      // this.formData.EmployeeCode = this.inputData.EmployeeCode;
-      // this.formData.FullName = this.inputData.FullName;
-      // this.formData.DepartmentId = this.inputData.DepartmentId;
-      // this.formData.PositionId = this.inputData.PositionId;
-      // this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      // this.formData.Gender = this.inputData.Gender;
-      // this.formData.IdentityNumber = this.inputData.IdentityNumber;
-      // this.formData.IdentityDate = createDateString(
-      //   this.inputData.IdentityDate
-      // );
-      // this.formData.IdentityPlace = this.inputData.IdentityPlace;
-      // this.formData.Address = this.inputData.Address;
-      // this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-      // this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-      // this.formData.Email = this.inputData.Email;
-      // this.formData.BankAccount = this.inputData.BankAccount;
-      // this.formData.BankName = this.inputData.BankName;
-      // this.formData.Branch = this.inputData.Branch;
-
+      // Tạo giá trị mặc định của formData từ prop inputData
       for (const key in this.inputData) {
         if (Object.hasOwnProperty.call(this.formData, key)) {
           this.formData[key] = this.inputData[key];
         }
       }
+      // Bổ sung thêm trường EmployeeId
       this.formData.EmployeeId = this.inputData.EmployeeId;
+      // Chuyển ngày tháng nếu có sai format
       this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
       this.formData.IdentityDate = createDateString(
         this.inputData.IdentityDate
       );
     } else if (this.inputData.IsDuplicate === true) {
+      // chuyển trạng thái popup sang DUPLICATe
       this.formMode === this.$MEnum.FormMode.DUPLICATE;
-      // this.formData.IsCustomer = this.inputData.IsCustomer;
-      // this.formData.IsSupplier = this.inputData.IsSupplier;
-      // this.formData.EmployeeCode = this.inputData.EmployeeCode;
-      // this.formData.FullName = this.inputData.FullName;
-      // this.formData.DepartmentId = this.inputData.DepartmentId;
-      // this.formData.PositionId = this.inputData.PositionId;
-      // this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      // this.formData.Gender = this.inputData.Gender;
-      // this.formData.IdentityNumber = this.inputData.IdentityNumber;
-      // this.formData.IdentityDate = createDateString(
-      //   this.inputData.IdentityDate
-      // );
-      // this.formData.IdentityPlace = this.inputData.IdentityPlace;
-      // this.formData.Address = this.inputData.Address;
-      // this.formData.MobilePhoneNumber = this.inputData.MobilePhoneNumber;
-      // this.formData.LandlinePhoneNumber = this.inputData.LandlinePhoneNumber;
-      // this.formData.Email = this.inputData.Email;
-      // this.formData.BankAccount = this.inputData.BankAccount;
-      // this.formData.BankName = this.inputData.BankName;
-      // this.formData.Branch = this.inputData.Branch;
-
-
+      // Tạo giá trị mặc định cho formData từ prop inputData
       for (const key in this.inputData) {
         if (Object.hasOwnProperty.call(this.formData, key)) {
           this.formData[key] = this.inputData[key];
         }
       }
+      // Thêm trường EmployeeId
       this.formData.EmployeeId = this.inputData.EmployeeId;
       this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
       this.formData.IdentityDate = createDateString(
@@ -434,6 +397,7 @@ export default {
       this.resetForm();
       // console.log("resetForm");
     }
+    // Lấy thông tin department và position để đưa vào combobox
     let allDepartment = await getAllDepartments();
     let allPosition = await getAllPositions();
     let departmentArr = [];
@@ -478,8 +442,6 @@ export default {
         if (this.validate()) {
           let isDuplicateNewCode = await this.checkNewCode();
           if (isDuplicateNewCode) {
-            // let msg = [`Mã nhân viên ${this.formData.EmployeeCode} đã tồn tại trong hệ thống`];
-            // this.$tinyEmitter.emit("openValidateDialog", msg);
             this.dialog.type = this.$MEnum.DialogType.WARNING;
             this.dialog.mode = this.$MEnum.DialogMode.WARNING;
             this.dialog.text = [this.$MResource["VN"].EmployeeCodeDuplicate];
@@ -516,13 +478,13 @@ export default {
               this.formMode === this.$MEnum.FormMode.ADD ||
               this.formMode === this.$MEnum.FormMode.DUPLICATE
             ) {
-              this.emitData();
+              await this.emitData();
               this.$tinyEmitter.emit("loadData");
               this.$tinyEmitter.emit("openToast", this.toast);
               //this.toast.showToast = true;
               this.closeFunction();
             } else {
-              this.emitData();
+              await this.emitData();
               this.toast.showToast = true;
               this.closeFunction();
             }

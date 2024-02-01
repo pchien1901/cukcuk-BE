@@ -112,7 +112,7 @@ export const getEmployeeInfoByPage = async (currentPage = 1, pageSize = 10, text
 
 /**
  * Kiểm tra trùng mã trước khi Insert và Update
- * @param {*} employee Đối tượng cần kiểm tra
+ * @param {object} data : đối tượng chứa các trường {EmployeeId, EmployeeCode, IsCreate: (true/false), IsUpate: (true/false)}
  * @returns true - đã bị trùng, false -chưa
  * Author: PMChien
  */

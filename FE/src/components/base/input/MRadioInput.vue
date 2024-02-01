@@ -30,21 +30,21 @@ export default {
   },
   data() {
     return {
-      selectedOption: this.value,
+      selectedOption: this.modelValue,
     };
   },
   emits: ['update:modelValue'],
   created() {
-    if(this.modelValue) {
-      this.selectedOption = this.modelValue;
-    }
+    // if(this.modelValue) {
+    //   this.selectedOption = this.modelValue;
+    // }
   },
   watch: {
     selectedOption(newValue) {
       this.$emit('update:modelValue', newValue);
     },
-    modelValue(newValue) {
-      this.selectedOption = newValue;
+    modelValue() {
+      this.selectedOption = this.modelValue;
     },
   },
 };
