@@ -67,6 +67,19 @@ const MResource = {
         FileIsNotChosen: "Vui lòng chọn tệp Excel để thực hiện.",
       }
     },
+
+    Login: {
+      Username: {
+        UsernameIsRequired: "Tên đăng nhập không được để trống",
+        UsernameIsNotFormat: "Tên đăng nhập không đúng định dạng",
+      },
+      Password: {
+        PasswordIsRequired: "Mật khẩu không được để trống",
+      },
+      Invalid: {
+        InvalidMsg: "Tên đăng nhập hoặc mật khẩu không hợp lệ",
+      }
+    }
   },
   EN: {
     CustomerNotEmpty: "Mã khách hàng không được để trống",

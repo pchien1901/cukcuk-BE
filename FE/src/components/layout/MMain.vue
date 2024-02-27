@@ -48,7 +48,7 @@ export default {
     },
     /**
      * Hàm ẩn hiện loading
-     * @param {boolen} isShow ẩn hiện Loading
+     * @param {Boolen} isShow ẩn hiện Loading
      */
     toogleLoading(isShow) {
       try {

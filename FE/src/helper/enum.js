@@ -25,6 +25,10 @@ const MEnum = {
     VALIDATION: 1,
     RESULT: 2,
   },
+  Language: {
+    VIETNAMESE: 0,
+    ENGLISH: 1,
+  }
 };
 
 export default MEnum;

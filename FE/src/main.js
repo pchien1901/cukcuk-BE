@@ -23,6 +23,7 @@ import MEmployeeImportTable from '../src/view/employee/MEmployeeImportTable.vue'
 // view
 import MEmployeeList from '../src/view/employee/MEmployeeList.vue';
 import MImportEmployee from '../src/view/employee/MImportEmployee.vue';
+import MLogin from '../src/view/login/MLogin.vue';
 
 //  lib
 import axios from "axios";
@@ -63,7 +64,9 @@ app
 // router
 const routes = [
   {path: "/nhan-vien", name: 'EmployeeRouter', component: MEmployeeList},
-  {path: "/nhan-vien/nhap-khau", name: 'ImportEmployeeRouter', component: MImportEmployee}
+  {path: "/nhan-vien/nhap-khau", name: 'ImportEmployeeRouter', component: MImportEmployee},
+  {path: "/login", name: 'LoginRouter', component: MLogin},
+
 ]
 
 const router = createRouter({

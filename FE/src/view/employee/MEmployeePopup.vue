@@ -43,7 +43,8 @@
               :class="'width-1 mr'"
               :error="formError.EmployeeCode"
               v-model="formData.EmployeeCode"
-              ref="employeeCode"
+              ref="EmployeeCode"
+              @focus="() => handleInputFocus('EmployeeCode')"
             />
             <MInput
               :type="'text'"
@@ -52,6 +53,8 @@
               :class="'width-2'"
               :error="formError.FullName"
               v-model="formData.FullName"
+              ref="FullName"
+              @focus="() => handleInputFocus('FullName')"
             />
           </div>
           <div class="popup-control">
@@ -98,6 +101,8 @@
               :error="formError.IdentityNumber"
               v-model="formData.IdentityNumber"
               :value="formData.IdentityNumber"
+              ref="IdentityNumber"
+              @focus="() => handleInputFocus('IdentityNumber')"
             />
             <MDatePicker
               :label="'Ngày cấp'"
@@ -134,6 +139,8 @@
               :error="formError.MobilePhoneNumber"
               v-model="formData.MobilePhoneNumber"
               :value="formData.MobilePhoneNumber"
+              ref="MobilePhoneNumber"
+              @focus="() => handleInputFocus('MobilePhoneNumber')"
             />
             <MInput
               :type="'text'"
@@ -143,6 +150,8 @@
               :error="formError.LandlinePhoneNumber"
               v-model="formData.LandlinePhoneNumber"
               :value="formData.LandlinePhoneNumber"
+              ref="LandlinePhoneNumber"
+              @focus="() => handleInputFocus('LandlinePhoneNumber')"
             />
             <MInput
               :type="'text'"
@@ -151,6 +160,8 @@
               :error="formError.Email"
               v-model="formData.Email"
               :value="formData.Email"
+              ref="Email"
+              @focus="() => handleInputFocus('Email')"
             />
           </div>
           <div class="row popup-control">
@@ -425,7 +436,7 @@ export default {
   mounted() {
     this.$tinyEmitter.on("resetEmployeeForm", this.resetForm);
     this.$nextTick(() => {
-      this.$refs.employeeCode.onFocus();
+      this.$refs.EmployeeCode.onFocus();
     });
   },
   beforeUnmount() {
@@ -801,6 +812,17 @@ export default {
           this.dialog.listStyle = true;
           this.dialog.showDialog = true;
         }
+
+        if(!isValid) {
+          for (const key in this.formError) {
+            if (Object.hasOwnProperty.call(this.formError, key)) {
+              if(this.formError[key] && this.$refs[key]) {
+                this.$refs[key].addError();
+              }
+            }
+          }
+        }
+
         return isValid && checkRequired;
       } catch (error) {
         console.error("Có lỗi tại validate employee: ", error);
@@ -821,6 +843,20 @@ export default {
         this.formMode = this.$MEnum.FormMode.ADD;
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+
+    /**
+     * Xóa viền đỏ và thông báo lỗi
+     * Author: PMChien
+     */
+    handleInputFocus(inputRef) {
+      try {
+        if(this.$refs[inputRef]) {
+          this.$refs[inputRef].removeError();
+        }
+      } catch (error) {
+        console.error("Đã có lỗi xảy ra: ", error);
       }
     },
   },
