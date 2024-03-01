@@ -14,6 +14,7 @@ namespace MISA.CUKCUK.Core.Services
         #region Declaration
         protected IBaseRepository<T> repository;
         protected IMemoryCache memoryCache;
+        protected IUnitOfWork unitOfWork;
         #endregion
 
         #region Constructor
@@ -35,7 +36,7 @@ namespace MISA.CUKCUK.Core.Services
         public MISAServiceResult DeleteService(string id)
         {
             var res = ValidateDelete(id);
-            if(res)
+            if (res)
             {
                 var resultDelete = repository.Delete(id);
                 return new MISAServiceResult
@@ -53,6 +54,16 @@ namespace MISA.CUKCUK.Core.Services
                 };
             }
         }
+
+        //public MISAResponse DeleteService(string id)
+        //{
+        //    var res = ValidateDelete(id);
+        //    if(res)
+        //    {
+        //        unitOfWork.BeginTransaction();
+        //        var resultDelete = repository.Delete(id);
+        //    }
+        //}
 
         /// <summary>
         /// Kiểm tra nghiệp vụ trước khi Insert và thêm dữ liệu

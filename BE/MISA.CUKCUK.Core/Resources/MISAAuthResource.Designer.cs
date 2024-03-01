@@ -79,6 +79,15 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên đăng nhập hoặc mật khẩu không chính xác.
+        /// </summary>
+        public static string InvalidUsernameOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidUsernameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Người dùng không tồn tại hoặc đã bị xóa.
         /// </summary>
         public static string InvalidUserUserMsg {

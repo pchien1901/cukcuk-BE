@@ -59,3 +59,6 @@ C:\Users\judai\E\code\MISA\misa-amis-backend\cukcuk-BE\BE\MISA.CUKCUK.Core\obj\D
 C:\Users\judai\E\code\MISA\misa-amis-backend\cukcuk-BE\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\MISA.CUKCUK.Core.genruntimeconfig.cache
 C:\Users\judai\E\code\MISA\misa-amis-backend\cukcuk-BE\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\ref\MISA.CUKCUK.Core.dll
 C:\Users\judai\E\code\MISA\misa-amis-backend\cukcuk-BE\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\MISA.CUKCUK.Core.Resources.MISAAuthResource.resources
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\bin\Debug\net6.0\MISA.CUKCUK.Core.runtimeconfig.json
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\MISA.CUKCUK.Core.Resources.MISAAuthResource.resources
+C:\Users\judai\E\code\MISA\misa-backend\MISA.CUKCUK.WEB082_PMCHIEN\BE\MISA.CUKCUK.Core\obj\Debug\net6.0\MISA.CUKCUK.Core.genruntimeconfig.cache

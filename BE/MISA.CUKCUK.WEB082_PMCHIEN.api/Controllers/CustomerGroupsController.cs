@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.CUKCUK.Core.DTOs;
 using MISA.CUKCUK.Core.DTOs.CrudDTOs;
@@ -10,6 +11,7 @@ using System.Net;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class CustomerGroupsController : BaseController<CustomerGroup>

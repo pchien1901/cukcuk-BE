@@ -123,6 +123,9 @@
   <data name="InvalidUserDevMsg" xml:space="preserve">
     <value>Người dùng không tồn tại</value>
   </data>
+  <data name="InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Tên đăng nhập hoặc mật khẩu không chính xác</value>
+  </data>
   <data name="InvalidUserUserMsg" xml:space="preserve">
     <value>Người dùng không tồn tại hoặc đã bị xóa</value>
   </data>

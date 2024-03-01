@@ -1,4 +1,5 @@
 ﻿//using core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.CUKCUK.Core.DTOs.CrudDTOs;
@@ -12,6 +13,7 @@ using MISA.CUKCUK.Core.Services;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class EmployeesController : BaseController<Employee>

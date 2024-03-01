@@ -57,10 +57,10 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                     var token = CreateToken(authClaims);
                     var refreshToken = GenerateRefreshToken();
 
-                    _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInDays"], out int refreshTokenValidityInDays);
+                    _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInMinutes"], out int refreshTokenValidityInMinutes);
 
                     user.RefreshToken = refreshToken;
-                    user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
+                    user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(refreshTokenValidityInMinutes);
 
                     await _userManager.UpdateAsync(user);
 
@@ -69,11 +69,19 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                         {
                             Token = new JwtSecurityTokenHandler().WriteToken(token),
                             RefreshToken = refreshToken,
-                            Expiration = token.ValidTo
+                            Expiration = token.ValidTo,
+                            ExpirationRefreshToken = user.RefreshTokenExpiryTime
                         });
                 }
                 //return Unauthorized();
-                return Unauthorized();
+                return StatusCode(400, new
+                {
+                    devMsg = MISAAuthResource.InvalidUsernameOrPassword,
+                    userMsg = MISAAuthResource.InvalidUsernameOrPassword,
+                    errorCode = "",
+                    moreInfor = "",
+                    traceId = ""
+                });
             }
             catch (Exception)
             {
@@ -298,52 +306,97 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Hàm tạo Token mới
+        /// </summary>
+        /// <param name="authClaims">Danh sách Claims</param>
+        /// <returns>JwtSecurityToken - token mới</returns>
+        /// Created by: PMChien
         private JwtSecurityToken CreateToken(List<Claim> authClaims)
         {
-            var authSigningkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-            _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int tokenValidityInMinutes);
+            try
+            {
+                var authSigningkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+                _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int tokenValidityInMinutes);
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddMinutes(tokenValidityInMinutes),
-                claims: authClaims,
-                signingCredentials: new SigningCredentials(authSigningkey, SecurityAlgorithms.HmacSha256)
-                );
-            return token;
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddMinutes(tokenValidityInMinutes),
+                    claims: authClaims,
+                    signingCredentials: new SigningCredentials(authSigningkey, SecurityAlgorithms.HmacSha256)
+                    );
+                return token;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
+        /// <summary>
+        /// Tạo token mới ngẫu nhiên
+        /// </summary>
+        /// <returns>Token ngẫu nhiên mới</returns>
+        /// Created by: PMChien
         private static string GenerateRefreshToken()
         {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            try
+            {
+                var randomNumber = new byte[64];
+                using var rng = RandomNumberGenerator.Create();
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
+        /// <summary>
+        /// Lấy thông tin từ token cũ
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>ClaimsPrincipal</returns>
+        /// Created by: PMChien
+        /// <exception cref="SecurityTokenException"></exception>
         private ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
-            var tokenValidationParameters = new TokenValidationParameters
+            try
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
-                ValidateLifetime = false
-            };
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])),
+                    ValidateLifetime = false
+                };
 
-            var tokenHanlder = new JwtSecurityTokenHandler();
-            var principal = tokenHanlder.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
-            if(securityToken is not JwtSecurityToken jwtSecurityToken ||
-                !jwtSecurityToken.Header.Alg
-                .Equals(SecurityAlgorithms.HmacSha256, 
-                        StringComparison.InvariantCultureIgnoreCase)
-            )
-            {
-                throw new SecurityTokenException("Invalid token");
+                var tokenHanlder = new JwtSecurityTokenHandler();
+                var principal = tokenHanlder.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+                if(securityToken is not JwtSecurityToken jwtSecurityToken ||
+                    !jwtSecurityToken.Header.Alg
+                    .Equals(SecurityAlgorithms.HmacSha256, 
+                            StringComparison.InvariantCultureIgnoreCase)
+                )
+                {
+                    throw new SecurityTokenException("Invalid token");
+                }
+
+                return principal;
             }
+            catch (Exception)
+            {
 
-            return principal;
+                throw;
+            }
+            
         }
     }
 }
