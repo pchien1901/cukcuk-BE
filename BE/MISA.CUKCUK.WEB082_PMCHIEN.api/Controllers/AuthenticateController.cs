@@ -74,7 +74,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                         });
                 }
                 //return Unauthorized();
-                return StatusCode(400, new
+                return StatusCode(401, new
                 {
                     devMsg = MISAAuthResource.InvalidUsernameOrPassword,
                     userMsg = MISAAuthResource.InvalidUsernameOrPassword,
