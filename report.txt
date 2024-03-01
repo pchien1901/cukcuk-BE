@@ -1,4 +1,4 @@
 Màn hình đăng nhập: Hoàn thành
-Yêu cầu người dùng đăng nhập mới có thể truy cập API: Hoàn thiện sơ bộ
-Người dùng chưa đăng nhập mà cố tình truy cập các màn hình thì chuyển đến màn hình đăng nhập:
-Đang hoàn thiện
+Yêu cầu người dùng đăng nhập mới có thể truy cập API: Hoàn thành
+Người dùng chưa đăng nhập mà cố tình truy cập các màn hình thì chuyển đến màn hình đăng nhập: Hoàn thành
+
