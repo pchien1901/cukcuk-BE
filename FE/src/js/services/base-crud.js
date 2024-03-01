@@ -8,11 +8,6 @@ import { checkAuthentication } from "./token.js";
 
 const apiURL = config.API_URL;
 
-// export function handleErr(error, type, emitter) {
-//   console.error("Đã xảy ra lỗi: ", error);
-//   // if()
-// }
-
 // Thêm một bộ đón chặn response
 axios.interceptors.response.use(
   function (response) {
@@ -30,8 +25,6 @@ axios.interceptors.response.use(
       let userMsg = errorResponse?.data?.userMsg
         ? errorResponse.data.userMsg
         : null;
-      console.log("biến userMsg: ", userMsg);
-      console.log("error.response.data.userMsg: ", error.response.data.userMsg);
 
       switch (error.response.status) {
         case 400:
@@ -116,7 +109,6 @@ export async function apiHandle(
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("response: ", res);
         if (res) {
           return res?.data ? res.data : res;
         }
@@ -129,8 +121,10 @@ export async function apiHandle(
             Authorization: `Bearer ${token}`,
           },
         });
-        return res.data;
-        //break;
+        if (res) {
+          return res?.data ? res.data : res;
+        }
+        break;
       }
       case MApiResource.apiMethod.delete: {
         if (data) {
@@ -140,7 +134,10 @@ export async function apiHandle(
               Authorization: `Bearer ${token}`,
             },
           });
-          return res.data;
+          if (res) {
+            return res?.data ? res.data : res;
+          }
+          break;
         } else {
           let res = await axios.delete(`${apiURL}/${subURL}`, {
             headers: {
@@ -148,7 +145,10 @@ export async function apiHandle(
               Authorization: `Bearer ${token}`,
             },
           });
-          return res.data;
+          if (res) {
+            return res?.data ? res.data : res;
+          }
+          break;
         }
         //break;
       }

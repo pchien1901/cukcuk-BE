@@ -109,11 +109,15 @@
 </template>
 
 <script>
+import { checkAuthentication } from '@/js/services/token.js';
 import { validateFile, importFile } from '../../js/services/employee.js';
 import MEmployeeImportTable from './MEmployeeImportTable.vue';
 export default {
   name: "MImportEmployee",
   components: [ MEmployeeImportTable ],
+  async created() {
+    await checkAuthentication();
+  },
   data() {
     return {
       file: null,

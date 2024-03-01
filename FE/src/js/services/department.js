@@ -1,7 +1,24 @@
-import axios from 'axios';
-import config from '../config/config.js';
+/* eslint-disable */
+import axios from "axios";
+import config from "../config/config.js";
+import { checkAuthentication } from "./token.js";
 
 const apiURL = config.API_URL;
+
+// Thêm một bộ đón chặn request
+axios.interceptors.request.use(async function (config) {
+  // kiểm tra xác thực người dùng
+  await checkAuthentication();
+  let token = localStorage.getItem("accessToken");
+
+  if(token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, function (error) {
+  console.error("Đã có lỗi khi gửi request", error );
+  return Promise.reject(error);
+});
 
 /**
  * gọi api lấy tất cả Department
@@ -14,7 +31,7 @@ export const getAllDepartments = async () => {
     // .then(response => {
     //   console.log("response tại get allemployee: ", response);
     //   return response;
-    // }) 
+    // })
     // .catch(error => {
     //   console.log("error tại get all employee: ", error);
     //   if(error.response) {
@@ -24,19 +41,18 @@ export const getAllDepartments = async () => {
     //   }
     //   else {
     //     return { data: -1};
-    //   }  
+    //   }
     // })
     let res = await axios.get(`${apiURL}/Departments`);
     return res.data;
-  }
-  catch (error) {
-    console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
+  } catch (error) {
+    console.error("Đã xảy ra lỗi trong lúc lấy dữ liệu: ", error);
     let status = error.response.status;
-    if(status >= 400)  {
+    if (status >= 400) {
       return error.response;
     }
   }
-}
+};
 
 /**
  * Lấy một Department theo id
@@ -49,10 +65,10 @@ export const getDepartmentById = async (id) => {
     let res = await axios.get(`${apiURL}/Departments/${id}`);
     return res;
   } catch (error) {
-    console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
+    console.error("Đã xảy ra lỗi trong lúc lấy dữ liệu: ", error);
     let status = error.response.status;
-    if(status >= 400)  {
+    if (status >= 400) {
       return error.response;
     }
   }
-}
+};

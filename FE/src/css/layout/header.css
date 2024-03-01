@@ -32,6 +32,13 @@
   align-items: center;
 }
 
+.user-dropdown-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
 .header-right .user-name {
   margin: 0px 12px ;
   font-size: 14px;
@@ -40,4 +47,52 @@
 .header-right .icon-arrow-down {
   transform: scale(2);
   margin-right: 16px;
+}
+
+.user-control {
+  display: flex;
+  align-items: center;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 16px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  width: 100px;
+  max-height: 308px;
+  padding: 0px 4px;
+  border-radius: 4px;
+  margin: 0px;
+  box-sizing: border-box;
+  border: 1px solid var(--primary-boder);
+  /* box-shadow: 0 4px 16px rgba(23,27,42,0.24); */
+  background-color: #FFFFFF;
+  overflow-y: scroll;
+  box-shadow:  0px 2px 8px rgba(23,27,42,0.24);
+  z-index: 2;
+}
+
+.user-dropdown::-webkit-scrollbar {
+  width: 1px;
+}
+
+.user-dropdown__item {
+  display: flex;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 4px 4px;
+  padding: 0px 8px;
+  height: 36px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.user-dropdown__item:hover {
+  background-color: var(--primary-boder);
+  font-weight: 400;
 }

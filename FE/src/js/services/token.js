@@ -26,7 +26,10 @@ export async function getNewToken() {
 
     // khi thời gian hết hạn refresh token < hiện tại => chuyển về trang đăng nhập
     if(expirationRefreshTokenTime <= now) {
+      console.log("Hết thời gian đăng nhập: ", expirationAccessTokenTime);
       store.commit('changeAuthenticateStatus', false);
+      console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
       router.push("/login");
       tinyEmitter.emit(
         MResource["VN"].Event.Toast.openMainToast,
@@ -69,6 +72,15 @@ export async function checkAuthentication() {
   try {
     if(!store.state.isAuthenticate) {
       router.push("/login");
+      console.log("Trở về trang login");
+      // tinyEmitter.emit(
+      //   MResource["VN"].Event.Toast.openMainToast,
+      //   {
+      //     type: MResource["VN"].ToastTypeWarning,
+      //     message: MResource["VN"].Toast.Auth.TokenExpiration,
+      //     action: null,
+      //   }
+      // );
     }
     let now = new Date();
     let expirationAccessTokenString = localStorage.getItem("expirationToken");

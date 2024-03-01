@@ -67,8 +67,12 @@
           </div>
           <div class="text-center copy-right-text">Copyright © 2012 - 2024 MISA JSC</div>
         </div>
+        <div v-if="showLoading" class="login-loading">
+          <div class="login-loading__spinner"></div>
+        </div>
       </div>
     </div>
+    
   </div>
   <div class="lang-container login-class" @click="toggleLangDropDown">
     <div class="language-icon" :class="this.language === this.$MEnum.Language.VIETNAMESE ? 'icon-vi' : 'icon-en'"></div>
@@ -104,7 +108,8 @@ export default {
         Username: null,
         Password: null,
       },
-      language: this.$MEnum.Language.VIETNAMESE
+      language: this.$MEnum.Language.VIETNAMESE,
+      showLoading: false,
     }
   },
   methods: {
@@ -141,6 +146,7 @@ export default {
      */
     async handleSubmitLoginForm() {
       try {
+        this.showLoading = true;
         if(this.validate()) {
           console.log(this.formData);
           // gọi api login
@@ -154,11 +160,14 @@ export default {
           //   this.$MApiResource.apiUrl.login,
           //   this.formData,
           //   MApiResource.apiHeaderContentType.applicationType);
-          console.log(res);
+          console.log("Đăng nhập thành công: ",res);
           // nếu đăng nhập thành công
           if(res) {
+            this.showLoading = false;
             this.$store.commit("changeAuthenticateStatus", true);
             this.$router.push("/nhan-vien");
+
+            // Lưu accessToken, refreshToken, expirationToken và expirationRefreshToken vào LocalStorage
             localStorage.setItem("accessToken", res.Token)
             localStorage.setItem("refreshToken", res.RefreshToken);
             localStorage.setItem("expirationToken", res.Expiration);
@@ -167,6 +176,9 @@ export default {
             // kiểm tra xem localStorage có token chưa
             console.log("accessToken: ", localStorage.getItem("accessToken"));
             console.log("refreshToken: ", localStorage.getItem("refreshToken"));
+          }
+          else {
+            setTimeout(() => { this.showLoading = false}, 2000);
           }
         }
       } catch (error) {

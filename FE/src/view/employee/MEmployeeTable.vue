@@ -274,7 +274,15 @@ export default {
      */
     emitLoadData() {
       try {
-        this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+        //this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+        if(this.searchText) {
+          this.pagination.CurrentPage = 1;
+          this.pagination.PageSize = 10;
+          this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+        }
+        else {
+          this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+        }
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }

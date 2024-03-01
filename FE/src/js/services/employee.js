@@ -13,9 +13,13 @@ axios.interceptors.request.use(async function (config) {
   // kiểm tra xác thực người dùng
   await checkAuthentication();
   let token = localStorage.getItem("accessToken");
-
+  
+  console.log("token nè: ", token);
+  console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
   if(token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    if(store.state.isAuthenticate) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 }, function (error) {
@@ -43,7 +47,7 @@ axios.interceptors.request.use(async function (config) {
 //         tinyEmitter.emit(
 //           MResource["VN"].Event.Toast.openMainToast,
 //           {
-//             type: MResource["VN"].ToastTypeError,
+//            type: MResource["VN"].ToastTypeWarning,
 //             message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
 //           }
 //         );
@@ -88,6 +92,7 @@ export const getAllEmployees = async () => {
           userMsg = error.response.data.UserMsg;
         }
         store.commit('changeAuthenticateStatus', false);
+        console.log("thay đổi store thành: ", store.state.isAuthenticate);
         router.push("/login");
         tinyEmitter.emit(
           MResource["VN"].Event.Toast.openMainToast,
@@ -136,11 +141,13 @@ export const getEmployeeById = async (id) => {
           userMsg = error.response.data.UserMsg;
         }
         store.commit('changeAuthenticateStatus', false);
+        console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
         router.push("/login");
         tinyEmitter.emit(
           MResource["VN"].Event.Toast.openMainToast,
           {
-            type: MResource["VN"].ToastTypeError,
+           type: MResource["VN"].ToastTypeWarning,
             message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
           }
         );
@@ -180,11 +187,13 @@ export const getNewEmployeeCode = async () => {
           userMsg = error.response.data.UserMsg;
         }
         store.commit('changeAuthenticateStatus', false);
+        console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
         router.push("/login");
         tinyEmitter.emit(
           MResource["VN"].Event.Toast.openMainToast,
           {
-            type: MResource["VN"].ToastTypeError,
+           type: MResource["VN"].ToastTypeWarning,
             message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
           }
         );
@@ -219,11 +228,13 @@ export const getEmployeeInfo = async ()  => {
         userMsg = error.response.data.UserMsg;
       }
       store.commit('changeAuthenticateStatus', false);
+      console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
       router.push("/login");
       tinyEmitter.emit(
         MResource["VN"].Event.Toast.openMainToast,
         {
-          type: MResource["VN"].ToastTypeError,
+         type: MResource["VN"].ToastTypeWarning,
           message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
         }
       );
@@ -273,11 +284,13 @@ export const getEmployeeInfoByPage = async (currentPage = 1, pageSize = 10, text
         userMsg = error.response.data.UserMsg;
       }
       store.commit('changeAuthenticateStatus', false);
+      console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
       router.push("/login");
       tinyEmitter.emit(
         MResource["VN"].Event.Toast.openMainToast,
         {
-          type: MResource["VN"].ToastTypeError,
+         type: MResource["VN"].ToastTypeWarning,
           message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
         }
       );
