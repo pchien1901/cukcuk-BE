@@ -65,9 +65,13 @@ const MResource = {
     Toast: {
       Import: {
         FileIsNotChosen: "Vui lòng chọn tệp Excel để thực hiện.",
+      },
+      Auth: {
+        TokenExpiration: "Hết phiên đăng nhập"
       }
     },
 
+    // Thông báo cho màn hình login
     Login: {
       Username: {
         UsernameIsRequired: "Tên đăng nhập không được để trống",
@@ -75,9 +79,17 @@ const MResource = {
       },
       Password: {
         PasswordIsRequired: "Mật khẩu không được để trống",
+        PasswordMustBeInFormat: "Mật khẩu cần có chữ hoa, chữ thường, số và kí tự đặc biệt"
       },
       Invalid: {
         InvalidMsg: "Tên đăng nhập hoặc mật khẩu không hợp lệ",
+      }
+    },
+
+    // Các sự kiện (emit?)
+    Event: {
+      Toast: {
+        openMainToast: "openMainToast",
       }
     }
   },

@@ -6,38 +6,41 @@
           <div class="login-form validate-form">
             <span class="login-form-logo"></span>
             <div class="login-form-inputs login-class">
-              <!-- <div class="wrap-input username-wrap validate-input">
-                <input class="input ap-lg-input" type="text" name="username" placeholder="Số điện thoại/Email"/>
-                <span class="error-info">Tên đăng nhập không được để trống</span>
-              </div>
-              <div class="wrap-input password-wrap validate-input">
-                <input class="input ap-lg-input" type="password" name="password" placeholder="Mật khẩu"/>
-                <span class="error-info">Mật khẩu không được để trống</span>
-              </div> -->
-                <!-- USERNAME -->
-                <div class="form-control">
-                  <MInput 
-                    :size="'large'" 
-                    :placeholder="'Số điện thoại/Email'"
-                    :error="formError.Username"
-                    v-model="formData.Username"
-                    ref="Username"
-                    @focus="() => handleInputFocus('Username')"
-                  />
+              <form>
+                <!-- <div class="wrap-input username-wrap validate-input">
+                  <input class="input ap-lg-input" type="text" name="username" placeholder="Số điện thoại/Email"/>
+                  <span class="error-info">Tên đăng nhập không được để trống</span>
                 </div>
+                <div class="wrap-input password-wrap validate-input">
+                  <input class="input ap-lg-input" type="password" name="password" placeholder="Mật khẩu"/>
+                  <span class="error-info">Mật khẩu không được để trống</span>
+                </div> -->
+                  <!-- USERNAME -->
+                  <div class="form-control">
+                    <MInput 
+                      :size="'large'" 
+                      :placeholder="'Số điện thoại/Email'"
+                      :error="formError.Username"
+                      v-model="formData.Username"
+                      ref="Username"
+                      @focus="() => handleInputFocus('Username')"
+                    />
+                  </div>
 
-                <!-- PASSWORD -->
-                <div class="form-control">
-                  <MInput 
-                    :type="'password'" 
-                    :size="'large'" 
-                    :placeholder="'Mật khẩu'" 
-                    :error="formError.Password"
-                    v-model="formData.Password"
-                    ref="Password"
-                    @focus="() => handleInputFocus('Password')"
-                  />
-                </div>
+                  <!-- PASSWORD -->
+                  <div class="form-control">
+                    <MInput 
+                      :type="'password'" 
+                      :size="'large'" 
+                      :placeholder="'Mật khẩu'" 
+                      :error="formError.Password"
+                      v-model="formData.Password"
+                      ref="Password"
+                      @focus="() => handleInputFocus('Password')"
+                    />
+                  </div>
+              </form>
+              
 
                 <!-- FORGOT PASSWORD -->
                 <div class="forgot-password">
@@ -85,6 +88,9 @@
 </template>
 
 <script>
+/* eslint-disable */ 
+import { apiHandle } from '@/js/services/base-crud';
+import MApiResource from '@/helper/api-resource.js';
 export default {
   name : "MLogin",
   data() {
@@ -133,10 +139,35 @@ export default {
      * Xử lí khi button Đăng nhập/Login click
      * Author: PMChien
      */
-    handleSubmitLoginForm() {
+    async handleSubmitLoginForm() {
       try {
         if(this.validate()) {
-          console.log("thông tin hợp lệ");
+          console.log(this.formData);
+          // gọi api login
+          let res = await apiHandle(
+            this.$MApiResource.apiMethod.post,
+            this.$MApiResource.apiUrl.login,
+            this.formData,
+            MApiResource.apiHeaderContentType.applicationType
+          );
+          // console.log(this.$MApiResource.apiMethod.post,
+          //   this.$MApiResource.apiUrl.login,
+          //   this.formData,
+          //   MApiResource.apiHeaderContentType.applicationType);
+          console.log(res);
+          // nếu đăng nhập thành công
+          if(res) {
+            this.$store.commit("changeAuthenticateStatus", true);
+            this.$router.push("/nhan-vien");
+            localStorage.setItem("accessToken", res.Token)
+            localStorage.setItem("refreshToken", res.RefreshToken);
+            localStorage.setItem("expirationToken", res.Expiration);
+            localStorage.setItem("expirationRefreshToken", res.ExpirationRefreshToken);
+
+            // kiểm tra xem localStorage có token chưa
+            console.log("accessToken: ", localStorage.getItem("accessToken"));
+            console.log("refreshToken: ", localStorage.getItem("refreshToken"));
+          }
         }
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);
@@ -191,6 +222,14 @@ export default {
         // validate password
         if(!this.formData.Password) {
           this.formError.Password = this.$MResource["VN"].Login.Password.PasswordIsRequired;
+        }
+        else {
+          const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()-+=])[A-Za-z\d!@#$%^&*()-+=]+$/;
+          if(!passwordRegex.test(this.formData.Password)) {
+            isValid = false;
+            this.formError.Password = this.$MResource["VN"].Login.Password.PasswordMustBeInFormat;
+            console.log("Mật khẩu không đúng định dạng");
+          }
         }
 
         // Nếu không thỏa mãn, thêm hiệu ứng lỗi cho lần submit thứ 2

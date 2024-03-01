@@ -1,5 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { createStore } from 'vuex';
+import App from './App.vue';
 
 //   base component
 import MNavItem from '../src/components/base/sidebar/MNavItem.vue';
@@ -32,6 +33,7 @@ import tinyEmitter from "tiny-emitter/instance";
 
 // resource
 import MResource from './helper/resource';
+import MApiResource from './helper/api-resource.js';
 import MEnum from './helper/enum';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -63,15 +65,37 @@ app
 
 // router
 const routes = [
+  {path: "/", redirect: "/login"},
   {path: "/nhan-vien", name: 'EmployeeRouter', component: MEmployeeList},
   {path: "/nhan-vien/nhap-khau", name: 'ImportEmployeeRouter', component: MImportEmployee},
   {path: "/login", name: 'LoginRouter', component: MLogin},
 
 ]
 
-const router = createRouter({
+// tạo router
+export const router = createRouter({
     history: createWebHistory(),
     routes: routes
+});
+
+
+// vuex
+const store = createStore({
+  state: {
+    isAuthenticate: false,
+
+    role: {
+      USER: "USER",
+      ADMIN: "ADMIN"
+    },
+
+    currentRole: null,
+  },
+  mutations: {
+    changeAuthenticateStatus(state, status) {
+      state.isAuthenticate = status;
+    }
+  }
 });
 
 app.use(router);
@@ -81,5 +105,13 @@ app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$tinyEmitter = tinyEmitter;
 app.config.globalProperties.$MEnum = MEnum;
 app.config.globalProperties.$MResource = MResource;
+app.config.globalProperties.$MApiResource = MApiResource;
+
+
+// vuex
+app.use(store);
 
 app.mount("#app");
+
+export { store };
+export default { app };
