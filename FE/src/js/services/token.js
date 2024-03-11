@@ -82,12 +82,15 @@ export async function checkAuthentication() {
       //   }
       // );
     }
-    let now = new Date();
-    let expirationAccessTokenString = localStorage.getItem("expirationToken");
-    let expirationAccessTokenTime = new Date(expirationAccessTokenString);
-    if(store.state.isAuthenticate && expirationAccessTokenTime <= now) {
-      await getNewToken();
+    else {
+      let now = new Date();
+      let expirationAccessTokenString = localStorage.getItem("expirationToken");
+      let expirationAccessTokenTime = new Date(expirationAccessTokenString);
+      if(store.state.isAuthenticate && expirationAccessTokenTime <= now) {
+        await getNewToken();
+      }
     }
+    
   } catch (error) {
     console.error("Đã xảy ra lỗi: ", error);
   }

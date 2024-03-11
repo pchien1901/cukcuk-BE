@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background-image: url('../../../assets/img/login-background/bg1.jpg');
+  background-image: url("../../../assets/img/login-background/bg1.jpg");
   background-position: center;
   background-size: cover;
   z-index: 1;
@@ -31,7 +31,11 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(rgba(0,30,61,.6) 0,rgba(0,0,0,.1) 41.42%,rgba(0,0,0,.3) 100%);
+  background: linear-gradient(
+    rgba(0, 30, 61, 0.6) 0,
+    rgba(0, 0, 0, 0.1) 41.42%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
 }
 
 /*  WRAP LOGIN  */
@@ -42,14 +46,15 @@
   min-height: 340px;
   background: #fff;
   position: relative;
-  box-shadow: 0 12px 20px rgba(0, 0, 0, .12);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
 }
 
 /* LOGIN LOGO */
 .login-form-logo {
   font-size: 60px;
-  background: url(../../../assets/img/login-background/icon-amis-platform2.svg) center no-repeat;
+  background: url(../../../assets/img/login-background/icon-amis-platform2.svg)
+    center no-repeat;
   background-size: contain;
   display: block;
   display: -moz-box;
@@ -60,10 +65,13 @@
   margin-bottom: 40px;
 }
 
-
 /* LOGIN FORM */
 .login-form {
   width: 100%;
+}
+
+.login-form input:focus {
+  border-color: #0073e6 !important;
 }
 
 .form-control {
@@ -72,7 +80,7 @@
 
 .wrap-input {
   width: 100%;
-  position:relative ;
+  position: relative;
   margin-bottom: 12px;
   font-family: "Roboto", sans-serif;
 }
@@ -100,7 +108,7 @@
 
 .wrap-input .input:focus {
   border-color: #0073e6;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 span.error-info {
@@ -136,18 +144,22 @@ span.error-info {
   cursor: pointer;
   height: 40px;
   border-radius: 3px;
-  /* background: #0073e6; */
-  transition: all .4s;
-  -o-transition: all .4s;
-  -moz-transition: all .4s;
+  background: #0073e6;
+  transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
   display: block;
   text-decoration: none;
 }
 
 .login-form-btn:hover {
-  /* background-color: #384fd5; */
-  box-shadow: 0 2px 15px rgba(42,126,252,.25);
-  transition: all .5s;
+  background-color: #384fd5;
+  box-shadow: 0 2px 15px rgba(42, 126, 252, 0.25);
+  transition: all 0.5s;
+}
+
+.login-form-btn:active {
+  background-color: #384fd5;
 }
 
 /* METHOD BLOCK */
@@ -193,16 +205,16 @@ span.error-info {
   background-repeat: no-repeat;
 }
 
-.method-item[method='Google'] {
-  background-image: url('../../../assets/img/login-background/icon-google.svg');
+.method-item[method="Google"] {
+  background-image: url("../../../assets/img/login-background/icon-google.svg");
 }
 
-.method-item[method='Apple'] {
-  background-image: url('../../../assets/img/login-background/icon-apple.svg');
+.method-item[method="Apple"] {
+  background-image: url("../../../assets/img/login-background/icon-apple.svg");
 }
 
-.method-item[method='Microsoft'] {
-  background-image: url('../../../assets/img/login-background/icon-microsoft.svg');
+.method-item[method="Microsoft"] {
+  background-image: url("../../../assets/img/login-background/icon-microsoft.svg");
 }
 
 /* COPY RIGHT TEXT */
@@ -215,7 +227,7 @@ span.error-info {
   text-align: center;
   left: 0;
   bottom: -28px;
-  color: rgba(255,255,255,.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* LANGUAGE */
@@ -227,7 +239,7 @@ span.error-info {
   height: 32px;
   z-index: 2;
   border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, .3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #f8f8f8;
   padding: 0 16px 0 38px;
   cursor: pointer;
@@ -252,11 +264,11 @@ span.error-info {
 }
 
 .icon-vi {
-  background-image: url('../../../assets/img/login-background/icon-vi.svg');
+  background-image: url("../../../assets/img/login-background/icon-vi.svg");
 }
 
 .icon-en {
-  background-image: url('../../../assets/img/login-background/icon-en.svg');
+  background-image: url("../../../assets/img/login-background/icon-en.svg");
 }
 
 .lang-dropdown {
@@ -266,9 +278,9 @@ span.error-info {
   padding: 8px 0px;
   width: 120px;
   border-radius: 4px;
-  box-shadow: 16px 0px 4px rgba(23,27,42,0.24);
+  box-shadow: 16px 0px 4px rgba(23, 27, 42, 0.24);
   color: #1f1f1f;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .lang-item {
@@ -283,7 +295,6 @@ span.error-info {
   background-color: #f2f2f2;
   cursor: pointer;
 }
-
 
 /* LOGIN LOADING */
 .login-loading {
@@ -312,7 +323,7 @@ span.error-info {
   0% {
     transform: rotate(0deg);
   }
- 
+
   100% {
     transform: rotate(360deg);
   }

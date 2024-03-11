@@ -17,9 +17,16 @@
 	height: 23px;
 }
 
+.icon-employee {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -165px -1664px;
+	/* background-size: 1008px 953px; */
+	width: 17px;
+	height: 17px;
+}
+
 .icon-overview {
   background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -16px -815px;
-	background-size: 1008px 953px;
+	/* background-size: 1008px 953px; */
 	width: 9px;
 	height: 10px;
   scale: 2;

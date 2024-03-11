@@ -22,6 +22,12 @@
 	height: 20px;
 }
 
+.icon-export-excel {
+  background: url('../../assets/img/icon/icons8-export-excel-24.png');
+  width: 24px;
+  height: 24px;
+}
+
 .icon-arrow-blue {
   background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -900px -365px;
 	width: 8px;

@@ -65,7 +65,8 @@ input[type="text"].m-input-large {
 
 .m-input input[type="text"]:focus {
   background-color: #ffffff;
-  outline: 1px solid #50b83c;
+  /* outline: 1px solid #50b83c; */
+  border: 1px solid #50b83c;
 }
 
 .m-text-input-wrapper {
@@ -114,7 +115,7 @@ input:focus.m-input--error  {
   border: 1px solid #e0e0e0;
   outline: none; */
   width: 0.1px;
-  height: 0.1px;
+  height: 0.1px !important; 
 }
 
 /* .m-input input[type=file]::-webkit-file-upload-button {
@@ -205,7 +206,8 @@ input[type="password"].m-input-large {
 
 .m-input input[type="password"]:focus {
   background-color: #ffffff;
-  outline: 1px solid #50b83c;
+  /* outline: 1px solid #50b83c; */
+  border: 1px solid #50b83c;
 }
 
 .m-password-input-wrapper {

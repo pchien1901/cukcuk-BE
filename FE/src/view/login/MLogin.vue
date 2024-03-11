@@ -146,8 +146,9 @@ export default {
      */
     async handleSubmitLoginForm() {
       try {
-        this.showLoading = true;
+        
         if(this.validate()) {
+          this.showLoading = true;
           console.log(this.formData);
           // gọi api login
           let res = await apiHandle(
@@ -156,10 +157,7 @@ export default {
             this.formData,
             MApiResource.apiHeaderContentType.applicationType
           );
-          // console.log(this.$MApiResource.apiMethod.post,
-          //   this.$MApiResource.apiUrl.login,
-          //   this.formData,
-          //   MApiResource.apiHeaderContentType.applicationType);
+          
           console.log("Đăng nhập thành công: ",res);
           // nếu đăng nhập thành công
           if(res) {
@@ -178,9 +176,12 @@ export default {
             console.log("refreshToken: ", localStorage.getItem("refreshToken"));
           }
           else {
-            setTimeout(() => { this.showLoading = false}, 2000);
+            console.log("res: ", res);
+            //setTimeout(() => { this.showLoading = false}, 2000);
+            this.showLoading = false;
           }
         }
+        
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);
       }

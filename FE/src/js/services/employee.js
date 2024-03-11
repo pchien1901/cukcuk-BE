@@ -5,6 +5,7 @@ import { store } from '@/main.js';
 import { router } from '@/main.js';
 import tinyEmitter from "tiny-emitter/instance";
 import MResource from '@/helper/resource.js';
+import MApiResource from '@/helper/api-resource.js';
 
 const apiURL = config.API_URL;
 
@@ -17,7 +18,7 @@ axios.interceptors.request.use(async function (config) {
   console.log("token nè: ", token);
   console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
   if(token) {
-    if(store.state.isAuthenticate) {
+    if(store.state.isAuthenticate === true) {
       config.headers.Authorization = `Bearer ${token}`;
     }
   }
@@ -84,8 +85,8 @@ export const getAllEmployees = async () => {
   }
   catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400) {
+    let status = error?.response?.status;
+    if(status && status >= 400) {
       if(status === 401) {
         let userMsg = null;
         if(error?.response?.data?.UserMsg) {
@@ -133,7 +134,7 @@ export const getEmployeeById = async (id) => {
     return res;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
+    let status = error?.response?.status;
     if(status >= 400)  {
       if(status === 401) {
         let userMsg = null;
@@ -356,6 +357,32 @@ export const importFile = async (importKey) => {
   } catch (error) {
     console.error("Đã xảy ra lỗi: ", error);
     return error.response;
+  }
+}
+
+/**
+ * Hàm xuất file excel
+ * @param {*} currentPage Trang hiện tại
+ * @param {*} pageSize số bản ghi/ trang
+ * @param {*} text Từ khóa tìm kiếm
+ * Author: PMChien
+ */
+export const exportFile = async (currentPage = 1, pageSize = 10, text = "") => {
+  try {
+    if(!text) {
+      text = "";
+    }
+    if(currentPage < 1) {
+      currentPage = 1;
+    }
+
+    let res = await axios.get(
+      `${apiURL}/Employees/export-file/?page=${currentPage}&size=${pageSize}&text=${text}`,
+       { responseType: MApiResource.apiHeaderContentType.arrayType }
+    );
+    return res;
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
   }
 }
 

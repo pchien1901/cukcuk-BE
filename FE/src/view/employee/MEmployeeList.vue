@@ -66,7 +66,7 @@ getEmployeeInfoByPage,
 } from "../../js/services/employee.js";
 import { getAllDepartments, getDepartmentById } from '../../js/services/department.js';
 import { getAllPositions, getPositionById } from '../../js/services/position.js';
-
+import { checkAuthentication } from "@/js/services/token";
 export default {
   name: "MEmployeeList",
   components: { MEmployeeTable, MEmployeePopup },
@@ -110,6 +110,7 @@ export default {
     };
   },
   async created() {
+    await checkAuthentication();
     this.isShowLoading = true;
     this.loadData(1, 10, "");
     setTimeout(() => { this.isShowLoading = false}, 2000);

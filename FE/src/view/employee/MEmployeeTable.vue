@@ -21,6 +21,17 @@
           :class="'button-center'"
           @click="emitLoadData"
         />
+
+        <MButton
+          :type="'icon'"
+          :iconClass="'icon-export-excel'"
+          title="Xuất file"
+          tooltip="Xuất file"
+          tooltipPosition="bottom"
+          :class="'button-export-excel'"
+          @click="exportExcelFile"
+        />
+
         <MButton
           :type="'icon'"
           :iconClass="'icon-excel-svg'"
@@ -128,11 +139,13 @@
 // import { getAllEmployees } from "../../js/services/employee.js";
 // import { getAllDepartments } from "../../js/services/department.js";
 // import { getAllPositions } from "../../js/services/position.js";
+import { checkAuthentication } from "@/js/services/token.js";
 import {
   convertDateFormat,
   getGenderLabel,
 } from "../../js/ulti/convert-data.js";
 import { baseEmit, baseEmitWithParam } from '../../js/ulti/emit.js';
+import { exportFile } from "@/js/services/employee.js";
 
 export default {
   name: "MEmployeeTable",
@@ -328,7 +341,7 @@ export default {
     },
     //#endregion
 
-    //#region 
+    //#region Import / Export file
     /**
      * Chuyển đến trang import Employee khi ấn button Nhập
      * Author: PMChien
@@ -336,6 +349,22 @@ export default {
     goToImportPage() {
       try {
         this.$router.push('/nhan-vien/nhap-khau');
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
+      }
+    },
+
+    async exportExcelFile() {
+      try {
+        await checkAuthentication();
+        const res = await exportFile(this.pagination.CurrentPage, this.pagination.PageSize, this.searchText);
+        let blob = new Blob([res.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+
+        const fileName = this.$MResource["VN"].File.EmployeeFile;
+        // file-saver download file
+        this.$saveAs(blob, fileName);
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
       }

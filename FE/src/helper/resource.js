@@ -61,6 +61,10 @@ const MResource = {
       }
     },
 
+    File: {
+      EmployeeFile: "Danh_sach_nhan_vien",
+    },
+
     // thông báo khi import
     Toast: {
       Import: {

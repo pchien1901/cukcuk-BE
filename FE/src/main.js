@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createStore } from 'vuex';
+import { saveAs } from 'file-saver';
 import App from './App.vue';
 
 //   base component
@@ -106,6 +107,7 @@ app.config.globalProperties.$tinyEmitter = tinyEmitter;
 app.config.globalProperties.$MEnum = MEnum;
 app.config.globalProperties.$MResource = MResource;
 app.config.globalProperties.$MApiResource = MApiResource;
+app.config.globalProperties.$saveAs = saveAs;
 
 
 // vuex

@@ -7,8 +7,9 @@
     </div>
     <div class="sidebar-body">
       <router-link to="/nhan-vien">
-        <MNavItem :text="'Tổng quan'" :iconClass="'icon-overview-active'" :iconActive="'icon-overview-active'"/>
+        <MNavItem :text="'Nhân viên'" :iconClass="'icon-employee'" :iconActive="'icon-employee'"/>
       </router-link>
+      <MNavItem :text="'Tổng quan'" :iconClass="'icon-overview-active'" :iconActive="'icon-overview-active'"/>
       <MNavItem :text="'Tiền mặt'" :iconClass="'icon-cash-active'" :iconActive="'icon-cash-active'"/>
       <MNavItem :text="'Tiền gửi'" :iconClass="'icon-deposits-active'" :iconActive="'icon-deposits-active'"/>
       <MNavItem :text="'Mua hàng'" :iconClass="'icon-buy-active'" :iconActive="'icon-buy-active'"/>
