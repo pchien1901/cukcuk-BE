@@ -71,5 +71,15 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// </returns>
         /// Created by: PMChien
         MISAServiceResult ReadImportFile(IFormFile fileImport);
+
+        /// <summary>
+        /// Xuất file excel
+        /// </summary>
+        /// <param name="page">Trang hiện tại</param>
+        /// <param name="pageSize">Kích thước trang</param>
+        /// <param name="text">Từ khóa tìm kiếm</param>
+        /// <returns>MISAServiceResult</returns>
+        /// Created by: PMChien
+        MISAServiceResult ExportEmployee(int page, int pageSize, string? text);
     }
 }

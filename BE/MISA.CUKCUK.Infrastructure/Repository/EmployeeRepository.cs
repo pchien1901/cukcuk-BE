@@ -107,8 +107,9 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             return (int)Math.Ceiling((double)totalRecords / pageSize);
         }
 
-        public List<EmployeeInfo> GetEmployeeInfoByPage(int offset, int pageSize, string? text)
+        public Page<EmployeeInfo> GetEmployeeInfoByPage(int offset, int pageSize, string? text)
         {
+            /// Lấy danh sách kết quả phân trang - tìm kiếm
             // tên procedure
             var proc = "Proc_GetEmployeeInfoByPage";
 
@@ -117,10 +118,44 @@ namespace MISA.CUKCUK.Infrastructure.Repository
             param.Add("pageSize", pageSize);
             param.Add("text", text);
 
-            var data = _dbContext.Connection.Query<EmployeeInfo>(proc, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
-            return data;
+            var listRecord = _dbContext.Connection.Query<EmployeeInfo>(proc, param, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
+            /// Lấy tổng số trang
+            // tên procedure
+            var procPageCount = "Proc_GetEmployeeInfoPageCount";
+            var searchText = "";
+            if (!String.IsNullOrEmpty(text))
+            {
+                searchText = text;
+            }
+            var paramPageCount = new DynamicParameters();
+            paramPageCount.Add("text", searchText);
 
+            // thực hiện truy vấn
+            var totalRecords = _dbContext.Connection.QuerySingle<int>(procPageCount , param: paramPageCount, commandType: System.Data.CommandType.StoredProcedure);
+
+            var pageCount = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            /// Tổng sống bản ghi
+             // tên procedure
+            var procTotalRecord = "Proc_CountEmployeeSearchResult";
+            var searchTotalRecordText = "";
+            if (!String.IsNullOrEmpty(text))
+            {
+                searchTotalRecordText = text;
+            }
+            var paramTotalRecord = new DynamicParameters();
+            paramTotalRecord.Add("text", searchTotalRecordText);
+
+            // thực hiện truy vấn
+            var totalRecordsToCount = _dbContext.Connection.QuerySingle<int>(procTotalRecord, param: paramTotalRecord, commandType: System.Data.CommandType.StoredProcedure);
+            return new Page<EmployeeInfo>
+            {
+                ListRecord = listRecord,
+                CurrentPage = offset,
+                TotalPage = pageCount,
+                TotalRecord = totalRecordsToCount
+            };
         }
 
         public int CountSearchRecord(string? text)

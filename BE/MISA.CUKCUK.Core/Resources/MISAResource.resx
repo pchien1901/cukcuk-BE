@@ -162,11 +162,26 @@
   <data name="EmployeeDoesNotExist" xml:space="preserve">
     <value>Nhân viên chưa tồn tại trong hệ thống</value>
   </data>
+  <data name="EmployeeFileHeader" xml:space="preserve">
+    <value>Danh sách nhân viên</value>
+  </data>
+  <data name="EmployeeFileName" xml:space="preserve">
+    <value>Danh_sach_nhan_vien</value>
+  </data>
+  <data name="EmployeeWorkSheetName" xml:space="preserve">
+    <value>Danh sách nhân viên</value>
+  </data>
+  <data name="ExportFileFail" xml:space="preserve">
+    <value>Đã xảy ra lỗi trong quá trình xuất file.</value>
+  </data>
   <data name="FullNameRequired" xml:space="preserve">
     <value>Họ và tên không được để trống</value>
   </data>
   <data name="GenderInvalid" xml:space="preserve">
     <value>Giới tính không hợp lệ</value>
+  </data>
+  <data name="ImportFileFail" xml:space="preserve">
+    <value>Nhập khẩu không thành công.</value>
   </data>
   <data name="PageError" xml:space="preserve">
     <value>Thông tin trang không hợp lệ</value>

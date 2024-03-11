@@ -136,7 +136,30 @@ namespace MISA.CUKCUK.Core.Exceptions
 
             try
             {
+
+                // kiểm tra người dùng đã được xác thực chưa
+                //if (!context.User.Identity.IsAuthenticated)
+                //{
+                //    var error = new
+                //    {
+                //        devMsg = MISAAuthResource.UserIsNotAuthenticated,
+                //        userMsg = MISAAuthResource.UserIsNotAuthenticated,
+                //        errorCode = "",
+                //        moreInfor = "",
+                //        traceId = ""
+                //    };
+
+                //    var res = JsonConvert.SerializeObject(error);
+                //    context.Response.StatusCode = 401;
+                //    await context.Response.WriteAsync(res);
+                //}
+                //else
+                //{
+                //    await _next(context);
+                //}
+
                 await _next(context);
+
             }
             catch(MISAValidateException misaValidateEx)
             {

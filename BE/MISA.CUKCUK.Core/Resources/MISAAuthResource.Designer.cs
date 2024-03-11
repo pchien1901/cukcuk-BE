@@ -115,6 +115,15 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vui lòng đăng nhập để sử dụng dịch vụ.
+        /// </summary>
+        public static string PleaseLoginToUseWeb {
+            get {
+                return ResourceManager.GetString("PleaseLoginToUseWeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đăng ký người dùng thất bại.
         /// </summary>
         public static string RegisterFail {
@@ -129,6 +138,15 @@ namespace MISA.CUKCUK.Core.Resources {
         public static string UserIsExist {
             get {
                 return ResourceManager.GetString("UserIsExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Người dùng chưa được xác thực.
+        /// </summary>
+        public static string UserIsNotAuthenticated {
+            get {
+                return ResourceManager.GetString("UserIsNotAuthenticated", resourceCulture);
             }
         }
     }

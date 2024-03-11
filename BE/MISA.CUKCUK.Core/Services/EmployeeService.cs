@@ -13,8 +13,11 @@ using MISA.CUKCUK.Core.Interfaces;
 using MISA.CUKCUK.Core.MISAEnum;
 using MISA.CUKCUK.Core.Resources;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -371,6 +374,11 @@ namespace MISA.CUKCUK.Core.Services
             return employeeInfoList;
         }
 
+        /// <summary>
+        /// Đọc file cần import và thêm thông tin vào memory cache, lần sau có lệnh thêm sẽ lấy file ra thêm luôn
+        /// </summary>
+        /// <param name="fileImport">file excel cần import</param>
+        /// <returns>MISAServiceResult Success = true - file đã được lưu vào memory cache</returns>
         public MISAServiceResult ReadImportFile(IFormFile fileImport)
         {
             var employeeImport = ValidateImportService(fileImport);
@@ -398,7 +406,7 @@ namespace MISA.CUKCUK.Core.Services
         public MISAServiceResult ImportEmployee(string keyImport)
         {
             var result = 0;
-            var employeeList = (List<EmployeeImport>) memoryCache.Get(keyImport);
+            var employeeList = (List<EmployeeImport>)memoryCache.Get(keyImport);
             _unitOfWork.BeginTransaction();
             try
             {
@@ -419,7 +427,7 @@ namespace MISA.CUKCUK.Core.Services
                 var employees = new List<Employee>();
                 foreach (var item in employeeList)
                 {
-                    if(item.CanImported == true)
+                    if (item.CanImported == true)
                     {
                         var employee = new Employee
                         {
@@ -453,7 +461,7 @@ namespace MISA.CUKCUK.Core.Services
 
                 throw;
             }
-            
+
             _unitOfWork.Commit();
             if (result == 0)
             {
@@ -477,6 +485,109 @@ namespace MISA.CUKCUK.Core.Services
                         Imported = result,
                         Total = employeeList.Count
                     }
+                };
+            }
+        }
+
+        /// <summary>
+        /// Xuất file excel
+        /// </summary>
+        /// <param name="page">Trang hiện tại</param>
+        /// <param name="pageSize">Kích thước trang</param>
+        /// <param name="text">Từ khóa tìm kiếm</param>
+        /// <returns>MISAServiceResult</returns>
+        /// Created by: PMChien
+        public MISAServiceResult ExportEmployee(int page, int pageSize, string? text)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            Page<EmployeeInfo> employeesInfoPage = _unitOfWork.Employees.GetEmployeeInfoByPage(page, pageSize, text);
+            var employees = employeesInfoPage.ListRecord;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            // create an excel file
+            using(ExcelPackage package = new ExcelPackage())
+            {
+                // created excel file
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(MISAResource.EmployeeWorkSheetName);
+                int row = 4;
+                int index = 1;
+                ExcelRange titleRange = worksheet.Cells["A1:I1"];
+                worksheet.Cells["A2:I2"].Merge = true;
+                titleRange.Merge = true;
+                titleRange.Value = MISAResource.EmployeeFileHeader;
+                titleRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                using (ExcelRange rng = worksheet.Cells["A1:I1"])
+                {
+                    rng.Style.Font.Bold = true;
+                    rng.Style.Font.Size = 14;
+                } 
+
+                // header title
+                worksheet.Cells[3, 1].Value = "STT";
+                worksheet.Cells[3, 2].Value = "Mã nhân viên";
+                worksheet.Cells[3, 3].Value = "Tên nhân viên";
+                worksheet.Cells[3, 4].Value = "Giới tính";
+                worksheet.Cells[3, 5].Value = "Ngày sinh";
+                worksheet.Cells[3, 6].Value = "Chức danh";
+                worksheet.Cells[3, 7].Value = "Tên đơn vị";
+                worksheet.Cells[3, 8].Value = "Số tài khoản";
+                worksheet.Cells[3, 9].Value = "Tên ngân hàng";
+                for(int col = 1; col <= 9; col++)
+                {
+                    worksheet.Cells[3, col].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    worksheet.Cells[3, col].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                }
+
+                // write data
+                foreach(var employee in employees)
+                {
+                    worksheet.Cells[row, 1].Value = index;
+                    worksheet.Cells[row, 2].Value = employee.EmployeeCode;
+                    worksheet.Cells[row, 3].Value = employee.FullName;
+                    string gender;
+                    switch(employee.Gender)
+                    {
+                        case Gender.MALE:
+                            gender = "Nam";
+                            break;
+                        case Gender.FEMALE:
+                            gender = "Nữ";
+                            break;
+                        default:
+                            gender = "Khác";
+                            break;
+                    }
+                    worksheet.Cells[row, 4].Value = gender;
+                    worksheet.Cells[row, 5].Style.Numberformat.Format = "dd/MM/yyyy";
+                    worksheet.Cells[row, 5].Value = employee.DateOfBirth;
+                    worksheet.Cells[row, 6].Value = employee.PositionName;
+                    worksheet.Cells[row, 7].Value = employee.DepartmentName;
+                    worksheet.Cells[row, 8].Value = employee.BankAccountNumber;
+                    worksheet.Cells[row, 9].Value = employee.BankName;
+                    row++;
+                    index++;
+                }
+
+                // auto fit column's width
+                worksheet.Cells.AutoFitColumns();
+                MemoryStream stream = new MemoryStream(package.GetAsByteArray());
+                byte[] fileBytes = stream.ToArray();
+                string fileName = MISAResource.EmployeeFileName;
+                var excelData = new Dictionary<string, object>
+                {
+                    {"FileBytes", fileBytes },
+                    {"FileName", fileName }
+                };
+
+                return new MISAServiceResult
+                {
+                    Success = true,
+                    DataObject = excelData
                 };
             }
         }
@@ -752,21 +863,14 @@ namespace MISA.CUKCUK.Core.Services
                 //throw new MISAValidateException(Resources.MISAResource.PageError);
                 page = 1;
             }
-            List<EmployeeInfo> employeeInfoByPage = _unitOfWork.Employees.GetEmployeeInfoByPage(
+            Page<EmployeeInfo> employeeInfoByPage = _unitOfWork.Employees.GetEmployeeInfoByPage(
                (page - 1)*pageSize, pageSize, text );
-            if(employeeInfoByPage.Count >= 0)
+            if(employeeInfoByPage.ListRecord.Count >= 0)
             {
-                var employeeInfos = new Page<EmployeeInfo>
-                {
-                    ListRecord = employeeInfoByPage,
-                    CurrentPage = page,
-                    TotalPage = _unitOfWork.Employees.GetPageCount<EmployeeInfo>(pageSize,text),
-                    TotalRecord = _unitOfWork.Employees.CountSearchRecord(text)
-                };
                 return new MISAServiceResult
                 {
                     Success = true,
-                    DataObject = employeeInfos
+                    DataObject = employeeInfoByPage
                 };
             }
             else

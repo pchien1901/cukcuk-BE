@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -98,6 +99,9 @@ builder.Services.AddMemoryCache();
 builder.Services.AddAutoMapper
     (typeof(AutoMapperProfile).Assembly);
 
+// add default response in case 401
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareHandleService>();
+
 var app = builder.Build();
 
 
@@ -110,7 +114,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // chèn middleware
+//app.UseMiddleware<AuthorizationMiddlewareHandleService>();
 app.UseMiddleware<HandleExceptionMiddleware>();
+
 
 app.UseCors("AllowAll");
 
@@ -119,6 +125,7 @@ app.UseHttpsRedirection();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
+//app.UseMiddleware<AuthorizationMiddlewareHandleService>();
 
 app.MapControllers();
 

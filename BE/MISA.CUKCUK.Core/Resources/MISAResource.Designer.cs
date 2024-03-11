@@ -196,6 +196,42 @@ namespace MISA.CUKCUK.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Danh sách nhân viên.
+        /// </summary>
+        public static string EmployeeFileHeader {
+            get {
+                return ResourceManager.GetString("EmployeeFileHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh_sach_nhan_vien.
+        /// </summary>
+        public static string EmployeeFileName {
+            get {
+                return ResourceManager.GetString("EmployeeFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách nhân viên.
+        /// </summary>
+        public static string EmployeeWorkSheetName {
+            get {
+                return ResourceManager.GetString("EmployeeWorkSheetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đã xảy ra lỗi trong quá trình xuất file..
+        /// </summary>
+        public static string ExportFileFail {
+            get {
+                return ResourceManager.GetString("ExportFileFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Họ và tên không được để trống.
         /// </summary>
         public static string FullNameRequired {
@@ -210,6 +246,15 @@ namespace MISA.CUKCUK.Core.Resources {
         public static string GenderInvalid {
             get {
                 return ResourceManager.GetString("GenderInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhập khẩu không thành công..
+        /// </summary>
+        public static string ImportFileFail {
+            get {
+                return ResourceManager.GetString("ImportFileFail", resourceCulture);
             }
         }
         

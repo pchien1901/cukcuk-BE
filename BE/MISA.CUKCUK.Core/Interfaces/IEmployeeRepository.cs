@@ -67,6 +67,6 @@ namespace MISA.CUKCUK.Core.Interfaces
         /// <param name="text">Nội dung tìm kiếm theo tên hoặc mã nhân viên</param>
         /// <returns>pageSize bản ghi bắt đầu từ offset</returns>
         /// Created by: PMChien
-        List<EmployeeInfo> GetEmployeeInfoByPage(int offset, int pageSize, string? text);
+        Page<EmployeeInfo> GetEmployeeInfoByPage(int offset, int pageSize, string? text);
     }
 }

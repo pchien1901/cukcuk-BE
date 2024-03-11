@@ -220,12 +220,17 @@ namespace MISA.CUKCUK.Core.UnitTests.Services
             // Add more employee info objects as needed
         };
 
-            UnitOfWork.Employees.GetEmployeeInfoByPage(Arg.Any<int>(), Arg.Any<int>(), text)
-                .Returns(employeeInfoList);
+            var employeeInfoPage = new Page<EmployeeInfo>
+            {
+                ListRecord = employeeInfoList,
+                CurrentPage = 1,
+                TotalPage = 3,
+                TotalRecord = 25,
+            };
 
-            // Mock the method calls in the unitOfWork to return appropriate values for TotalPage and TotalRecord
-            UnitOfWork.Employees.GetPageCount<EmployeeInfo>(pageSize, text).Returns(3); // Example value
-            UnitOfWork.Employees.CountSearchRecord(text).Returns(25); // Example value
+            UnitOfWork.Employees.GetEmployeeInfoByPage(Arg.Any<int>(), Arg.Any<int>(), text)
+                .Returns(employeeInfoPage);
+
 
             // Act
             var result = EmployeeService.PageService(page, pageSize, text);
@@ -249,7 +254,7 @@ namespace MISA.CUKCUK.Core.UnitTests.Services
             string text = "search text";
 
             UnitOfWork.Employees.GetEmployeeInfoByPage(Arg.Any<int>(), Arg.Any<int>(), text)
-                .Returns(new List<EmployeeInfo>()); // Trả về danh sách rỗng
+                .Returns(new Page<EmployeeInfo>()); // Trả về danh sách rỗng
 
             // Act
             var result = EmployeeService.PageService(page, pageSize, text);

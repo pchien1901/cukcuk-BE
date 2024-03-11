@@ -126,6 +126,50 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 throw;
             }
         }
+
+        [HttpGet("export-file")]
+        public IActionResult ExportEmployeeExportFile(
+            [FromQuery(Name = "page")] int page = 1,
+            [FromQuery(Name = "size")] int size = 10,
+            [FromQuery(Name = "text")] string? text = null
+        )
+        {
+            try
+            {
+                var searchText = "";
+                if(text != null)
+                {
+                    searchText = text;
+                }
+                var result = _employeeService.ExportEmployee(page, size, searchText);
+
+                if (result.Success && result.DataObject != null)
+                {
+                    var excelData = (Dictionary<string, object>)result.DataObject;
+                    var fileBytes = (byte[])excelData["FileBytes"];
+                    var fileName = (string)excelData["FileName"];
+
+                    return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName, true);
+                }
+                else
+                {
+                    return StatusCode(500, new
+                    {
+                        devMsg = MISAResource.ExportFileFail,
+                        userMsg = MISAResource.ExportFileFail,
+                        errorCode = "",
+                        moreInfor = "",
+                        traceId = ""
+                    });
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
 
 
@@ -205,8 +249,8 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 else
                 {
                     return StatusCode(500, new { 
-                        devMsg = "Lỗi tại ImportEmployeeFromFile, employee controller",
-                        userMsg = "Nhập khẩu không thành công.",
+                        devMsg = MISAResource.ImportFileFail,
+                        userMsg = MISAResource.ImportFileFail,
                         errorCode = "",
                         moreInfor = "",
                         traceId = "",

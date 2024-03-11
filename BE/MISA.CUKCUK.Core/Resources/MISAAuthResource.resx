@@ -135,10 +135,16 @@
   <data name="NullTokenUser" xml:space="preserve">
     <value>Không thể gia hạn đăng nhập</value>
   </data>
+  <data name="PleaseLoginToUseWeb" xml:space="preserve">
+    <value>Vui lòng đăng nhập để sử dụng dịch vụ</value>
+  </data>
   <data name="RegisterFail" xml:space="preserve">
     <value>Đăng ký người dùng thất bại</value>
   </data>
   <data name="UserIsExist" xml:space="preserve">
     <value>Người dùng đã tồn tại</value>
+  </data>
+  <data name="UserIsNotAuthenticated" xml:space="preserve">
+    <value>Người dùng chưa được xác thực</value>
   </data>
 </root>
