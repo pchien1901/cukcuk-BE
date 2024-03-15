@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.Runtime.Versioning;
 using MISA.CUKCUK.Core.Resources;
 using System.Diagnostics;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 
 namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 {
@@ -261,13 +262,20 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 var newAccessToken = CreateToken(principal.Claims.ToList());
                 var newRefreshToken = GenerateRefreshToken();
 
+                // Lấy giá trị hết hạn refreshToken mới
+                _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInMinutes"], out int refreshTokenValidityInMinutes);
+
+                // cập nhật refreshToken và thời gian hết hạn mới
                 user.RefreshToken = newRefreshToken;
+                user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(refreshTokenValidityInMinutes);
                 await _userManager.UpdateAsync(user);
-                return StatusCode(200, new ObjectResult( new
+                return StatusCode(200, new
                 {
                     accessToken = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
-                    refreshToken = newRefreshToken
-                }));
+                    refreshToken = newRefreshToken,
+                    Expiration = newAccessToken.ValidTo,
+                    ExpirationRefreshToken = user.RefreshTokenExpiryTime
+                });
             }
             catch (Exception)
             {
