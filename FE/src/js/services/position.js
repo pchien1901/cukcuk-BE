@@ -6,20 +6,20 @@ import { checkAuthentication } from './token.js';
 
 const apiURL = config.API_URL;
 
-// Thêm một bộ đón chặn request
-axios.interceptors.request.use(async function (config) {
-  // kiểm tra xác thực người dùng
-  await checkAuthentication();
-  let token = localStorage.getItem("accessToken");
+// // Thêm một bộ đón chặn request
+// axios.interceptors.request.use(async function (config) {
+//   // kiểm tra xác thực người dùng
+//   await checkAuthentication();
+//   let token = localStorage.getItem("accessToken");
 
-  if(token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, function (error) {
-  console.error("Đã có lỗi khi gửi request", error );
-  return Promise.reject(error);
-});
+//   if(token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// }, function (error) {
+//   console.error("Đã có lỗi khi gửi request", error );
+//   return Promise.reject(error);
+// });
 
 /**
  * gọi api lấy tất cả Position

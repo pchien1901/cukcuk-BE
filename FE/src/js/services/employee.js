@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import config from '../config/config.js';
 import { checkAuthentication } from './token.js';
@@ -6,60 +7,52 @@ import { router } from '@/main.js';
 import tinyEmitter from "tiny-emitter/instance";
 import MResource from '@/helper/resource.js';
 import MApiResource from '@/helper/api-resource.js';
+//import { getNewToken } from './token.js';
 
 const apiURL = config.API_URL;
 
 // Thêm một bộ đón chặn request
 axios.interceptors.request.use(async function (config) {
-  // kiểm tra xác thực người dùng
-  await checkAuthentication();
-  let token = localStorage.getItem("accessToken");
-  
-  console.log("token nè: ", token);
-  console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
-  if(token) {
-    if(store.state.isAuthenticate === true) {
-      config.headers.Authorization = `Bearer ${token}`;
+  if(!isUnauthenticatedRequest(config)) {
+    console.log("url: ", config, "Hàm isUnauthenticateRequest: ", isUnauthenticatedRequest(config));
+    // kiểm tra xác thực người dùng
+    await checkAuthentication();
+
+    let token = localStorage.getItem("accessToken");
+    
+    console.log("token nè: ", token);
+    console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
+    if(token) {
+      if(store.state.isAuthenticate === true) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
   }
+  
   return config;
 }, function (error) {
   console.error("Đã có lỗi khi gửi request", error );
   return Promise.reject(error);
 });
 
-
-// Thêm một bộ đón chặn response
-// axios.interceptors.response.use(function (response) {
-//   // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
-//   // Làm gì đó với dữ liệu response
-//   return response;
-// }, function (error) {
-//   // Bất kì mã trạng thái nào lọt ra ngoài tầm 2xx đều khiến hàm này được trigger\
-//   console.error("Đã có lỗi khi gửi request", error );
-//   //return Promise.reject(error);
-//   if(error?.response?.status) {
-//     let errorResponse = error.response;
-
-//     switch(error.response.status) {
-//       case 401: 
-//         store.commit('changeAuthenticateStatus', false);
-//         router.push("/login");
-//         tinyEmitter.emit(
-//           MResource["VN"].Event.Toast.openMainToast,
-//           {
-//            type: MResource["VN"].ToastTypeWarning,
-//             message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-//           }
-//         );
-//         break;
-//       default:
-//         return error.response;
-//     }
-//   }
-// });
-
-
+/**
+ * Hàm kiểm tra các api url không cần phải xác thực (login, register, registerAdmin, revoke, refreshToken)
+ * @param {*} config đối tượng đại diện cho cấu hình của yêu cầu HTTP
+ * Author: PMChien
+ */
+function isUnauthenticatedRequest(config) {
+  try {
+    return (
+      config.url.includes(MApiResource.apiUrl.login) ||
+      config.url.includes(MApiResource.apiUrl.refreshToken) ||
+      config.url.includes(MApiResource.apiUrl.register) ||
+      config.url.includes(MApiResource.apiUrl.registerAdmin)
+    );
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
+  }
+}
+ 
 /**
  * gọi api lấy tất cả Employee
  * @returns danh sách Employee/ error {data {}} nếu lỗi/ -1 nếu lỗi không xác định
@@ -85,28 +78,28 @@ export const getAllEmployees = async () => {
   }
   catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error?.response?.status;
-    if(status && status >= 400) {
-      if(status === 401) {
-        let userMsg = null;
-        if(error?.response?.data?.UserMsg) {
-          userMsg = error.response.data.UserMsg;
-        }
-        store.commit('changeAuthenticateStatus', false);
-        console.log("thay đổi store thành: ", store.state.isAuthenticate);
-        router.push("/login");
-        tinyEmitter.emit(
-          MResource["VN"].Event.Toast.openMainToast,
-          {
-            type: MResource["VN"].ToastTypeWarning,
-            message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-          }
-        );
-      }
-      else {
-        return error.response;
-      }
-    }
+    // let status = error?.response?.status;
+    // if(status && status >= 400) {
+    //   if(status === 401) {
+    //     let userMsg = null;
+    //     if(error?.response?.data?.UserMsg) {
+    //       userMsg = error.response.data.UserMsg;
+    //     }
+    //     store.commit('changeAuthenticateStatus', false);
+    //     console.log("thay đổi store thành: ", store.state.isAuthenticate);
+    //     router.push("/login");
+    //     tinyEmitter.emit(
+    //       MResource["VN"].Event.Toast.openMainToast,
+    //       {
+    //         type: MResource["VN"].ToastTypeWarning,
+    //         message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
+    //       }
+    //     );
+    //   }
+    //   else {
+    //     return error.response;
+    //   }
+    // }
   }
 }
 
@@ -134,29 +127,29 @@ export const getEmployeeById = async (id) => {
     return res;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error?.response?.status;
-    if(status >= 400)  {
-      if(status === 401) {
-        let userMsg = null;
-        if(error?.response?.data?.UserMsg) {
-          userMsg = error.response.data.UserMsg;
-        }
-        store.commit('changeAuthenticateStatus', false);
-        console.log("thay đổi store thành: ", store.state.isAuthenticate);
+    // let status = error?.response?.status;
+    // if(status >= 400)  {
+    //   if(status === 401) {
+    //     let userMsg = null;
+    //     if(error?.response?.data?.UserMsg) {
+    //       userMsg = error.response.data.UserMsg;
+    //     }
+    //     store.commit('changeAuthenticateStatus', false);
+    //     console.log("thay đổi store thành: ", store.state.isAuthenticate);
 
-        router.push("/login");
-        tinyEmitter.emit(
-          MResource["VN"].Event.Toast.openMainToast,
-          {
-           type: MResource["VN"].ToastTypeWarning,
-            message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-          }
-        );
-      }
-      else {
-        return error.response;
-      }
-    }
+    //     router.push("/login");
+    //     tinyEmitter.emit(
+    //       MResource["VN"].Event.Toast.openMainToast,
+    //       {
+    //        type: MResource["VN"].ToastTypeWarning,
+    //         message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
+    //       }
+    //     );
+    //   }
+    //   else {
+    //     return error.response;
+    //   }
+    // }
   }
 }
 
@@ -180,27 +173,27 @@ export const getNewEmployeeCode = async () => {
     return res.data;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400)  {
-      if(status === 401) {
-        let userMsg = null;
-        if(error?.response?.data?.UserMsg) {
-          userMsg = error.response.data.UserMsg;
-        }
-        store.commit('changeAuthenticateStatus', false);
-        console.log("thay đổi store thành: ", store.state.isAuthenticate);
+    // let status = error.response.status;
+    // if(status >= 400)  {
+    //   if(status === 401) {
+    //     let userMsg = null;
+    //     if(error?.response?.data?.UserMsg) {
+    //       userMsg = error.response.data.UserMsg;
+    //     }
+    //     store.commit('changeAuthenticateStatus', false);
+    //     console.log("thay đổi store thành: ", store.state.isAuthenticate);
 
-        router.push("/login");
-        tinyEmitter.emit(
-          MResource["VN"].Event.Toast.openMainToast,
-          {
-           type: MResource["VN"].ToastTypeWarning,
-            message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-          }
-        );
-      }
-      return error.response;
-    }
+    //     router.push("/login");
+    //     tinyEmitter.emit(
+    //       MResource["VN"].Event.Toast.openMainToast,
+    //       {
+    //        type: MResource["VN"].ToastTypeWarning,
+    //         message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
+    //       }
+    //     );
+    //   }
+    //   return error.response;
+    // }
   }
 }
 
@@ -222,24 +215,24 @@ export const getEmployeeInfo = async ()  => {
     let res = await axios.get(`${apiURL}/Employees/information`);
     return res.data;
   } catch (error) {
-    let status = error.response.status;
-    if(status === 401) {
-      let userMsg = null;
-      if(error?.response?.data?.UserMsg) {
-        userMsg = error.response.data.UserMsg;
-      }
-      store.commit('changeAuthenticateStatus', false);
-      console.log("thay đổi store thành: ", store.state.isAuthenticate);
+    // let status = error.response.status;
+    // if(status === 401) {
+    //   let userMsg = null;
+    //   if(error?.response?.data?.UserMsg) {
+    //     userMsg = error.response.data.UserMsg;
+    //   }
+    //   store.commit('changeAuthenticateStatus', false);
+    //   console.log("thay đổi store thành: ", store.state.isAuthenticate);
 
-      router.push("/login");
-      tinyEmitter.emit(
-        MResource["VN"].Event.Toast.openMainToast,
-        {
-         type: MResource["VN"].ToastTypeWarning,
-          message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-        }
-      );
-    }
+    //   router.push("/login");
+    //   tinyEmitter.emit(
+    //     MResource["VN"].Event.Toast.openMainToast,
+    //     {
+    //      type: MResource["VN"].ToastTypeWarning,
+    //       message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
+    //     }
+    //   );
+    // }
     console.error("Đã xảy ra lỗi");
   }
 }
@@ -278,24 +271,24 @@ export const getEmployeeInfoByPage = async (currentPage = 1, pageSize = 10, text
   return res.data;
     
   } catch (error) {
-    let status = error.response.status;
-    if(status === 401) {
-      let userMsg = null;
-      if(error?.response?.data?.UserMsg) {
-        userMsg = error.response.data.UserMsg;
-      }
-      store.commit('changeAuthenticateStatus', false);
-      console.log("thay đổi store thành: ", store.state.isAuthenticate);
+    // let status = error.response.status;
+    // if(status === 401) {
+    //   let userMsg = null;
+    //   if(error?.response?.data?.UserMsg) {
+    //     userMsg = error.response.data.UserMsg;
+    //   }
+    //   store.commit('changeAuthenticateStatus', false);
+    //   console.log("thay đổi store thành: ", store.state.isAuthenticate);
 
-      router.push("/login");
-      tinyEmitter.emit(
-        MResource["VN"].Event.Toast.openMainToast,
-        {
-         type: MResource["VN"].ToastTypeWarning,
-          message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
-        }
-      );
-    }
+    //   router.push("/login");
+    //   tinyEmitter.emit(
+    //     MResource["VN"].Event.Toast.openMainToast,
+    //     {
+    //      type: MResource["VN"].ToastTypeWarning,
+    //       message: userMsg ? userMsg : "Hết phiên đăng nhập, vui lòng đăng nhập lại."
+    //     }
+    //   );
+    // }
     console.error("Đã xảy ra lỗi: ", error);
   }
 }
@@ -313,10 +306,10 @@ export const checkEmployeeCodeBeforeCU = async (data) => {
     return res.data;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400)  {
-      return error.response;
-    }
+    // let status = error.response.status;
+    // if(status >= 400)  {
+    //   return error.response;
+    // }
   }
 }
 
@@ -398,10 +391,10 @@ export const createEmployee = async(data) => {
     return res;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc post dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400)  {
-      return error.response;
-    }
+    // let status = error.response.status;
+    // if(status >= 400)  {
+    //   return error.response;
+    // }
   }
 }
 
@@ -418,10 +411,10 @@ export const updateEmployee = async (data, id) => {
     return res;
   } catch (error) {
     console.error("Đã xảy ra lỗi trong put employee: ", error);
-    let status = error.response.status;
-    if(status >= 400) {
-      return error.response;
-    }
+    // let status = error.response.status;
+    // if(status >= 400) {
+    //   return error.response;
+    // }
   }
 }
 
@@ -437,10 +430,10 @@ export const deleteEmployeeById = async (id) => {
     return res;
   } catch (error) {
     console.error("Đã xảy ra lỗi lúc delete Employee: ", error);
-    let status = error.response.status;
-    if(status >= 400) {
-      return error.response;
-    }
+    // let status = error.response.status;
+    // if(status >= 400) {
+    //   return error.response;
+    // }
   }
 }
 

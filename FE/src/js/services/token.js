@@ -47,7 +47,7 @@ export async function getNewToken() {
         RefreshToken: localStorage.getItem("refreshToken")
       };
       let res = await axios.post(
-        `${apiURL}/refresh-token`,
+        `${apiURL}/${MApiResource.apiUrl.refreshToken}`,
         data,
         {
           headers: {
@@ -58,6 +58,8 @@ export async function getNewToken() {
       console.log("token mới: ", res);
       localStorage.setItem("accessToken", res.data.accessToken);
       localStorage.setItem("refreshToken", res.data.refreshToken);
+      localStorage.setItem("expirationToken", res.data.Expiration);
+      localStorage.setItem("expirationRefreshToken", res.data.ExpirationRefreshToken);
     }
   } catch (error) {
     console.error("Đã có lỗi: ", error);

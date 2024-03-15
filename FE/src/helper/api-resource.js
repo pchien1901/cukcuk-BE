@@ -1,10 +1,10 @@
 const MApiResource = {
   apiUrl: {
     login: "Authenticate/login",
-    register: "register",
-    registerAdmin: "register-admin",
-    refreshToken: "refresh-token",
-    revoke: "revoke",
+    register: "Authenticate/register",
+    registerAdmin: "Authenticate/register-admin",
+    refreshToken: "Authenticate/refresh-token",
+    revoke: "Authenticate/revoke",
   },
   apiMethod: {
     get: "get",
