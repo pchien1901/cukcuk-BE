@@ -11,4 +11,9 @@ Sửa lỗi:
 	- Bỏ setTimeout tại MLogin
 	- Lấy dữ liệu phân trang: chỉ gọi đến DB một lần
 	- Các exception Authorized(401) đã sửa lại nếu gọi api mà chưa xác thực thì lỗi trả về theo RESTful
+	- Bỏ setTimeout tại màn hình MEmployeeList
+	- Sửa lại MEmployeePopup: 
+		+ Các trường Ngày sinh, Ngày cấp sẽ hiện lỗi ngay khi chọn sai
+		+ Combobox khi lỗi, nhập lại (chọn lại giá trị) hợp lệ sẽ xóa hiệu ứng lỗi
+				  
 
