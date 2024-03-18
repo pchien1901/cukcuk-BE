@@ -442,7 +442,40 @@ export default {
   beforeUnmount() {
     this.$tinyEmitter.off("resetEmployeeForm");
   },
-  watch: {},
+  watch: {
+    formData: {
+      handler() {
+         // theo dõi DateOfBirth, hiện lỗi khi DoB không thỏa mãn
+         if (this.formData.DateOfBirth) {
+          let today = new Date();
+          let dob = new Date(this.formData.DateOfBirth);
+          if (dob > today) {
+            this.formError.DateOfBirth = this.$MResource["VN"].DoBInvalid;
+          }
+          else {
+            if(this.formError.DateOfBirth) {
+              this.formError.DateOfBirth = "";
+            }
+          }
+        }
+
+        // theo dõi IdentityDate, hiện lỗi khi identity date không thỏa mãn
+        if (this.formData.IdentityDate) {
+          let today = new Date();
+          let IdentityDateCheck = new Date(this.formData.IdentityDate);
+          if (IdentityDateCheck > today) {
+            this.formError.IdentityDate = this.$MResource["VN"].DoRInvalid;
+          }
+          else {
+            if (this.formError.IdentityDate) {
+              this.formError.IdentityDate = "";
+            }
+          }
+        }
+      },
+      deep: true // dùng deep theo dõi sự thay đổi của thuộc tính đối tượng
+    }
+  },
   methods: {
     /**
      * Hàm gọi khi button "Cất và thêm mới được gọi", thêm(sửa) vào database sau đó
@@ -509,6 +542,7 @@ export default {
     },
     /**
      * Kiểm tra EmployeeCode mới có bị trùng không
+     * Author: PMChien
      */
     async checkNewCode() {
       try {

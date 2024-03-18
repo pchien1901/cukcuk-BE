@@ -2,6 +2,8 @@
   <div class="m-import-container">
     <!-- LOADING -->
     <MLoading v-if="isShowLoading"/>
+
+    <!-- IMPORT HEADER -->
     <div class="m-import-header">
       <div class="m-import-header__left">
         Bước {{ importState.mode + 1 }}: {{ importState.label[importState.mode] }}
@@ -15,6 +17,8 @@
           />
       </div>
     </div>
+
+    <!-- IMPORT SIDEBAR -->
     <div class="m-import-sidebar">
       <div class="sidebar-item" 
       :class="{'sidebar-item--selected' : this.importState.mode === this.$MEnum.ImportState.SELECT}">
@@ -29,14 +33,18 @@
         3. Kết quả nhập khẩu
       </div>
     </div>
+
+    <!-- IMPORT CONTENT -->
 		<div class="m-import-main">
 			<div class="m-import-content">
 				
+        <!-- VIEW 1: UPLOAD FILE -->
 				<div v-if="this.importState.mode === this.$MEnum.ImportState.SELECT" class="view-select-file">
 					<p>Chọn dữ liệu Nhân viên đã chuẩn bị để nhập khẩu vào phần mềm</p>
 					<MInput type="file"  @fileUploaded="handleFileUploaded"/>
 				</div>
 
+        <!-- VIEW 2: VALIDATE FILE -->
         <div v-if="this.importState.mode === this.$MEnum.ImportState.VALIDATION && this.validatedEmployees !== null && this.validatedEmployees.length > 0" class="view-validation-file">
           <!-- <div v-if="true" class="view-validation-file"> -->
 
@@ -45,10 +53,12 @@
             <div class="width-300">{{ this.invalidRows }}/{{ this.validatedEmployees.length }} dòng không hợp lệ</div>          
           </div>
           <div class="validation-body">
+            <!-- VALIDATE FILE RESULT TABLE -->
             <MEmployeeImportTable :items="validatedEmployees"/>
           </div>
 				</div>
 
+        <!-- VIEW 3: RESULT -->
         <div v-if="this.importState.mode === this.$MEnum.ImportState.RESULT" class="view-result-file">
 					<div class="result-title">Kết quả nhập khẩu</div>
           <div class="result-infomation">
@@ -61,6 +71,7 @@
 			</div>
 		</div>
     
+    <!-- IMPORT FOOTER -->
     <div class="m-import-footer">
       <div class="m-import-footer__left">
         <MButton :type="'second'" :text="'Trợ giúp'" />
@@ -86,6 +97,7 @@
           :text="'Thực hiện'" 
           :class="'m-import-footer__button-center'" 
           @click="handleImportBtn"
+          :disabled="validRows && validRows > 0 ? false : true"
         />
         <MButton :type="'second'" :text="this.importState.mode === this.$MEnum.ImportState.RESULT ? 'Đóng' : 'Hủy'" @click="closeImportEmployee"/>
       </div>
@@ -124,9 +136,9 @@ export default {
       importState: { 
           mode: this.$MEnum.ImportState.SELECT,
           label: {
-            0: "Chọn tệp nguồn",
-            1: "Kiểm tra dữ liệu",
-            2: "Kết quả nhập khẩu",
+            0: this.$MResource["VN"].File.ChooseFileToImport,
+            1: this.$MResource["VN"].File.ValidateFileToImport,
+            2: this.$MResource["VN"].File.ImportResult,
           }
       },
       validatedEmployees: [],

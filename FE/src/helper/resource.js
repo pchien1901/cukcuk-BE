@@ -17,6 +17,7 @@ const MResource = {
     EmployeeCodeIsNotEmpty: "Mã nhân viên không được để trống.",
     EmployeeCodeIsExist: "Mã nhân viên đã tồn tại.",
     DepartmentIdIsNotEmpty: "Đơn vị không được để trống.",
+    InformationNotFound: "Không tìm thấy thông tin",
 
     // dialog
     DeleteCustomerTitle: "Xóa Khách hàng",
@@ -63,6 +64,9 @@ const MResource = {
 
     File: {
       EmployeeFile: "Danh_sach_nhan_vien",
+      ChooseFileToImport: "Chọn tệp nguồn",
+      ValidateFileToImport: "Kiểm tra dữ liệu",
+      ImportResult: "Kết quả nhập khẩu"
     },
 
     // thông báo khi import

@@ -112,8 +112,9 @@ export default {
   async created() {
     await checkAuthentication();
     this.isShowLoading = true;
-    this.loadData(1, 10, "");
-    setTimeout(() => { this.isShowLoading = false}, 2000);
+    await this.loadData(1, 10, "");
+    //setTimeout(() => { this.isShowLoading = false}, 2000);
+    this.isShowLoading = false;
   },
   mounted() {
     // Khai báo Emitter
@@ -240,14 +241,15 @@ export default {
      * Hàm gọi loadData và tạo hiệu ứng loading khi button Tải lại click
      * Author: PMChien
      */
-    handleLoadingData(page, pageSize, text) {
+    async handleLoadingData(page, pageSize, text) {
       try {
         // Tạo hiệu ứng loading
         this.isShowLoading = true;
         // LoadData
-        this.loadData(page, pageSize, text);
+        await this.loadData(page, pageSize, text);
         // Tắt hiệu ứng loading
-        setTimeout(() => { this.isShowLoading = false }, 2000);
+        //setTimeout(() => { this.isShowLoading = false }, 2000);
+        this.isShowLoading = false;
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);
       }

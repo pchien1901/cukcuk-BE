@@ -128,6 +128,11 @@ export default {
       this.inputValue = newValue.text;
       this.result = newValue.value;
       this.$emit("update:modelValue", this.result);
+      // Tắt hiệu ứng error khi có giá trị thỏa mãn
+      if(this.isError) {
+        this.isError = false;
+        this.errorMsg = "";
+      }
     },
     modelValue(newValue) {
       let data = this.items.filter(item => item.value === newValue);
@@ -201,6 +206,12 @@ export default {
      * Author: Phạm Minh Chiến
      */
     handleInput($event) {
+      // nếu có lỗi thì khi nhập (@input) sẽ bỏ hiệu ứng lỗi
+      if(this.isError && this.isInputFocus) {
+        this.isError = false;
+        this.errorMsg = "";
+      }
+
       let text = $event.target.value;
       this.inputValue = text;
 
@@ -212,7 +223,7 @@ export default {
         );
         if (this.filteredItems.length === 0) {
           this.isError = true;
-          this.errorMsg = "Không tìm thấy thông tin";
+          this.errorMsg = this.$MResource["VN"].InformationNotFound;
           this.showSuggestion = false;
         }
         else {
@@ -221,9 +232,12 @@ export default {
         }
       } else {
         // Nếu chuỗi input là rỗng và không focus thì tắt suggestion
-        if(this.isInputFocus) {
-          this.showSuggestion = false;
-        }
+        // if(this.isInputFocus) {
+        //   this.showSuggestion = true;
+        // }
+        // Nếu không nhập gì cả // focus mà không nhập => refresh giá trị của combobox
+        this.result = "";
+        this.showSuggestion = false;
       }
       // this.$emit("update:value", this.inputValue);
     },
