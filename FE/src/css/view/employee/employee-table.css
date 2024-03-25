@@ -224,16 +224,27 @@ td .action-cell .m-btn-icon {
   /* background-color: transparent; */
 }
 
+.action-btns-wrapper {
+  position: sticky;
+  width: 0;
+  height: 0;
+  z-index: 2;
+  right: 0;
+}
+
 .action-btns {
+  height: 48px;
   display: flex;
   align-items: center;
   position: absolute;
+  /* position: sticky; */
   right: 24px;
   padding: 0;
   border: unset;
   background-color: transparent;
   z-index: 2;
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
 }
 
 .action-btns:hover {
@@ -241,7 +252,9 @@ td .action-cell .m-btn-icon {
 }
 
 tr:hover .action-btns {
-  visibility: visible;
+  /* visibility: visible; */
+  /* display: inline; */
+  display: flex;
 }
 
 .btn-action-table {

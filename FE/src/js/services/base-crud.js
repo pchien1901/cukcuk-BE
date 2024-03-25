@@ -8,7 +8,47 @@ import { checkAuthentication } from "./token.js";
 
 const apiURL = config.API_URL;
 
-// Thêm một bộ đón chặn response
+//#region config axios request, response
+/**
+ * Thêm một bộ đón chặn request
+ *  - Thêm Token vào header
+ * Author: PMChien
+ */
+axios.interceptors.request.use(
+  async function (config) {
+    if (!isUnauthenticatedRequest(config)) {
+      console.log(
+        "url: ",
+        config,
+        "Hàm isUnauthenticateRequest: ",
+        isUnauthenticatedRequest(config)
+      );
+      // kiểm tra xác thực người dùng
+      await checkAuthentication();
+
+      let token = localStorage.getItem("accessToken");
+
+      //console.log("token nè: ", token);
+      //console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
+      if (token) {
+        if (store.state.isAuthenticate === true) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+    }
+
+    return config;
+  },
+  function (error) {
+    console.error("Đã có lỗi khi gửi request", error);
+    return Promise.reject(error);
+  }
+);
+
+/**
+ * Thêm một bộ đón chặn response
+ *  - Bắt và xử lí lỗi
+ */
 axios.interceptors.response.use(
   function (response) {
     // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
@@ -30,30 +70,30 @@ axios.interceptors.response.use(
         case 400:
           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
             type: MResource["VN"].ToastTypeError,
-            message: userMsg ? userMsg : "Thông tin gửi đi chưa hợp lệ.",
+            message: userMsg ? userMsg : MResource["VN"].BadRequest,
           });
           break;
         case 401:
-          store.commit("changeAuthenticateStatus", false);
+          store.commit("logout");
           router.push("/login");
           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
             type: MResource["VN"].ToastTypeError,
             message: userMsg
               ? userMsg
-              : "Hết phiên đăng nhập, vui lòng đăng nhập lại.",
+              : MResource["VN"].Unauthorized,
           });
           return null;
-          //break;
+        //break;
         case 403:
           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
             type: MResource["VN"].ToastTypeError,
-            message: userMsg ? userMsg : "Truy cập bị từ chối.",
+            message: userMsg ? userMsg : MResource["VN"].Forbidden,
           });
           break;
         case 404:
           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
             type: MResource["VN"].ToastTypeError,
-            message: userMsg ? userMsg : "Không tìm thấy thông tin.",
+            message: userMsg ? userMsg : MResource["VN"].NotFound,
           });
           break;
         case 500:
@@ -61,13 +101,13 @@ axios.interceptors.response.use(
             type: MResource["VN"].ToastTypeError,
             message: userMsg
               ? userMsg
-              : "Lỗi phía máy chủ, vui lòng thử lại sau.",
+              : MResource["VN"].ServerError,
           });
           break;
         default:
           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
             type: MResource["VN"].ToastTypeError,
-            message: userMsg ? userMsg : "Đã xảy ra lỗi.",
+            message: userMsg ? userMsg : MResource["VN"].Error,
           });
           break;
       }
@@ -76,12 +116,33 @@ axios.interceptors.response.use(
 );
 
 /**
- *
- * @param {*} method
- * @param {*} subURL
- * @param {*} data
- * @param {*} type
- * @returns
+ * Hàm kiểm tra các api url không cần phải xác thực (login, register, registerAdmin, revoke, refreshToken)
+ * @param {*} config đối tượng đại diện cho cấu hình của yêu cầu HTTP
+ * Author: PMChien
+ */
+function isUnauthenticatedRequest(config) {
+  try {
+    return (
+      config.url.includes(MApiResource.apiUrl.login) ||
+      config.url.includes(MApiResource.apiUrl.refreshToken) ||
+      config.url.includes(MApiResource.apiUrl.register) ||
+      config.url.includes(MApiResource.apiUrl.registerAdmin)
+    );
+  } catch (error) {
+    console.error("Đã xảy ra lỗi: ", error);
+  }
+}
+//#endregion
+
+//#region call api
+/**
+ * Hàm gọi api dựa vào tham số truyền vào
+ * @param {*} method method của HTTP Request - get, put, post, delete
+ * @param {*} subURL Đường dẫn URL tới địa chỉ cần gọi (VD: /Authenticate/login)
+ * @param {*} data Dữ liệu gửi trong body
+ * @param {*} type  Type của HTTP
+ * @returns response hoặc response.data
+ * Author: PMChien
  */
 export async function apiHandle(
   method,
@@ -159,3 +220,4 @@ export async function apiHandle(
     console.error("Đã có lỗi xảy ra: ", error);
   }
 }
+//#endregion

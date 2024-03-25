@@ -13,7 +13,7 @@
             :class="'icon-cancel-popup'"
             :tooltip="'Thoát'"
             :tooltipPosition="'bottom'"
-            @click="closeImportEmployee"
+            @click="closeEmployeeImport"
           />
       </div>
     </div>
@@ -54,7 +54,7 @@
           </div>
           <div class="validation-body">
             <!-- VALIDATE FILE RESULT TABLE -->
-            <MEmployeeImportTable :items="validatedEmployees"/>
+            <EmployeeImportTable :items="validatedEmployees"/>
           </div>
 				</div>
 
@@ -99,7 +99,7 @@
           @click="handleImportBtn"
           :disabled="validRows && validRows > 0 ? false : true"
         />
-        <MButton :type="'second'" :text="this.importState.mode === this.$MEnum.ImportState.RESULT ? 'Đóng' : 'Hủy'" @click="closeImportEmployee"/>
+        <MButton :type="'second'" :text="this.importState.mode === this.$MEnum.ImportState.RESULT ? 'Đóng' : 'Hủy'" @click="closeEmployeeImport"/>
       </div>
     </div>
 
@@ -123,10 +123,10 @@
 <script>
 import { checkAuthentication } from '@/js/services/token.js';
 import { validateFile, importFile } from '../../js/services/employee.js';
-import MEmployeeImportTable from './MEmployeeImportTable.vue';
+import EmployeeImportTable from './EmployeeImportTable.vue';
 export default {
-  name: "MImportEmployee",
-  components: [ MEmployeeImportTable ],
+  name: "EmployeeImport",
+  components: [ EmployeeImportTable ],
   async created() {
     await checkAuthentication();
   },
@@ -269,7 +269,7 @@ export default {
      * Đóng Import page, reset file về null
      * Author: PMChien
      */
-    closeImportEmployee() {
+    closeEmployeeImport() {
       try {
         this.file = null;
         this.$router.push('/nhan-vien');

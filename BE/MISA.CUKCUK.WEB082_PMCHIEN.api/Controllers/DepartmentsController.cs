@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MISA.CUKCUK.Core.Auth;
 using MISA.CUKCUK.Core.DTOs.CrudDTOs;
 using MISA.CUKCUK.Core.Entities;
 using MISA.CUKCUK.Core.Exceptions;
@@ -17,13 +18,15 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         #region Declaration
         IDepartmentRepository _departmentRepository;
         IDepartmentService _departmentService;
+        IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public DepartmentsController(IDepartmentRepository departmentRepository, IDepartmentService departmentService)
+        public DepartmentsController(IDepartmentRepository departmentRepository, IDepartmentService departmentService, IUnitOfWork unitOfWork)
         {
             _departmentRepository = departmentRepository;
             _departmentService = departmentService;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
@@ -58,6 +61,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         public override IActionResult Post([FromBody] Department department)
         {
@@ -74,6 +78,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut("{id}")]
         public override IActionResult Put([FromBody] Department department)
         {
@@ -82,8 +87,8 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 var validate = _departmentService.UpdateService(department);
                 if( validate.Success == true )
                 {
-                    var res = _departmentRepository.Insert(department);
-                    return StatusCode(200, res);
+                    //var res = _departmentRepository.Insert(department);
+                    return StatusCode(200, validate.Data);
                 }
                 else
                 {
@@ -97,14 +102,21 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete("{id}")]
         public override IActionResult Delete(string id)
         {
             try
             {
                 var validate = _departmentService.DeleteService(id);
-                var res = _departmentRepository.Delete(id);
-                return StatusCode(200, res);
+                if(validate.Success)
+                {
+                    return StatusCode(200, validate.Data);
+                }
+                else
+                {
+                    return StatusCode(200, 0);
+                }
             }
             catch (Exception)
             {
@@ -113,12 +125,13 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         public override IActionResult Delete([FromBody] string[] ids)
         {
             try
             {
-                var res = _departmentRepository.DeleteAny(ids);
+                var res = _unitOfWork.Departments.DeleteAny(ids);
                 return StatusCode(200, res);
             }
             catch (Exception)

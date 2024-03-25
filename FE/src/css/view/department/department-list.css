@@ -1,0 +1,35 @@
+.department-page-container {
+  padding: 0px 24px 24px 24px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* HEADERl? */
+.department-page-header {
+  height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.department-page-header__left .title{
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* BODY */
+.department-page-body {
+  height: calc(100% - 68px);
+  background-color: #fff;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.039);
+  border-radius: 4px;
+}
+
+/* BODY HEADER */
+
+/* department TABLE */
+.department-table {
+  height: calc(100%);
+}
+/* .department-page-body .header-right . */

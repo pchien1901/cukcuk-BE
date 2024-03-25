@@ -45,7 +45,8 @@ const MResource = {
     
     // axios error
     BadRequest: "Thông tin chưa hợp lệ, vui lòng kiểm tra lại.",
-    Forbidden: "Bạn không được cấp, quyền truy cập, vui lòng liên hệ lại quản trị.",
+    Unauthorized: "Vui lòng đăng nhập lại.",
+    Forbidden: "Truy cập bị từ chối.",
     NotFound: "Không tìm thấy thông tin.",
     ServerError: "Máy chủ không phản hồi, vui lòng quay lại sau.",
 

@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "MHeader",
+  name: "TheHeader",
   data() {
     return {
       showDropdown: false,
@@ -52,7 +52,7 @@ export default {
         localStorage.removeItem("expirationRefreshToken");
 
         // đổi trạng thái đăng nhập trong store
-        this.$store.commit("changeAuthenticateStatus", false);
+        this.$store.commit("logout");
 
         // quay về trang login
         this.$router.push("/login");

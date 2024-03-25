@@ -16,12 +16,14 @@ namespace MISA.CUKCUK.Core.Services
     {
         #region Declaration
         IDepartmentRepository _departmentRepository;
+        IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public DepartmentService(IDepartmentRepository departmentRepository, IMemoryCache memoryCache): base(departmentRepository, memoryCache)
+        public DepartmentService(IDepartmentRepository departmentRepository, IMemoryCache memoryCache, IUnitOfWork unitOfWork) : base(departmentRepository, memoryCache)
         {
             _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
@@ -33,10 +35,10 @@ namespace MISA.CUKCUK.Core.Services
         /// <returns>MISAServiceResult {Success: có thỏa mãn không, Data: Thông tin}</returns>
         /// <exception cref="NotImplementedException"></exception>
         /// Created by: PMCHIEN (08/01/2024)
-        public MISAServiceResult DeleteService(string id)
-        {
-            throw new NotImplementedException();
-        }
+        //public MISAServiceResult DeleteService(string id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Kiểm tra Department trươc khi Insert
@@ -46,7 +48,7 @@ namespace MISA.CUKCUK.Core.Services
         /// Created by: PMCHIEN (08/01/2024)
         protected override void ValidateObject(Department department)
         {
-            var isDuplicate = _departmentRepository.CheckCodeIsExist(department.DepartmentCode);
+            var isDuplicate = _unitOfWork.Departments.CheckCodeIsExist(department.DepartmentCode);
             if (isDuplicate)
             {
                 throw new MISAValidateException(Resources.MISAResource.DepartmentCodeIsDuplicated);
@@ -70,7 +72,7 @@ namespace MISA.CUKCUK.Core.Services
             else
             {
                 // Kiểm tra departmentCode có bị trùng với đơn vị khác không
-                var departmentByCode = _departmentRepository.GetByCode(department.DepartmentCode);
+                var departmentByCode = _unitOfWork.Departments.GetByCode(department.DepartmentCode);
                 switch (departmentByCode.Count)
                 {
                     // không có bản ghi nào trùng mã

@@ -17,11 +17,11 @@
 
     <!-- BODY -->
     <div class="employee-page-body">
-      <MEmployeeTable :items="employees" :totalPage="totalPage" :totalRecord="totalRecord"/>
+      <EmployeeTable :items="employees" :totalPage="totalPage" :totalRecord="totalRecord"/>
     </div>
 
     <!-- POPUP -->
-    <MEmployeePopup v-if="showPopup" :closeFunction="() => this.closePopup()" :inputData="inputData"/>
+    <EmployeePopup v-if="showPopup" :closeFunction="() => this.closePopup()" :inputData="inputData"/>
 
     <!-- DIALOGL -->
     <MDialog
@@ -51,8 +51,8 @@
 
 <script>
 /* eslint-disable */
-import MEmployeeTable from "./MEmployeeTable.vue";
-import MEmployeePopup from "./MEmployeePopup.vue";
+import EmployeeTable from "./EmployeeTable.vue";
+import EmployeePopup from "./EmployeePopup.vue";
 import {
   getAllEmployees,
   getEmployeeById,
@@ -68,8 +68,8 @@ import { getAllDepartments, getDepartmentById } from '../../js/services/departme
 import { getAllPositions, getPositionById } from '../../js/services/position.js';
 import { checkAuthentication } from "@/js/services/token";
 export default {
-  name: "MEmployeeList",
-  components: { MEmployeeTable, MEmployeePopup },
+  name: "EmployeeList",
+  components: { EmployeeTable, EmployeePopup },
   data() {
     return {
       /**
@@ -81,6 +81,19 @@ export default {
        * dialog (object) quản lí thông tin dialog
        * inputData: dữ liệu Employee đưa vào popup thực hiện edit
        * isShowLoading: Quản lí đóng hiện loading khi server lỗi không vào được
+       * dialog: 
+       *      + type: (number) Loại của icon dialog: warning, info, error
+       *      + mode: (number) Loại dialog : dialog chỉ thông báo hay kèm theo hành động 
+       *      + text: (array (string)) Nội dung cảnh báo
+       *      + primaryAction: (function) Hành động của nút chính trong dialog
+       *      + primaryBtnText: (string) nhãn của nút chính
+       *      + cancelBtnText: (string) nhãn của nút thoát
+       * toast:
+       *      + type: (string) warning, error, info, success
+       *      + message: (string) Nội dung thông báo
+       *      + action: Hành động nếu có
+       *      + totalPage: tổng số trang dữ liệu employee từ server trả về
+       *      + totalRecord: Tổng số bản ghi employee từ server gửi về
        */
       employees: [],
       employeeToActionMulti: [],
@@ -110,6 +123,7 @@ export default {
     };
   },
   async created() {
+    console.log("store.state: ", this.$store.state);
     await checkAuthentication();
     this.isShowLoading = true;
     await this.loadData(1, 10, "");

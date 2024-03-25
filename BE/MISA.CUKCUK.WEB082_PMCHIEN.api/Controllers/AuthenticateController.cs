@@ -19,10 +19,13 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
     [ApiController]
     public class AuthenticateController: ControllerBase
     {
+        #region Declaration
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        #endregion
 
+        #region Constructor
         public AuthenticateController(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
@@ -33,14 +36,16 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             _roleManager = roleManager;
             _configuration = configuration;
         }
+        #endregion
 
+        #region Method
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             try
             {
                 var user = await _userManager.FindByNameAsync(model.Username);
-                if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -50,7 +55,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                     };
 
-                    foreach(var userRole in userRoles)
+                    foreach (var userRole in userRoles)
                     {
                         authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                     }
@@ -71,7 +76,8 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                             Token = new JwtSecurityTokenHandler().WriteToken(token),
                             RefreshToken = refreshToken,
                             Expiration = token.ValidTo,
-                            ExpirationRefreshToken = user.RefreshTokenExpiryTime
+                            ExpirationRefreshToken = user.RefreshTokenExpiryTime,
+                            Role = userRoles
                         });
                 }
                 //return Unauthorized();
@@ -89,7 +95,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 throw;
             }
-            
+
         }
 
         [HttpPost]
@@ -99,9 +105,9 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var userExists = await _userManager.FindByNameAsync(model.Username);
-                if(userExists != null)
+                if (userExists != null)
                 {
-                    return BadRequest( new
+                    return BadRequest(new
                     {
                         devMsg = MISAAuthResource.UserIsExist,
                         userMsg = MISAAuthResource.UserIsExist,
@@ -119,7 +125,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new
                     {
@@ -137,7 +143,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 throw;
             }
-           
+
         }
 
         [HttpPost]
@@ -147,7 +153,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var userExists = await _userManager.FindByNameAsync(model.Username);
-                if(userExists != null)
+                if (userExists != null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new
                     {
@@ -167,7 +173,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new
                     {
@@ -180,16 +186,16 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 }
 
                 // Tạo các quyền Admin và User nếu chưa tồn tại
-                if(!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
                 }
-                if(!await _roleManager.RoleExistsAsync(UserRoles.User))
+                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
                 }
 
-                if(await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.Admin);
                 }
@@ -212,9 +218,10 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
         {
             try
             {
-                if(tokenModel is null)
+                if (tokenModel is null)
                 {
-                    return BadRequest(new {
+                    return BadRequest(new
+                    {
                         devMsg = MISAAuthResource.NullToken,
                         userMsg = MISAAuthResource.NullTokenUser,
                         errorCode = "",
@@ -227,7 +234,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
                 string? refreshToken = tokenModel.RefreshToken;
 
                 var principal = GetPrincipalFromExpiredToken(accessToken);
-                if(principal == null)
+                if (principal == null)
                 {
                     return BadRequest(new
                     {
@@ -247,7 +254,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 var user = await _userManager.FindByNameAsync(username);
 
-                if(user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+                if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
                 {
                     return BadRequest(new
                     {
@@ -291,7 +298,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
             try
             {
                 var user = await _userManager.FindByNameAsync(username);
-                if(user == null)
+                if (user == null)
                 {
                     return BadRequest(new
                     {
@@ -341,7 +348,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -363,7 +370,7 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 throw;
             }
-           
+
         }
 
         /// <summary>
@@ -388,9 +395,9 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 var tokenHanlder = new JwtSecurityTokenHandler();
                 var principal = tokenHanlder.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
-                if(securityToken is not JwtSecurityToken jwtSecurityToken ||
+                if (securityToken is not JwtSecurityToken jwtSecurityToken ||
                     !jwtSecurityToken.Header.Alg
-                    .Equals(SecurityAlgorithms.HmacSha256, 
+                    .Equals(SecurityAlgorithms.HmacSha256,
                             StringComparison.InvariantCultureIgnoreCase)
                 )
                 {
@@ -404,7 +411,9 @@ namespace MISA.CUKCUK.WEB082_PMCHIEN.api.Controllers
 
                 throw;
             }
-            
+
+        }
+
+        #endregion    
         }
     }
-}

@@ -10,48 +10,6 @@ import MApiResource from '@/helper/api-resource.js';
 //import { getNewToken } from './token.js';
 
 const apiURL = config.API_URL;
-
-// Thêm một bộ đón chặn request
-axios.interceptors.request.use(async function (config) {
-  if(!isUnauthenticatedRequest(config)) {
-    console.log("url: ", config, "Hàm isUnauthenticateRequest: ", isUnauthenticatedRequest(config));
-    // kiểm tra xác thực người dùng
-    await checkAuthentication();
-
-    let token = localStorage.getItem("accessToken");
-    
-    console.log("token nè: ", token);
-    console.log("store.state.isAuthenticate: ", store.state.isAuthenticate);
-    if(token) {
-      if(store.state.isAuthenticate === true) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    }
-  }
-  
-  return config;
-}, function (error) {
-  console.error("Đã có lỗi khi gửi request", error );
-  return Promise.reject(error);
-});
-
-/**
- * Hàm kiểm tra các api url không cần phải xác thực (login, register, registerAdmin, revoke, refreshToken)
- * @param {*} config đối tượng đại diện cho cấu hình của yêu cầu HTTP
- * Author: PMChien
- */
-function isUnauthenticatedRequest(config) {
-  try {
-    return (
-      config.url.includes(MApiResource.apiUrl.login) ||
-      config.url.includes(MApiResource.apiUrl.refreshToken) ||
-      config.url.includes(MApiResource.apiUrl.register) ||
-      config.url.includes(MApiResource.apiUrl.registerAdmin)
-    );
-  } catch (error) {
-    console.error("Đã xảy ra lỗi: ", error);
-  }
-}
  
 /**
  * gọi api lấy tất cả Employee

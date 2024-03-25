@@ -24,126 +24,111 @@
 	height: 17px;
 }
 
+.icon-department {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -427px -1591px;
+	width: 16px;
+	height: 16px;
+}
+
+.icon-position {
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -592px -1588px;
+	width: 23px;
+	height: 18px;
+}
+
 .icon-overview {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -16px -815px;
-	/* background-size: 1008px 953px; */
-	width: 9px;
-	height: 10px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg')  no-repeat -33px -1587px;
+	width: 18px;
+	height: 20px;
 }
 
 .icon-cash {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -39px -815px;
+  /* background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -39px -815px;
 	background-size: 1008px 953px;
 	width: 7px;
 	height: 9px;
-  scale: 2;
+  scale: 2; */
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -78px -1588px;
+	width: 14px;
+	height: 18px;
 }
 
 .icon-deposits {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -60px -816px;
-	background-size: 1008px 953px;
-	width: 8px;
-	height: 8px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -121px -1590px;
+	width: 16px;
+	height: 16px;
 }
 
 .icon-buy {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -82px -816px;
-	background-size: 1008px 953px;
-	width: 8px;
-	height: 9px;
-  scale: 2;
-
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -165px -1589px;
+	width: 16px;
+	height: 18px;
 }
 
 .icon-sell {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -103px -815px;
-	background-size: 1008px 953px;
-	width: 10px;
-	height: 9px;
-  scale: 2;
-
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -165px -1589px;
+	width: 16px;
+	height: 18px;
 }
 
 .icon-bill {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -127px -816px;
-	background-size: 1008px 953px;
-	width: 7px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -254px -1589px;
+	width: 14px;
+	height: 17px;
 }
 
 .icon-warehouse{
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -147px -816px;
-	background-size: 1008px 953px;
-	width: 9px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -294px -1589px;
+	width: 18px;
+	height: 17px;
 }
 
 .icon-tools {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -169px -816px;
-	background-size: 1008px 953px;
-	width: 9px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -339px -1590px;
+	width: 17px;
+	height: 17px;
 }
 
 .icon-fixed-assets {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -191px -816px;
-	background-size: 1008px 953px;
-	width: 9px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -382px -1589px;
+	width: 17px;
+	height: 18px;
 }
 
 .icon-tax {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -213px -817px;
-	background-size: 1008px 953px;
-	width: 8px;
-	height: 8px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -427px -1591px;
+	width: 16px;
+	height: 16px;
 }
 
 .icon-price {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -235px -816px;
-	background-size: 1008px 953px;
-	width: 9px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -470px -1590px;
+	width: 18px;
+	height: 17px;
 }
 
 .icon-synthetic {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -257px -816px;
-	background-size: 1008px 953px;
-	width: 8px;
-	height: 9px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -514px -1590px;
+	width: 15px;
+	height: 16px;
 }
 
 .icon-budget {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -191px -832px;
-	background-size: 1008px 953px;
-	width: 8px;
-	height: 8px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -427px -1664px;
+	width: 16px;
+	height: 16px;
 }
 
 .icon-report {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -276px -818px;
-	background-size: 1008px 953px;
-	width: 7px;
-	height: 7px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -552px -1593px;
+	width: 14px;
+	height: 13px;
 }
 
 .icon-financial-analysis {
-  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -103px -833px;
-	background-size: 1008px 953px;
-	width: 9px;
-	height: 7px;
-  scale: 2;
+  background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -251px -1667px;
+	width: 17px;
+	height: 14px;
 }
 
 /* MENU ACTIVE ICON */

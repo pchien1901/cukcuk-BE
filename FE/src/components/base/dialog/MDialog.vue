@@ -87,10 +87,20 @@ export default {
 
     // hàm thao tác với nút chính dialog
     primaryAction: Function,
+
+    // Hàm thao tác nút phụ
     secondAction: Function,
+
+    // Nhãn của nút chính
     primaryBtnText: { type: String, default: "Đồng ý" },
+
+    // Nhãn nút phụ
     secondBtnText: { type: String, default: "Không" },
+
+    // nhãn nút thoát
     cancelBtnText: { type: String, default: "Hủy" },
+
+    // định dạng hiển thị nội dung có theo danh sách hay không
     listStyle: { type: Boolean, default: false}
   },
   data() {

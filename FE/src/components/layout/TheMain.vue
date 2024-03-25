@@ -18,15 +18,15 @@
 
 <script>
 export default {
-  name: "MMain",
+  name: "TheMain",
   created() {
     this.$tinyEmitter.on("lessSidebar", this.handleChangeWidth);
-    this.$tinyEmitter.on("serverError", this.toogleLoading);
+    this.$tinyEmitter.on("mainLoading", this.toogleLoading);
     this.$tinyEmitter.on("openMainToast", this.openToastEmit)
   },
   beforeUnmount() {
     this.$tinyEmitter.off("lessSidebar");
-    this.$tinyEmitter.off("serverError");
+    this.$tinyEmitter.off("mainLoading");
     this.$tinyEmitter.off("openMainToast");
   },
   computed: {

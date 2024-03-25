@@ -78,33 +78,36 @@
             <td>{{ cellValue(employee.BankAccountNumber) }}</td>
             <td>{{ cellValue(employee.BankName) }}</td>
             <td>{{ cellValue(employee.Branch) }}</td>
-            <td class="action-btns">
-              <MButton type="icon" :iconClass="'icon-edit'" :class="'btn-action-table'" :tooltip="'Sửa'" :tooltipPosition="'top'"
-              @click="() => emitSetValueToUpdateEmployee(employee.EmployeeId)"/>
-              <div class="btn-context-menu">
-                <MButton :type="'icon'" :iconClass="'icon-three-dot'" :class="'btn-action-table'" :tooltip="'Lựa chọn'" :tooltipPosition="'top'"
-                    @click="
-                      () => {
-                        employee.IsShowMenu = !employee.IsShowMenu;
-                      }
-                    "
-                />
-                <div v-if="employee.IsShowMenu" class="context-menu">
-                  <div
-                    class="duplicate"
-                    @click="() => this.emitDuplicate(employee)"
-                  >
-                    Nhân bản
-                  </div>
-                  <div
-                    class="delete"
-                    @click="() => this.openDeleteDialog(employee.EmployeeId)"
-                  >
-                    Xóa
+            <div class="action-btns-wrapper">
+              <div class="action-btns">
+                <MButton type="icon" :iconClass="'icon-edit'" :class="'btn-action-table'" :tooltip="'Sửa'" :tooltipPosition="'top'"
+                @click="() => emitSetValueToUpdateEmployee(employee.EmployeeId)"/>
+                <div class="btn-context-menu">
+                  <MButton :type="'icon'" :iconClass="'icon-three-dot'" :class="'btn-action-table'" :tooltip="'Lựa chọn'" :tooltipPosition="'top'"
+                      @click="
+                        () => {
+                          employee.IsShowMenu = !employee.IsShowMenu;
+                        }
+                      "
+                  />
+                  <div v-if="employee.IsShowMenu" class="context-menu">
+                    <div
+                      class="duplicate"
+                      @click="() => this.emitDuplicate(employee)"
+                    >
+                      Nhân bản
+                    </div>
+                    <div
+                      class="delete"
+                      @click="() => this.openDeleteDialog(employee.EmployeeId)"
+                    >
+                      Xóa
+                    </div>
                   </div>
                 </div>
               </div>
-            </td>
+            </div>
+            
           </tr>
         </tbody>
       </table>
@@ -148,7 +151,7 @@ import { baseEmit, baseEmitWithParam } from '../../js/ulti/emit.js';
 import { exportFile } from "@/js/services/employee.js";
 
 export default {
-  name: "MEmployeeTable",
+  name: "EmployeeTable",
   props: {
     /**
      * items: danh sách dữ liệu để render

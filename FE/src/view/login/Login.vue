@@ -96,7 +96,7 @@
 import { apiHandle } from '@/js/services/base-crud';
 import MApiResource from '@/helper/api-resource.js';
 export default {
-  name : "MLogin",
+  name : "Login",
   data() {
     return {
       isShowLangDropDown: false,
@@ -151,6 +151,14 @@ export default {
           this.showLoading = true;
           console.log(this.formData);
           // gọi api login
+          /**
+           * response gồm:
+           * Token: (string) accessToken
+           * RefreshToken: (string) refreshToken
+           * Expiration: (string) thời gian hết hạn accessToken
+           * ExpirationRefreshToken: (string) thời gian hết hạn của refreshToken
+           * Role: (Array) mảng quyền của người dùng
+           */
           let res = await apiHandle(
             this.$MApiResource.apiMethod.post,
             this.$MApiResource.apiUrl.login,
@@ -170,6 +178,23 @@ export default {
             localStorage.setItem("refreshToken", res.RefreshToken);
             localStorage.setItem("expirationToken", res.Expiration);
             localStorage.setItem("expirationRefreshToken", res.ExpirationRefreshToken);
+
+            // Kiểm tra quyền (Role) của người dùng
+            let userRole = res.Role;
+            if(userRole.length > 0) {
+              if( userRole.includes(this.$store.state.role.ADMIN)) {
+                this.$store.commit("changeUserRole", this.$store.state.role.ADMIN);
+                this.$tinyEmitter.emit("showAdminOption", true);
+              }
+              else {
+                this.$store.commit("changeUserRole", this.$store.state.role.USER);
+                this.$tinyEmitter.emit("showAdminOption", false);
+              }
+            }
+            else {
+              this.$store.commit("changeUserRole", this.$store.state.role.USER);
+              this.$tinyEmitter.emit("showAdminOption", false);
+            }
 
             // kiểm tra xem localStorage có token chưa
             console.log("accessToken: ", localStorage.getItem("accessToken"));

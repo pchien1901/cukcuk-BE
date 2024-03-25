@@ -83,7 +83,7 @@
 import { employeeFile } from './test.js';
 import { formatNumberWithCommas } from '@/js/ulti/convert-data';
 export default {
-  name : "MEmployeeImportTable",
+  name : "EmployeeImportTable",
   props: {
     items: { type: Array, default: () => []},
   },

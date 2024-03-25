@@ -48,7 +48,7 @@ namespace MISA.CUKCUK.Infrastructure.Repository
 
             // Dùng DynamicParameters chống SQL injection
             var parameters = new DynamicParameters();
-            parameters.Add("@ode", code);
+            parameters.Add("@code", code);
 
             // Thực hiện truy vấn
             var data = _dbContext.Connection.Query<Department>(sql, param: parameters).ToList();

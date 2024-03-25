@@ -12,22 +12,6 @@ const apiURL = config.API_URL;
  */
 export const getAllDepartments = async () => {
   try {
-    // await axios.get(`${apiURL}/Departments`)
-    // .then(response => {
-    //   console.log("response tại get allemployee: ", response);
-    //   return response;
-    // })
-    // .catch(error => {
-    //   console.log("error tại get all employee: ", error);
-    //   if(error.response) {
-    //     if(error.response.status) {
-    //       return error.response;
-    //     }
-    //   }
-    //   else {
-    //     return { data: -1};
-    //   }
-    // })
     let res = await axios.get(`${apiURL}/Departments`);
     return res.data;
   } catch (error) {

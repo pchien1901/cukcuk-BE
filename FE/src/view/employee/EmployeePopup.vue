@@ -273,7 +273,7 @@ import {
 } from "../../js/services/department.js";
 
 export default {
-  name: "MEmployeePopup",
+  name: "EmployeePopup",
   components: { MIcon },
   props: {
     /**

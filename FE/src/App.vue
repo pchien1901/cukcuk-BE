@@ -1,22 +1,22 @@
 <template>
   <div class="container">
-    <MSidebar />
+    <TheSidebar />
     <div :class="computedClasses">
-      <MHeader />
-      <MMain />
+      <TheHeader />
+      <TheMain />
     </div>
   </div>
 </template>
 
 <script>
-import MHeader from './components/layout/MHeader.vue';
-import MSidebar from './components/layout/MSidebar.vue';
-import MMain from './components/layout/MMain.vue';
+import TheHeader from './components/layout/TheHeader.vue';
+import TheSidebar from './components/layout/TheSidebar.vue';
+import TheMain from './components/layout/TheMain.vue';
 
 export default {
   name: 'App',
   components: {
-    MHeader, MSidebar, MMain
+    TheHeader, TheSidebar, TheMain
   },
   created() {
     this.$tinyEmitter.on("lessSidebar", this.handleLessSidebar);
