@@ -74,8 +74,9 @@ export async function checkAuthentication() {
   try {
     if (!store.state.isAuthenticate) {
       router.push("/login");
-      //console.log("Trở về trang login");
+      console.log("Trở về trang login do store.state.isAuthenticate false");
     } else {
+      console.log("store.state.isAuthenticate true, lấy token mới");
       let now = new Date();
       let expirationAccessTokenString = localStorage.getItem("expirationToken");
       let expirationAccessTokenTime = new Date(expirationAccessTokenString);

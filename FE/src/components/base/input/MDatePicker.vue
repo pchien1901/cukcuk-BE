@@ -4,13 +4,25 @@
       {{ label }}
       <span v-if="isRequired" class="required-star">*</span>
     </label>
-    <input
+    <!-- <input
       type="date"
       :name="name"
       :id="id"
       :class="computedClasses"
       v-model="date"
-    />
+    /> -->
+    
+    <div class="m-date-picker-wrap">
+      <flat-pickr 
+        v-model="date"
+        :class="computedClasses"
+        placeholder="dd/mm/yyyy"
+        :name="name"
+        :config="config"
+      />
+      <div class="icon-calendar"></div>
+    </div>
+    
     <div v-if="errorMessage" class="m-date-picker__error-message">
       {{ errorMessage }}
     </div>
@@ -20,8 +32,13 @@
 <script>
 /* eslint-disable */
 import { createDateString } from '../../../js/ulti/convert-data.js';
+import flatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import "flatpickr/dist/themes/material_green.css";
+import { Vietnamese } from "flatpickr/dist/l10n/vn.js";
 export default {
   name: "MDatePicker",
+  components: { flatPickr },
   props: {
     // Nhãn của trường
     label: String,
@@ -58,7 +75,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    modelValue: String,
+    modelValue: [String, Date],
   },
   emits: ["update:modelValue"],
   data() {
@@ -67,6 +84,15 @@ export default {
       // date: newDate,
       date: this.modelValue,
       //date: this.value,
+      config: {
+        altFormat: "d/m/Y",
+        altInput: true,
+        enableTime: false,
+        defaultHour:0,
+        allowInput : true,
+        altInputClass: "flat width-1",
+        locale: Vietnamese,
+      }
     };
   },
   watch: {
@@ -100,71 +126,5 @@ export default {
 
 <style scoped>
 /* DATE PICKER */
-.m-date-picker {
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-}
-
-.m-date-picker__input-small {
-  height: 32px;
-}
-
-.m-date-picker__input-medium {
-  height: 36px;
-}
-
-.m-date-picker__input-large {
-  height: 40px;
-}
-
-.m-date-picker label {
-  font-weight: 500;
-  margin-bottom: 8px;
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-}
-
-.m-date-picker input[type="date"] {
-  box-sizing: border-box;
-  padding: 0px 12px;
-  border-radius: 4px;
-  border: 1px solid #ebebeb;
-  outline: none;
-  /* color: #9E9E9E; */
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.m-date-picker input[type="date"]::placeholder {
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-}
-
-.m-date-picker--error input {
-  box-sizing: border-box;
-  padding: 0px 12px;
-  border-radius: 4px;
-  border: 1px solid #e61d1d !important;
-  outline: none;
-}
-
-.m-date-picker--error input:hover {
-  background-color: #f6f6f6;
-}
-
-.m-date-picker--error input:focus {
-  background-color: #ffffff;
-  outline: unset;
-}
-
-.m-date-picker__error-message {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  color: #e61d1d;
-  position: absolute;
-    bottom: 2px;
-}
+@import url("../../../css/component/date-picker.css");
 </style>

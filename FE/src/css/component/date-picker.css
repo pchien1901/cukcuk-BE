@@ -1,0 +1,126 @@
+/* DATE PICKER */
+.m-date-picker {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-date-picker__input-small {
+  height: 32px;
+}
+
+.m-date-picker__input-medium {
+  height: 36px;
+}
+
+.m-date-picker__input-large {
+  height: 40px;
+}
+
+.m-date-picker label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+
+.m-date-picker input[type="date"] {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  outline: none;
+  /* color: #9E9E9E; */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.m-date-picker__input {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  outline: none;
+  /* color: #9E9E9E; */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.flat{
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  outline: none;
+  /* color: #9E9E9E; */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.flat .active {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #ebebeb;
+  outline: none;
+  /* color: #9E9E9E; */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.m-date-picker:focus {
+  border: 1px solid #50b83c;
+  outline: none;
+}
+
+.m-date-picker input[type="date"]::placeholder {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+
+.m-date-picker--error input {
+  box-sizing: border-box;
+  padding: 0px 12px;
+  border-radius: 4px;
+  border: 1px solid #e61d1d !important;
+  outline: none;
+}
+
+.m-date-picker--error input:hover {
+  background-color: #f6f6f6;
+}
+
+.m-date-picker--error input:focus {
+  background-color: #ffffff;
+  outline: unset;
+}
+
+.m-date-picker__error-message {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #e61d1d;
+  position: absolute;
+    bottom: 2px;
+}
+
+/* icon calendar */
+.icon-calendar {
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat -128px -312px;
+	width: 16px;
+	height: 16px;
+}
+
+.m-date-picker-wrap {
+  position: relative;
+}
+
+.m-date-picker-wrap .icon-calendar {
+  position: absolute;
+  right: 12px;
+  top: 10px
+}

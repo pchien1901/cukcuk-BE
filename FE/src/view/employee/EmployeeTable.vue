@@ -11,6 +11,7 @@
       <div class="header-right">
         <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" v-model="searchText" :iconClass="'icon-search'"
         @handleEnter="handleSearchEnter" :title="this.$MResource['VN'].SearchEmployeeTitle"
+        @input="handleSearchInput"
         />
         <MButton
           :type="'icon'"
@@ -52,7 +53,7 @@
           <th>Tên nhân viên</th>
           <th>Giới tính</th>
           <th>Ngày sinh</th>
-          <th>Số CMTND</th>
+          <th title="Số Chứng minh thư nhân dân">Số CMTND</th>
           <th>Chức danh</th>
           <th>Tên đơn vị</th>
           <th>Số tài khoản</th>
@@ -117,12 +118,12 @@
       <div class="total-records">Tổng: <b>{{ totalRecord }}</b></div>
       <div class="pagination">
         <label>Số bản ghi/trang</label>
-        <MDropdown :items="pagingItem" position="top" v-model="this.pagination.PageSize"/>
+        <MDropdown :items="pagingItem" position="top" v-model="this.PageSize"/>
         <div class="lists-records"><b>{{this.startIndex}}</b> - <b>{{ this.endIndex }}</b> bản ghi</div>
         <div class="icon-pagination">
-          <div class="pageBefore" @click="goToPreviousPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === 1 }"
+          <div class="pageBefore" @click="goToPreviousPage" :class="{ 'icon-pagination--disabled': this.CurrentPage === 1 }"
           ><MIcon :iconAwsClass="'fas fa-chevron-left'" :tooltip="'Trang trước'" :tooltipPosition="'top'"/></div>
-          <div class="pageAfter"  @click="goToTheNextPage" :class="{ 'icon-pagination--disabled': this.pagination.CurrentPage === this.totalPage }"
+          <div class="pageAfter"  @click="goToTheNextPage" :class="{ 'icon-pagination--disabled': this.CurrentPage === this.totalPage }"
           ><MIcon :iconAwsClass="'fas fa-chevron-right'" :tooltip="'Trang sau'" :tooltipPosition="'top'"/></div>  
         </div>
       </div>
@@ -142,13 +143,14 @@
 // import { getAllEmployees } from "../../js/services/employee.js";
 // import { getAllDepartments } from "../../js/services/department.js";
 // import { getAllPositions } from "../../js/services/position.js";
+import { debounce } from "lodash";
 import { checkAuthentication } from "@/js/services/token.js";
 import {
   convertDateFormat,
   getGenderLabel,
 } from "../../js/ulti/convert-data.js";
 import { baseEmit, baseEmitWithParam } from '../../js/ulti/emit.js';
-import { exportFile } from "@/js/services/employee.js";
+import { exportFile, exportAllEmployees } from "@/js/services/employee.js";
 
 export default {
   name: "EmployeeTable",
@@ -210,10 +212,12 @@ export default {
         text: [this.$MResource["VN"].DeleteEmployeeMessage],
         primaryAction: null,
       },
-      pagination: {
-        CurrentPage: 1,
-        PageSize: 10,
-      },
+      // pagination: {
+      //   CurrentPage: 1,
+      //   PageSize: 10,
+      // },
+      CurrentPage: 1,
+      PageSize: 10,
       pagingItem: [
         {value: 10, text: 10},
         {value: 25, text: 25},
@@ -224,14 +228,14 @@ export default {
   },
   computed: {
     startIndex() {
-      return (this.pagination.CurrentPage - 1)*this.pagination.PageSize + 1;
+      return (this.CurrentPage - 1)*this.PageSize + 1;
     },
     endIndex() {
-      if(this.pagination.CurrentPage === this.totalPage) {
-        return  (this.pagination.CurrentPage - 1)*this.pagination.PageSize + this.items.length;
+      if(this.CurrentPage === this.totalPage) {
+        return  (this.CurrentPage - 1)*this.PageSize + this.items.length;
       }
       else {
-        return (this.pagination.CurrentPage - 1)*this.pagination.PageSize + this.pagination.PageSize;
+        return (this.CurrentPage - 1)*this.PageSize + this.PageSize;
       }
     }
   },
@@ -270,11 +274,34 @@ export default {
         console.error("Đã có lỗi : ", error);
       }
     },
-    pagination: {
-      handler() {
+    // pagination: {
+    //   handler(newValue, oldValue) {
+    //     console.log("newValue.PageSize: ", newValue.PageSize, "oldValue.PageSize: ", oldValue.PageSize);
+    //     if(newValue.PageSize !== oldValue.PageSize) {
+    //       console.log("Có vấn đề");
+    //       this.CurrentPage = 1;
+    //       this.emitLoadData();
+    //     }
+    //     else {
+    //       console.log("Không có vấn đề gì cả");
+    //       this.emitLoadData();
+    //     }
+    //   },
+    //   deep: true,
+    // },
+    CurrentPage() {
+      this.emitLoadData();
+    },
+    PageSize(newValue, oldValue) {
+      if(newValue !== oldValue) {
+        console.log("Trở về trang số 1");
+        this.CurrentPage = 1;
         this.emitLoadData();
-      },
-      deep: true,
+      }
+      else {
+        console.log("Tiếp tục");
+        this.emitLoadData();
+      }
     },
     // async items() {
     //   this.employees = this.items;
@@ -290,14 +317,14 @@ export default {
      */
     emitLoadData() {
       try {
-        //this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+        //this.$tinyEmitter.emit("loadData", this.CurrentPage, this.PageSize, this.searchText.trim());
         if(this.searchText) {
-          this.pagination.CurrentPage = 1;
-          this.pagination.PageSize = 10;
-          this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+          this.CurrentPage = 1;
+          this.PageSize = 10;
+          this.$tinyEmitter.emit("loadData", this.CurrentPage, this.PageSize, this.searchText.trim());
         }
         else {
-          this.$tinyEmitter.emit("loadData", this.pagination.CurrentPage, this.pagination.PageSize, this.searchText.trim());
+          this.$tinyEmitter.emit("loadData", this.CurrentPage, this.PageSize, this.searchText.trim());
         }
       } catch (error) {
         console.error("Đã xảy ra lỗi: ", error);
@@ -342,6 +369,15 @@ export default {
         console.error("Đã xảy ra lỗi: ", error);
       }
     },
+
+    /**
+     * Gọi debounce tìm kiếm khi người dùng nhập
+     * Author: PMChien
+     */
+    handleSearchInput: debounce(function(){
+      this.emitLoadData();
+    }, 1500)
+    ,
     //#endregion
 
     //#region Import / Export file
@@ -360,7 +396,8 @@ export default {
     async exportExcelFile() {
       try {
         await checkAuthentication();
-        const res = await exportFile(this.pagination.CurrentPage, this.pagination.PageSize, this.searchText);
+        //const res = await exportFile(this.CurrentPage, this.PageSize, this.searchText);
+        const res = await exportAllEmployees();
         let blob = new Blob([res.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
@@ -435,8 +472,8 @@ export default {
      */
     goToPreviousPage() {
       try {
-        if(this.pagination.CurrentPage > 1) {
-          this.pagination.CurrentPage -= 1;
+        if(this.CurrentPage > 1) {
+          this.CurrentPage -= 1;
         }
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);
@@ -449,8 +486,8 @@ export default {
      */
     goToTheNextPage() {
       try {
-        if(this.pagination.CurrentPage < this.totalPage) {
-          this.pagination.CurrentPage += 1;
+        if(this.CurrentPage < this.totalPage) {
+          this.CurrentPage += 1;
         }
       } catch (error) {
         console.error("Đã có lỗi xảy ra: ", error);

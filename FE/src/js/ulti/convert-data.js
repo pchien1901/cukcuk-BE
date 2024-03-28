@@ -14,6 +14,9 @@ function getGenderLabel(gender) {
         return "Khác";
       }
     }
+    else if(gender === 0) {
+      return "Nam";
+    }
   } catch (error) {
     console.error("Đã có lỗi xảy ra: ", error);
   }

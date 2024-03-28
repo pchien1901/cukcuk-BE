@@ -80,7 +80,6 @@
 
 <script>
 /* eslint-disable */
-import { employeeFile } from './test.js';
 import { formatNumberWithCommas } from '@/js/ulti/convert-data';
 export default {
   name : "EmployeeImportTable",

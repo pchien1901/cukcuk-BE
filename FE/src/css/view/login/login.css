@@ -74,7 +74,7 @@
   border-color: #0073e6 !important;
 }
 
-.form-control {
+.login-form .form-control {
   padding-bottom: 24px;
 }
 
@@ -316,7 +316,7 @@ span.error-info {
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  animation: spin 1s linear infinite;
+  animation: spin 0.5s linear infinite;
 }
 
 @keyframes spin {

@@ -206,40 +206,54 @@ export default {
      * Author: Phạm Minh Chiến
      */
     handleInput($event) {
-      // nếu có lỗi thì khi nhập (@input) sẽ bỏ hiệu ứng lỗi
-      if(this.isError && this.isInputFocus) {
-        this.isError = false;
-        this.errorMsg = "";
-      }
-
-      let text = $event.target.value;
-      this.inputValue = text;
-
-      // nếu giá trị nhập vào khác ""
-      if (text) {
-        // lọc các item có text bắt đầu với giá trị của input
-        this.filteredItems = this.items.filter((item) =>
-          item.text.toLowerCase().startsWith(text.trim().toLowerCase())
-        );
-        if (this.filteredItems.length === 0) {
-          this.isError = true;
-          this.errorMsg = this.$MResource["VN"].InformationNotFound;
-          this.showSuggestion = false;
-        }
-        else {
+      try {
+        // nếu có lỗi thì khi nhập (@input) sẽ bỏ hiệu ứng lỗi
+        if(this.isError && this.isInputFocus) {
           this.isError = false;
-          this.showSuggestion = true;
+          this.errorMsg = "";
         }
-      } else {
-        // Nếu chuỗi input là rỗng và không focus thì tắt suggestion
-        // if(this.isInputFocus) {
-        //   this.showSuggestion = true;
-        // }
-        // Nếu không nhập gì cả // focus mà không nhập => refresh giá trị của combobox
-        this.result = "";
-        this.showSuggestion = false;
+
+        let text = $event.target.value;
+        this.inputValue = text;
+        // this.selectedItem = {
+        //   text: text,
+        //   value: "",
+        // };
+
+        // nếu giá trị nhập vào khác ""
+        if (text) {
+          // lọc các item có text bắt đầu với giá trị của input
+          this.filteredItems = this.items.filter((item) =>
+            item.text.toLowerCase().startsWith(text.trim().toLowerCase())
+          );
+          if (this.filteredItems.length === 0) {
+            this.isError = true;
+            this.errorMsg = this.$MResource["VN"].InformationNotFound;
+            this.showSuggestion = false;
+          }
+          else {
+            this.isError = false;
+            this.showSuggestion = true;
+          }
+        } else {
+          // Nếu chuỗi input là rỗng và không focus thì tắt suggestion
+          // if(this.isInputFocus) {
+          //   this.showSuggestion = true;
+          // }
+          // Nếu không nhập gì cả // focus mà không nhập => refresh giá trị của combobox
+          this.result = "";
+          if (this.isRequired && !this.result) {
+            this.isError = true;
+          }
+          this.showSuggestion = false;
+          this.$emit("update:modelValue", this.result);
+        }
+        // this.$emit("update:value", this.inputValue);
       }
-      // this.$emit("update:value", this.inputValue);
+      catch (error) {
+        console.error("Đã có lỗi xảy ra:  ", error);
+      }
+      
     },
 
     /**
@@ -248,13 +262,18 @@ export default {
      * @Author Phạm Minh Chiến
      */
     selectItem(item) {
-      this.selectedItem = item;
-      this.inputValue = item.text;
-      this.showSuggestion = false;
-      this.result = item.value;
-      if(this.showDropdown) {
-        this.showDropdown = false;
+      try {
+        this.selectedItem = item;
+        this.inputValue = item.text;
+        this.showSuggestion = false;
+        this.result = item.value;
+        if(this.showDropdown) {
+          this.showDropdown = false;
+        }
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
       }
+      
     },
 
     /**
@@ -262,13 +281,18 @@ export default {
      * @author Phạm Minh Chiến
      */
     toggleDropdown() {
-      if(!this.showDropdown) {
-        this.showDropdown = true;
+      try {
+        if(!this.showDropdown) {
+          this.showDropdown = true;
+        }
+        else {
+          this.showDropdown = false;
+        }      
+        // this.showDropdown = !this.showDropdown;
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
       }
-      else {
-        this.showDropdown = false;
-      }      
-      // this.showDropdown = !this.showDropdown;
+      
     },
 
     /**
@@ -277,25 +301,30 @@ export default {
      * @author Phạm Minh Chiến
      */
     handleKeyDown(event) {
-      if(event.key === 'ArrowUp') {
-        // Xử lý khi ấn mũi tên lên 
-        this.selectedIndex = (this.selectedIndex - 1 + this.filteredItems.length) % this.filteredItems.length;
-      } else if (event.key === 'ArrowDown') {
-        // Xử lý khi ấn mũi tên xuống
-        this.selectedIndex = (this.selectedIndex + 1 + this.filteredItems.length) % this.filteredItems.length;
-      } else if (event.key === 'Enter') {
-        // Xử lý khi ấn enter
-        if(this.selectedIndex !== -1) {
-          this.selectItem(this.filteredItems[this.selectedIndex]);
+      try {
+        if(event.key === 'ArrowUp') {
+          // Xử lý khi ấn mũi tên lên 
+          this.selectedIndex = (this.selectedIndex - 1 + this.filteredItems.length) % this.filteredItems.length;
+        } else if (event.key === 'ArrowDown') {
+          // Xử lý khi ấn mũi tên xuống
+          this.selectedIndex = (this.selectedIndex + 1 + this.filteredItems.length) % this.filteredItems.length;
+        } else if (event.key === 'Enter') {
+          // Xử lý khi ấn enter
+          if(this.selectedIndex !== -1) {
+            this.selectItem(this.filteredItems[this.selectedIndex]);
+          }
+          else {
+            this.items.forEach((item) => {
+              if(item.text.toLowerCase().startsWith(this.inputValue.trim().toLowerCase())) {
+                this.selectItem(item);
+              }
+            });
+          }
         }
-        else {
-          this.items.forEach((item) => {
-            if(item.text.toLowerCase().startsWith(this.inputValue.trim().toLowerCase())) {
-              this.selectItem(item);
-            }
-          });
-        }
+      } catch (error) {
+        console.error("Đã xảy ra lỗi: ", error);
       }
+      
     }
   },
   data() {

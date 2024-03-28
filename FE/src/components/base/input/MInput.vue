@@ -19,6 +19,7 @@
       ref="inputValue"
       @keydown.enter="this.$emit('handleEnter')"
       @focus="this.$emit('focus')"
+      @input="this.$emit('input')"
     />
     <div v-if="iconClass !== null && iconClass !== '' && iconClass !== undefined" class="m-input__icon" :class="iconClass"></div>
     </div>

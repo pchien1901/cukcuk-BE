@@ -136,70 +136,146 @@ export const router = createRouter({
  *     Chưa đăng nhập thì luôn chuyển router về /login
  *     Đã đăng nhập mà truy cập router '/login' thì chuyển router về trang chủ '/'
  */
-router.beforeEach(async (to, from, next) => {
-  console.log("Trạng thái state: ", store.state);
+router.beforeEach((to, from, next) => {
   const isAuthenticated = store.state.isAuthenticate;
-
-  if (!isAuthenticated && to.path !== "/login") {
-    next("/login"); // Chuyển hướng đến trang đăng nhập nếu chưa xác thực
-  } else {
-    if (isAuthenticated && to.path === "/login") {
-        
-      let now = new Date();
-      // lấy thời gian hết hạn refresh token từ localStorage
-      let expirationRefreshTokenString = localStorage.getItem(
-        "expirationRefreshToken"
-      );
-      let expirationRefreshTokenTime = new Date(expirationRefreshTokenString);
-
-      // lấy thời gian hết hạn access token từ localStorage
-      let expirationAccessTokenString = localStorage.getItem("expirationToken");
-      let expirationAccessTokenTime = new Date(expirationAccessTokenString);
-
-      // khi thời gian hết hạn refresh token < hiện tại => chuyển về trang đăng nhập
-      if (expirationRefreshTokenTime <= now) {
-        // console.log("Hết thời gian đăng nhập: ", expirationAccessTokenTime);
-        store.commit("logout");
-        // console.log("thay đổi store thành: ", store.state.isAuthenticate);
-
-        next("/login"); // Chuyển hướng đến trang đăng nhập nếu chưa xác thực
-        tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
-          type: MResource["VN"].ToastTypeWarning,
-          message: MResource["VN"].Toast.Auth.TokenExpiration,
-          action: null,
-        });
-      } else if (expirationAccessTokenTime <= now) {
-        //console.log("access token hết hạn");
-        let data = {
-          AccessToken: localStorage.getItem("accessToken"),
-          RefreshToken: localStorage.getItem("refreshToken"),
-        };
-        let res = await axios.post(
-          `${apiURL}/${MApiResource.apiUrl.refreshToken}`,
-          data,
-          {
-            headers: {
-              "Content-Type": MApiResource.apiHeaderContentType.applicationType,
-            },
-          }
-        );
-        //console.log("token mới: ", res);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
-        localStorage.setItem("expirationToken", res.data.Expiration);
-        localStorage.setItem(
-          "expirationRefreshToken",
-          res.data.ExpirationRefreshToken
-        );
-
-
-        next("/");
+ // debugger
+  if(!isAuthenticated && to.path === "/login") {
+    next();
+  }
+  else {
+    if(isAuthenticated && to.path === "/login") {
+      next("/");
+    }
+    else {
+      if(!isAuthenticated ) {
+        next("/login");
       }
-    } else {
-      next(); // Tiếp tục điều hướng bình thường
+      else {
+
+        next();
+      }
     }
   }
+  
 });
+
+// router.beforeEach(async (to, from, next) => {
+//   console.log("Trạng thái state: ", store.state);
+//   const isAuthenticated = store.state.isAuthenticate;
+
+//   if (!isAuthenticated) {
+//     if(to.path === "/login") {
+//       next();
+//     }
+//     else {
+//       next("/login"); // Chuyển hướng đến trang đăng nhập nếu chưa xác thực
+//     }
+//   } else {
+//     if (isAuthenticated && to.path === "/login") {
+        
+//       let now = new Date();
+//       // lấy thời gian hết hạn refresh token từ localStorage
+//       let expirationRefreshTokenString = localStorage.getItem(
+//         "expirationRefreshToken"
+//       );
+//       let expirationRefreshTokenTime = new Date(expirationRefreshTokenString);
+
+//       // lấy thời gian hết hạn access token từ localStorage
+//       let expirationAccessTokenString = localStorage.getItem("expirationToken");
+//       let expirationAccessTokenTime = new Date(expirationAccessTokenString);
+
+//       // khi thời gian hết hạn refresh token < hiện tại => chuyển về trang đăng nhập
+//       if (expirationRefreshTokenTime <= now) {
+//         // console.log("Hết thời gian đăng nhập: ", expirationAccessTokenTime);
+//         store.commit("logout");
+//         // console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
+//         next("/login"); // Chuyển hướng đến trang đăng nhập nếu chưa xác thực
+//         tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
+//           type: MResource["VN"].ToastTypeWarning,
+//           message: MResource["VN"].Toast.Auth.TokenExpiration,
+//           action: null,
+//         });
+//       } else if (expirationAccessTokenTime <= now) {
+//         //console.log("access token hết hạn");
+//         let data = {
+//           AccessToken: localStorage.getItem("accessToken"),
+//           RefreshToken: localStorage.getItem("refreshToken"),
+//         };
+//         let res = await axios.post(
+//           `${apiURL}/${MApiResource.apiUrl.refreshToken}`,
+//           data,
+//           {
+//             headers: {
+//               "Content-Type": MApiResource.apiHeaderContentType.applicationType,
+//             },
+//           }
+//         );
+//         //console.log("token mới: ", res);
+//         localStorage.setItem("accessToken", res.data.accessToken);
+//         localStorage.setItem("refreshToken", res.data.refreshToken);
+//         localStorage.setItem("expirationToken", res.data.Expiration);
+//         localStorage.setItem(
+//           "expirationRefreshToken",
+//           res.data.ExpirationRefreshToken
+//         );
+//         next("/");
+//       }
+//       else if( isAuthenticated && to.path !== "/login") {
+//         let now = new Date();
+//         // lấy thời gian hết hạn refresh token từ localStorage
+//         let expirationRefreshTokenString = localStorage.getItem(
+//           "expirationRefreshToken"
+//         );
+//         let expirationRefreshTokenTime = new Date(expirationRefreshTokenString);
+
+//         // lấy thời gian hết hạn access token từ localStorage
+//         let expirationAccessTokenString = localStorage.getItem("expirationToken");
+//         let expirationAccessTokenTime = new Date(expirationAccessTokenString);
+
+//         // khi thời gian hết hạn refresh token < hiện tại => chuyển về trang đăng nhập
+//         if (expirationRefreshTokenTime <= now) {
+//           // console.log("Hết thời gian đăng nhập: ", expirationAccessTokenTime);
+//           store.commit("logout");
+//           // console.log("thay đổi store thành: ", store.state.isAuthenticate);
+
+//           next("/login"); // Chuyển hướng đến trang đăng nhập nếu chưa xác thực
+//           tinyEmitter.emit(MResource["VN"].Event.Toast.openMainToast, {
+//             type: MResource["VN"].ToastTypeWarning,
+//             message: MResource["VN"].Toast.Auth.TokenExpiration,
+//             action: null,
+//           });
+//         } else if (expirationAccessTokenTime <= now) {
+//           //console.log("access token hết hạn");
+//           let data = {
+//             AccessToken: localStorage.getItem("accessToken"),
+//             RefreshToken: localStorage.getItem("refreshToken"),
+//           };
+//           let res = await axios.post(
+//             `${apiURL}/${MApiResource.apiUrl.refreshToken}`,
+//             data,
+//             {
+//               headers: {
+//                 "Content-Type": MApiResource.apiHeaderContentType.applicationType,
+//               },
+//             }
+//           );
+//           //console.log("token mới: ", res);
+//           localStorage.setItem("accessToken", res.data.accessToken);
+//           localStorage.setItem("refreshToken", res.data.refreshToken);
+//           localStorage.setItem("expirationToken", res.data.Expiration);
+//           localStorage.setItem(
+//             "expirationRefreshToken",
+//             res.data.ExpirationRefreshToken
+//           );
+//           next();
+//         }
+//       }
+//     } else {
+//       next(); // Tiếp tục điều hướng bình thường
+//     }
+//   }
+// });
 
 app.use(router);
 

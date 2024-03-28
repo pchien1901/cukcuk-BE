@@ -110,6 +110,7 @@
               :error="formError.IdentityDate"
               v-model="formData.IdentityDate"
             />
+            
           </div>
           <div class="popup-control">
             <MInput
@@ -278,7 +279,7 @@ export default {
   props: {
     /**
      * closeFunction: Hàm đóng Popup
-     *
+     * inputData: 
      */
     closeFunction: Function,
     inputData: { type: Object },
@@ -447,9 +448,11 @@ export default {
       handler() {
          // theo dõi DateOfBirth, hiện lỗi khi DoB không thỏa mãn
          if (this.formData.DateOfBirth) {
+          console.log("dob: ", this.formData.DateOfBirth);
           let today = new Date();
           let dob = new Date(this.formData.DateOfBirth);
           if (dob > today) {
+            console.log(this.formData.DateOfBirth);
             this.formError.DateOfBirth = this.$MResource["VN"].DoBInvalid;
           }
           else {

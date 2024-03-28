@@ -16,10 +16,6 @@ export const getAllDepartments = async () => {
     return res.data;
   } catch (error) {
     console.error("Đã xảy ra lỗi trong lúc lấy dữ liệu: ", error);
-    let status = error.response.status;
-    if (status >= 400) {
-      return error.response;
-    }
   }
 };
 
@@ -35,9 +31,5 @@ export const getDepartmentById = async (id) => {
     return res;
   } catch (error) {
     console.error("Đã xảy ra lỗi trong lúc lấy dữ liệu: ", error);
-    let status = error.response.status;
-    if (status >= 400) {
-      return error.response;
-    }
   }
 };
