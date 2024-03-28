@@ -13,29 +13,11 @@ const apiURL = config.API_URL;
  */
 export const getAllPositions = async () => {
   try {
-    // await axios.get(`${apiURL}/Positions`)
-    // .then(response => {
-    //   return response;
-    // }) 
-    // .catch(error => {
-    //   if(error.response) {
-    //     if(error.response.status) {
-    //       return error.response;
-    //     }
-    //   }
-    //   else {
-    //     return { data: -1};
-    //   }  
-    // })
     let res = await axios.get(`${apiURL}/Positions`);
     return res.data;
   }
   catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400)  {
-      return error.response;
-    }
   }
 }
 
@@ -51,9 +33,5 @@ export const getPositionById = async (id) => {
     return res;
   } catch (error) {
     console.error('Đã xảy ra lỗi trong lúc lấy dữ liệu: ', error);
-    let status = error.response.status;
-    if(status >= 400)  {
-      return error.response;
-    }
   }
 }

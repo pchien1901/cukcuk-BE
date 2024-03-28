@@ -20,7 +20,7 @@
         :name="name"
         :config="config"
       />
-      <div class="icon-calendar"></div>
+      <div class="icon-calendar" data-toggle></div>
     </div>
     
     <div v-if="errorMessage" class="m-date-picker__error-message">
@@ -92,6 +92,7 @@ export default {
         allowInput : true,
         altInputClass: "flat width-1",
         locale: Vietnamese,
+        wrap: true
       }
     };
   },

@@ -41,6 +41,9 @@
 export default {
   name: "TheSidebar",
   created() {
+    if(this.$store.state.currentRole === this.$store.state.role.ADMIN) {
+      this.isAdmin = true;
+    }
     this.$tinyEmitter.on("lessSidebar", this.handleLessSidebar);
     this.$tinyEmitter.on("showAdminOption", this.showAdminOption);
   },

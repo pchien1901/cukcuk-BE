@@ -54,7 +54,7 @@ const MResource = {
     Error: "Không thành công, đã có lỗi xảy ra.",
 
     // employee table
-    SearchEmployeeTitle: "Nhấn Enter để tìm kiếm",
+    SearchEmployeeTitle: "Nhập để tìm kiếm",
 
     Input: {
       TypeFile: {

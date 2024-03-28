@@ -214,11 +214,6 @@ export default {
         }
 
         let text = $event.target.value;
-        this.inputValue = text;
-        // this.selectedItem = {
-        //   text: text,
-        //   value: "",
-        // };
 
         // nếu giá trị nhập vào khác ""
         if (text) {
@@ -230,6 +225,8 @@ export default {
             this.isError = true;
             this.errorMsg = this.$MResource["VN"].InformationNotFound;
             this.showSuggestion = false;
+            //this.result = "";
+            
           }
           else {
             this.isError = false;
@@ -237,15 +234,13 @@ export default {
           }
         } else {
           // Nếu chuỗi input là rỗng và không focus thì tắt suggestion
-          // if(this.isInputFocus) {
-          //   this.showSuggestion = true;
-          // }
-          // Nếu không nhập gì cả // focus mà không nhập => refresh giá trị của combobox
           this.result = "";
-          if (this.isRequired && !this.result) {
+          if (this.isRequired) {
             this.isError = true;
+            this.errorMsg = "Vui lòng nhập giá trị."
           }
           this.showSuggestion = false;
+          this.selectedItem = {... this.selectedItem, text : "", value: ""};
           this.$emit("update:modelValue", this.result);
         }
         // this.$emit("update:value", this.inputValue);

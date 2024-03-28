@@ -10,7 +10,7 @@
       </div>
       <div class="header-right">
         <MInput :type="'text'" :placeholder="'Tìm theo mã, tên nhân viên'" v-model="searchText" :iconClass="'icon-search'"
-        @handleEnter="handleSearchEnter" :title="this.$MResource['VN'].SearchEmployeeTitle"
+       :title="this.$MResource['VN'].SearchEmployeeTitle"
         @input="handleSearchInput"
         />
         <MButton

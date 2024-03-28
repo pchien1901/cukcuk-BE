@@ -374,65 +374,70 @@ export default {
   },
   computed: {},
   async created() {
-    if (this.inputData.IsUpdate === true) {
-      // chuyển trạng thái của popup về UPDATE
-      this.formMode = this.$MEnum.FormMode.UPDATE;
-      // Tạo giá trị mặc định của formData từ prop inputData
-      for (const key in this.inputData) {
-        if (Object.hasOwnProperty.call(this.formData, key)) {
-          this.formData[key] = this.inputData[key];
+    try {
+      if (this.inputData.IsUpdate === true) {
+        // chuyển trạng thái của popup về UPDATE
+        this.formMode = this.$MEnum.FormMode.UPDATE;
+        // Tạo giá trị mặc định của formData từ prop inputData
+        for (const key in this.inputData) {
+          if (Object.hasOwnProperty.call(this.formData, key)) {
+            this.formData[key] = this.inputData[key];
+          }
         }
-      }
-      // Bổ sung thêm trường EmployeeId
-      this.formData.EmployeeId = this.inputData.EmployeeId;
-      // Chuyển ngày tháng nếu có sai format
-      this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      this.formData.IdentityDate = createDateString(
-        this.inputData.IdentityDate
-      );
-    } else if (this.inputData.IsDuplicate === true) {
-      // chuyển trạng thái popup sang DUPLICATe
-      this.formMode === this.$MEnum.FormMode.DUPLICATE;
-      // Tạo giá trị mặc định cho formData từ prop inputData
-      for (const key in this.inputData) {
-        if (Object.hasOwnProperty.call(this.formData, key)) {
-          this.formData[key] = this.inputData[key];
+        // Bổ sung thêm trường EmployeeId
+        this.formData.EmployeeId = this.inputData.EmployeeId;
+        // Chuyển ngày tháng nếu có sai format
+        this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+        this.formData.IdentityDate = createDateString(
+          this.inputData.IdentityDate
+        );
+      } else if (this.inputData.IsDuplicate === true) {
+        // chuyển trạng thái popup sang DUPLICATe
+        this.formMode === this.$MEnum.FormMode.DUPLICATE;
+        // Tạo giá trị mặc định cho formData từ prop inputData
+        for (const key in this.inputData) {
+          if (Object.hasOwnProperty.call(this.formData, key)) {
+            this.formData[key] = this.inputData[key];
+          }
         }
+        // Thêm trường EmployeeId
+        this.formData.EmployeeId = this.inputData.EmployeeId;
+        this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
+        this.formData.IdentityDate = createDateString(
+          this.inputData.IdentityDate
+        );
+      } else {
+        this.resetForm();
+        // console.log("resetForm");
       }
-      // Thêm trường EmployeeId
-      this.formData.EmployeeId = this.inputData.EmployeeId;
-      this.formData.DateOfBirth = createDateString(this.inputData.DateOfBirth);
-      this.formData.IdentityDate = createDateString(
-        this.inputData.IdentityDate
-      );
-    } else {
-      this.resetForm();
-      // console.log("resetForm");
-    }
-    // Lấy thông tin department và position để đưa vào combobox
-    let allDepartment = await getAllDepartments();
-    let allPosition = await getAllPositions();
-    let departmentArr = [];
-    let positionArr = [];
-    // Thêm giá trị cho combobox Departments
-    for (const department of allDepartment) {
-      let item = {
-        text: department.DepartmentName,
-        value: department.DepartmentId,
-      };
-      departmentArr.push(item);
-    }
+      // Lấy thông tin department và position để đưa vào combobox
+      let allDepartment = await getAllDepartments();
+      let allPosition = await getAllPositions();
+      let departmentArr = [];
+      let positionArr = [];
+      // Thêm giá trị cho combobox Departments
+      for (const department of allDepartment) {
+        let item = {
+          text: department.DepartmentName,
+          value: department.DepartmentId,
+        };
+        departmentArr.push(item);
+      }
 
-    // Thêm giá trị cho combobox Postions
-    for (const position of allPosition) {
-      let item = {
-        text: position.PositionName,
-        value: position.PositionId,
-      };
-      positionArr.push(item);
+      // Thêm giá trị cho combobox Postions
+      for (const position of allPosition) {
+        let item = {
+          text: position.PositionName,
+          value: position.PositionId,
+        };
+        positionArr.push(item);
+      }
+      this.departments = departmentArr;
+      this.positions = positionArr;
+    } catch (error) {
+      console.error("Đã xảy ra lỗi tại created EmployeePopup: ", error);
     }
-    this.departments = departmentArr;
-    this.positions = positionArr;
+    
   },
   mounted() {
     this.$tinyEmitter.on("resetEmployeeForm", this.resetForm);
